@@ -1,0 +1,36 @@
+.welcome-section {
+    position: relative;
+    height: 100vh;
+    background: url('../../../../assets/2.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .welcome-content {
+    background-color: rgba(53, 112, 221, 0.9);
+    color: white;
+    padding: 50px;
+    max-width: 500px;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    height: 30%;
+    width: 500px;
+
+  }
+  
+  .welcome-content h1 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .welcome-content p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  .welcome-content a {
+    color: white;
+    text-decoration: underline;
+    margin-top: 20px;
+    display: inline-block;
+  }
