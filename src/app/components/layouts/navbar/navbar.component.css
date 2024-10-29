@@ -6,4 +6,11 @@
     background-color: rgb(53, 112, 221);
     z-index: 40;
     position: fixed;
+    display: flex;
+    justify-content: space-between;
 }  
+
+mat-toolbar{
+  display: flex;
+  justify-content: space-between;
+}

@@ -36,7 +36,6 @@
   }
   to{
     opacity: 1;
-    clip-path: inset(0 0 0 0);
     clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
     transform: translateX(0px);
   }
@@ -69,12 +68,12 @@
 @keyframes appearTextSlogan{
   from{
     opacity: 0;
-    transform: translateX(-150px);
+    scale: 0.5;
     
   }
   to{
     opacity: 1;
-    transform: translateX(0px);
+    scale: 1;
   }
 }
 
@@ -83,7 +82,7 @@
 .welcome-section {
   position: relative; /* Permite scroll */
   /* min-height: 75vh; Ocupa 3/4 de la pantalla */
-  min-height: 80vh;
+  height: 700px;
   width: 80%;
   background: url('../../../../assets/2.jpg') no-repeat center center/cover;
   display: flex;
@@ -96,7 +95,7 @@
   animation: appearFirst 1.5s linear;
 }
 
-.welcome-content {
+.welcome-content{
   background-color: rgba(53, 112, 221, 0.9);
   color: white;
   padding: 50px;
@@ -125,10 +124,8 @@ h3{
 
 
 
-.welcome-section2 {
-  margin-top: 50px;
-  position: relative; /* Permite scroll */
-  min-height: 80vh;
+.welcome-section-2 {
+  height: 700px;
   width: 80%;
   background: url('../../../../assets/6.jpg') no-repeat center center/cover;
   display: flex;
@@ -142,6 +139,8 @@ h3{
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0;
+  padding-top: 80px; /* Ajusta según el tamaño de tu navbar */
+   /* Ajusta para que el elemento ocupe menos espacio visual */
 }
 
 .welcome-content2 {
@@ -149,7 +148,7 @@ h3{
   color: white;
   padding: 50px;
   clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
-  width: 600px;
+  width: 670px;
   text-align: right;
   align-self: flex-end;
   animation: appearTextRight linear;
@@ -158,10 +157,87 @@ h3{
 
 }
 
-.welcome-section3 {
-  margin-top: 50px;
+.welcome-section-doble
+{
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+  
+}
+
+.welcome-section-doble-hijo-1{
+  
+  height: 700px;
+  width: 45%;
+  background: url('../../../../assets/7.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  border-radius: 20px;/* bordes redondos */
+  margin-top: 150px;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+
+}
+
+.welcome-section-doble-hijo-2{
+  
+  height: 700px;
+  width: 45%;
+  background: url('../../../../assets/8.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  border-radius: 20px;/* bordes redondos */
+  margin-top: 150px;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+
+}
+
+.welcome-content-doble-hijo-1 {
+  background-color: rgba(53, 112, 221, 0.801);
+  color: white;
+  padding: 50px;
+  clip-path: polygon(2% 0, 100% 0, 100% 100%, 0% 100%);
+  width: 500px;
+  text-align: right;
+  align-self: flex-end;
+  animation: appearTextRight linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+
+}
+
+.welcome-content-doble-hijo-2 {
+  background-color: rgba(255, 255, 255, 0.795);
+  color:  rgba(53, 112, 221, 0.9);
+  padding: 50px;
+  clip-path: polygon(2% 0, 100% 0, 100% 100%, 0% 100%);
+  width: 500px;
+  text-align: right;
+  align-self: flex-end;
+  animation: appearTextRight linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+
+}
+
+
+
+
+
+.welcome-section-3 {
   position: relative; /* Permite scroll */
-  min-height: 80vh;
+  min-height: 700px;
   width: 80%;
   background: url('../../../../assets/5.jpg') no-repeat center center/cover;
   display: flex;
