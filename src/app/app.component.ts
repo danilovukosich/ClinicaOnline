@@ -8,7 +8,8 @@ import { LandingComponent } from './components/layouts/landing/landing.component
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, LandingComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  
 })
 export class AppComponent {
   title = 'clinicaonline';
