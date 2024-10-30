@@ -51,7 +51,14 @@ export class LandingComponent {
 
   onScrollToSection(sectionId: string) {
     let offset = -140; // Ajusta este valor según el espacio que necesites en la parte superior
-  
+    
+    if (sectionId === 'top') 
+      {
+      // Scrollea hasta arriba de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     let element;
     switch (sectionId) 
     {

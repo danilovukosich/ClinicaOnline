@@ -23,4 +23,9 @@ export class NavbarComponent {
     this.scrollToEvent.emit(sectionId);
   }
 
+  scrollToTop()
+  {
+    this.scrollToEvent.emit('top');
+  }
+
 }
