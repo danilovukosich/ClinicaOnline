@@ -6,6 +6,15 @@
   
 }
 
+h1{
+  font-weight: 700;
+}
+
+h3{
+  font-weight: 600;
+  font-size: 40px;
+}
+
 @keyframes appearFirst{
   from{
     opacity: 0;
@@ -116,12 +125,6 @@
   margin-right: 150px;
   animation: appearTextSlogan 2s linear;
 }
-
-h3{
-  font-weight: 700;
-  font-size: 40px;
-}
-
 
 
 .welcome-section-2 {

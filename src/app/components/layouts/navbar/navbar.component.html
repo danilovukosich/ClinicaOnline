@@ -4,7 +4,7 @@
         <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" style="color: #fff;">
             <mat-icon>menu</mat-icon>
         </button> -->
-        <span (click)="scrollToTop()" style="font-size: 35px; color: azure; cursor: pointer; font-weight: 550;">Clinica Online</span>
+        <span (click)="scrollToTop()" routerLink="landing" style="font-size: 35px; color: azure; cursor: pointer; font-weight: 550;">Clinica Online</span>
         <mat-icon style="color: #fff; font-size: 28px; margin-left: 10px;">local_hospital</mat-icon>
         
         <span class="example-spacer"></span>
@@ -21,22 +21,10 @@
     
     
     <div>
-        <div>
-            <button mat-raised-button extended>
-                <mat-icon>person</mat-icon>
-                Account
-            </button>
-        
-            <!-- <button mat-raised-button extended>
-                <mat-icon>person</mat-icon>
-                Inicia sesion
-            </button>
-        
-            <button mat-raised-button extended>
-                <mat-icon>person</mat-icon>
-                Registrate
-            </button> -->
-        </div>
+        <button routerLink="login" mat-raised-button extended>
+            <mat-icon>person</mat-icon>
+            Iniciar sesión
+        </button>
     </div>
     
 </mat-toolbar>

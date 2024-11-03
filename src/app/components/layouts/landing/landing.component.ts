@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { FooterComponent } from '../footer/footer.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -19,7 +19,7 @@ export class LandingComponent {
   @ViewChild('sectionDoble') sectionDoble!: ElementRef;
   @ViewChild('section3') section3!: ElementRef;
 
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute, private router: Router){}
 
   // onScrollToSection(sectionId: string)
   // {
@@ -78,6 +78,11 @@ export class LandingComponent {
       const yOffset = element.nativeElement.getBoundingClientRect().top + window.pageYOffset + offset;
       window.scrollTo({ top: yOffset, behavior: 'smooth' });
     }
+  }
+
+  navegarLogin()
+  {
+    this.router.navigate(['/login']);
   }
 
 }
