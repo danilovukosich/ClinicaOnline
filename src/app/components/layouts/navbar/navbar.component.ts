@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,6 +22,7 @@ export class NavbarComponent {
 
   items: MenuItem[] | undefined;
 
+  constructor(private auth:AuthService){}
   ngOnInit() 
   {
       this.items = [
@@ -39,6 +41,25 @@ export class NavbarComponent {
   scrollToTop()
   {
     this.scrollToEvent.emit('top');
+  }
+
+
+  VerifyCurrentUser()
+  {
+    if(this.auth.GetUser()!=null)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }
+
+  LogOut()
+  {
+    this.auth.LogOut();
   }
 
 }

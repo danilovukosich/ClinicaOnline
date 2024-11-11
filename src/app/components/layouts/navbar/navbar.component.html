@@ -20,10 +20,21 @@
     
     
     <div>
-        <button routerLink="login" mat-raised-button extended>
-            <mat-icon>person</mat-icon>
-            Iniciar sesión
-        </button>
+        @if (this.VerifyCurrentUser()) 
+        {
+            <button (click)="LogOut()" routerLink="landing" mat-raised-button extended>
+                <mat-icon>person</mat-icon>
+                Logout
+            </button>
+        }
+        @else 
+        {
+            <button routerLink="login" mat-raised-button extended>
+                <mat-icon>person</mat-icon>
+                Iniciar sesión
+            </button>
+        }
+        
     </div>
     
 </mat-toolbar>

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,10 @@ export class LoginComponent {
 
   @ViewChild('drawer') drawer!: MatDrawer;
   // constructor(private auth:AuthService){}
+
+
+  constructor(private auth:AuthService){}
+
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -71,9 +76,13 @@ export class LoginComponent {
 
   LogIn()
   {
+    console.log("entro login");
+    
     if(this.formLogin.valid)
     {
-      // this.auth.LogUser(this.formLogin.get('emailLogin')?.value, this.formLogin.get('passwordLogin')?.value); 
+      this.auth.LogUser(this.formLogin.get('emailLogin')?.value, this.formLogin.get('passwordLogin')?.value); 
+      console.log("entro if");
+      
     }   
   }
 

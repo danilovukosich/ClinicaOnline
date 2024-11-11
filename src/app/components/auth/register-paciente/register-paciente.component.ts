@@ -7,6 +7,9 @@ import {MatInputModule} from '@angular/material/input';
 import { Router } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
+import { CommonModule } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-register-paciente',
@@ -19,7 +22,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
             MatIcon,
             MatSelectModule,
             RecaptchaModule,
-            RecaptchaFormsModule],
+            RecaptchaFormsModule,
+            CommonModule],
   templateUrl: './register-paciente.component.html',
   styleUrl: './register-paciente.component.css'
 })
@@ -36,6 +40,7 @@ export class RegisterPacienteComponent {
   edad!:string;
   dni!:number;
   obraSocial!:string;
+  
   rol:string= "paciente";
 
 
