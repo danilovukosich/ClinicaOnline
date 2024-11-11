@@ -1,1 +1,144 @@
-<p>register-paciente works!</p>
+<div class="container">
+
+    <div class="row">
+
+        <form class="form" [formGroup]="formRegistro" (submit)="LogIn()">
+    
+            <h1 style="color:  rgb(52, 127, 212); font-weight: 600;">Registro pacientes</h1>
+    
+            <div style="display: flex; justify-content: space-evenly;">
+                <mat-form-field style="width: 45%;">
+                    <mat-label>Nombre</mat-label>
+                    <input [(ngModel)]="nombre"  matInput formControlName="nombreregistro" placeholder="Ingrese Nombre">
+                    @if (nombreregistro?.hasError('required')) 
+                    {
+                        <mat-error>Nombre es <strong>requerido</strong></mat-error>
+                    }
+                    @if (nombreregistro?.hasError('pattern')) 
+                    {
+                        <mat-error>Solo ingresar <strong>letras</strong></mat-error>
+                    }
+
+                </mat-form-field>
+                
+                <mat-form-field style="width: 45%;">
+                    <mat-label>Apellido</mat-label>
+                    <input [(ngModel)]="apellido" matInput placeholder="Ingrese Apellido" formControlName="apellidoRegistro">
+                    
+                    @if (apellidoRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Apellido <strong>requerida</strong></mat-error>
+                    }
+                    @if (apellidoRegistro?.hasError('pattern')) 
+                    {
+                        <mat-error>Solo ingresar <strong>letras</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div style="display: flex; justify-content: space-evenly;">
+                <mat-form-field style="width: 45%;">
+
+                    <mat-label>Edad</mat-label>
+                    <input type="number" [(ngModel)]="edad"  matInput formControlName="edadRegistro" placeholder="Ingrese edad">
+                    @if (edadRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                    }
+                    @if (edadRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                    }
+                    @if (edadRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                    }
+
+                    
+                </mat-form-field>
+                
+                <mat-form-field style="width: 45%;">
+                    <mat-label>DNI</mat-label>
+                    <input type="number" [(ngModel)]="dni" matInput placeholder="Ingrese DNI" formControlName="dniRegistro">
+                    
+                    @if (dniRegistro?.hasError('required')) 
+                    {
+                        <mat-error>DNI <strong>requerido</strong></mat-error>
+                    }
+                    
+                </mat-form-field>
+            </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <mat-form-field style="width: 93%;">
+                    <mat-label>Email</mat-label>
+                    <input [(ngModel)]="email" type="email" matInput formControlName="emailRegistro" placeholder="Ingrese email">
+                    
+                    @if (emailRegistro?.hasError('email') && !emailRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Igresar email valido</mat-error>
+                    }
+                    @if (emailRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Email es <strong>requerido</strong></mat-error>
+                    }
+                </mat-form-field>
+                
+                <mat-form-field style="width: 94%;">
+                    <mat-label>Contraseña</mat-label>
+                    <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordRegistro">
+                    <button mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    @if (passwordRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Contraseña <strong>requeridas</strong></mat-error>
+                    }
+                    @if (passwordRegistro?.hasError('minlength')) 
+                    {
+                        <mat-error>Debe ser mayor a <strong>6 digitos</strong></mat-error>
+                    }
+                    
+                </mat-form-field>
+
+            </div>
+
+            <div style="display: flex; justify-content: space-evenly;">
+                <mat-form-field style="width: 45%;">
+
+                    <mat-label>Obra social</mat-label>
+                    <mat-select [(ngModel)]="obraSocial" formControlName="obraSocialRegistro">
+                      <mat-option value="osde">OSDE</mat-option>
+                      <mat-option value="swiss">Swiss medical</mat-option>
+                      <mat-option value="osecac">OSECAC</mat-option>
+                      <mat-option value="ioma">IOMA</mat-option>
+                    </mat-select>
+                    @if (edadRegistro?.hasError('required')) 
+                    {
+                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                    }
+                    
+                </mat-form-field>
+                
+                <div style="width: 45%; text-align: start;">
+                    <mat-label>Foto de perfil</mat-label>
+                    <br>
+                    <input  type="file"  >
+                </div>
+            </div>
+
+            <div class="capcha">
+                <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcPE3sqAAAAADhl6VcekFc5zSE-yiYC-JSt9IC9"></re-captcha>
+            </div>
+
+
+            
+            <div class="buttonsContainer" >
+                <button style="margin-top: 15px; width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
+                <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button>
+            </div>
+        
+        </form>
+    </div>
+    
+</div>

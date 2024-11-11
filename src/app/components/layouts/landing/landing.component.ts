@@ -73,7 +73,7 @@ export class LandingComponent {
         break;
     }
   
-    if (element) 
+    if (element)
     {
       const yOffset = element.nativeElement.getBoundingClientRect().top + window.pageYOffset + offset;
       window.scrollTo({ top: yOffset, behavior: 'smooth' });
@@ -83,6 +83,16 @@ export class LandingComponent {
   navegarLogin()
   {
     this.router.navigate(['/login']);
+  }
+
+  navegarRegistroPaciente()
+  {
+    this.router.navigate(['/regitroPaciente']);
+  }
+
+  navegarEspecialista()
+  {
+    this.router.navigate(['/registroEspecialista']);
   }
 
 }

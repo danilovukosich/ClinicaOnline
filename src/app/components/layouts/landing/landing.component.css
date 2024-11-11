@@ -40,13 +40,13 @@ h3{
 @keyframes appearTextLeft{
   from{
     opacity: 0;
-    transform: translateX(250px);
-    clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    /* transform: translateX(250px); */
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
   }
   to{
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
-    transform: translateX(0px);
+    /* transform: translateX(0px); */
   }
 }
 
@@ -100,7 +100,7 @@ h3{
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
   border-radius: 20px;/* bordes redondos */
-  margin-top: 135px;
+  margin-top: 150px;
   animation: appearFirst 1.5s linear;
 }
 
