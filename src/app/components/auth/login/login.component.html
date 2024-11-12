@@ -42,7 +42,7 @@
                 <mat-form-field style="width: 100%;">
                     <mat-label>Contraseña</mat-label>
                     <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordLogin">
-                    <button mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                     @if (passwordLogin?.hasError('required')) 
@@ -54,7 +54,7 @@
         
                 <div class="buttonsContainer" >
                     <button type="submit" mat-raised-button >Iniciar sesion</button>
-                    <button (click)="drawer.toggle()"  style="margin-top: 15px; width: 75%; margin-left: 45px;" type="button" mat-flat-button >Autocompletar</button>
+                    <button type="button" (click)="drawer.toggle()"  style="margin-top: 15px; width: 75%; margin-left: 45px;"  mat-flat-button >Autocompletar</button>
                 </div>
             
             </form>

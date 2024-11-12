@@ -37,13 +37,13 @@ export class RegisterPacienteComponent {
   
   hide = true;//contraseña
 
-  // email!:string;
-  // password!:string;
-  // nombre!:string;
-  // apellido!:string;
-  // edad!:string;
-  // dni!:number;
-  // obraSocial!:string;
+  email!:string;
+  password!:string;
+  nombre!:string;
+  apellido!:string;
+  edad!:string;
+  dni!:number;
+  obraSocial!:string;
   rol:string= "paciente";
 
   constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService)
