@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -19,6 +19,38 @@ export class AuthService {
     setTimeout(()=>{
 
     },1000);
+  }
+
+  Register(nuevoUsuarioMail:string,nuevoUsuarioContra:string)
+  {
+    createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
+    .then((res)=>{
+
+      // this.toast.success("Registro exitoso", "Exito");
+      // this.router.navigate(["home"]);
+      // this.LogUser(nuevoUsuarioMail, nuevoUsuarioContra);
+    })
+    .catch((e)=>{
+      console.log(e.code);
+
+      switch (e.code) {
+        case "auth/invalid-email":
+          this.toast.danger("Email Invalido", "Error");
+        break;
+        case "auth/email-already-in-use":
+          this.toast.danger("Email en uso", "Error");
+        break;
+        case "auth/weak-password":
+          this.toast.danger("Contraseña debil", "Error");
+        break;
+        case "auth/invalid-credential":
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+        default:
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+      }
+    })
   }
 
   

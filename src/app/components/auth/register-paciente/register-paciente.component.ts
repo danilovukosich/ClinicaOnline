@@ -8,7 +8,10 @@ import { Router } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
 import { CommonModule } from '@angular/common';
-
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { VerificarMailDialogComponent } from '../../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
+import { AuthService } from '../../../services/auth.service';
+import { NgToastService } from 'ng-angular-popup';
 
 
 @Component({
@@ -23,7 +26,8 @@ import { CommonModule } from '@angular/common';
             MatSelectModule,
             RecaptchaModule,
             RecaptchaFormsModule,
-            CommonModule],
+            CommonModule,
+            MatDialogModule],
   templateUrl: './register-paciente.component.html',
   styleUrl: './register-paciente.component.css'
 })
@@ -33,22 +37,16 @@ export class RegisterPacienteComponent {
   
   hide = true;//contraseña
 
-  email!:string;
-  password!:string;
-  nombre!:string;
-  apellido!:string;
-  edad!:string;
-  dni!:number;
-  obraSocial!:string;
-  
+  // email!:string;
+  // password!:string;
+  // nombre!:string;
+  // apellido!:string;
+  // edad!:string;
+  // dni!:number;
+  // obraSocial!:string;
   rol:string= "paciente";
 
-
-
-  
-  
-  // constructor(private auth:AuthService){}
-  constructor(  private router: Router)
+  constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService)
   {
 
   }
@@ -57,32 +55,39 @@ export class RegisterPacienteComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-
     this.formRegistro = new FormGroup({
       emailRegistro : new FormControl('', [Validators.required, Validators.email]),
-      passwordRegistro : new FormControl('', [Validators.required, Validators.minLength(7)]),
+      passwordRegistro : new FormControl('', [Validators.required, Validators.minLength(6)]),
       nombreregistro : new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       apellidoRegistro : new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
       edadRegistro : new FormControl('', [Validators.required,  Validators.min(0), Validators.max(99)]),
-      dniRegistro : new FormControl('', [Validators.required]),
+      dniRegistro : new FormControl('', [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       obraSocialRegistro : new FormControl('', [Validators.required]),
     });
 
   }
 
+
+  OpenDialog()
+  {
+    this.dialog.open(VerificarMailDialogComponent);
+  }
+
+
   token:boolean = false;
-  
-  executeRecaptchaVisible(token:any){
+  executeRecaptchaVisible(token:any)
+  {
     this.token = !this.token;
 
     console.log(this.token);
-    
   }
+
 
   GoToLogin()
   {
     this.router.navigate(['/login']);
   }
+
 
   togglePasswordVisibility() 
   {
@@ -90,20 +95,33 @@ export class RegisterPacienteComponent {
   }
 
 
-  LogIn()
-  {
-    if(this.formRegistro.valid)
-    {
-      // this.auth.LogUser(this.formLogin.get('emailLogin')?.value, this.formLogin.get('passwordLogin')?.value); 
-    }   
-  }
 
   Register()
   {
+    
+    
     if(this.formRegistro.valid)
     {
-      // this.auth.Register(this.formRegistro.get('emailRegistro')?.value, this.formRegistro.get('passwordRegistro')?.value);
+      if(this.token==true)
+      {
+        console.log("registro exitoso");
+        
+        //this.auth.Register(this.formRegistro.get('emailRegistro')?.value, this.formRegistro.get('passwordRegistro')?.value);
+        
+        this.OpenDialog();//dialog de verificacion de email
+      }
+      else
+      {
+        this.toast.danger("Verificar que no eres un robot!", "ERROR");
+      }
+      
     }
+    else
+    {
+      console.log("no valido");
+      this.toast.danger("Verificar formulario!", "ERROR");
+    }
+
   }
 
   get emailRegistro()
