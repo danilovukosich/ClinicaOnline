@@ -153,16 +153,15 @@
         </form>
     </div>
 
+
+    <!-- SPINNER -->
     <div *ngIf="cargando" class="spinner-overlay">
         <mat-progress-spinner
           mode="indeterminate"
           diameter="50">
         </mat-progress-spinner>
-      </div>
+    </div>
       
-      <!-- Formulario o contenido principal -->
-      <div [class.loading]="cargando">
-        <!-- Aquí va tu formulario o contenido -->
-      </div>
-    
+    <div [class.loading]="cargando"></div>
+    <!-- SPINNER -->
 </div>
