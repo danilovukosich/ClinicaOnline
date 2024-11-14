@@ -12,6 +12,9 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { VerificarMailDialogComponent } from '../../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
+import { Firestore } from '@angular/fire/firestore';
+import { UsuarioPaciente } from '../../../models/usuario-paciente';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -27,7 +30,8 @@ import { NgToastService } from 'ng-angular-popup';
             RecaptchaModule,
             RecaptchaFormsModule,
             CommonModule,
-            MatDialogModule],
+            MatDialogModule,
+            MatProgressSpinnerModule],
   templateUrl: './register-paciente.component.html',
   styleUrl: './register-paciente.component.css'
 })
@@ -41,12 +45,15 @@ export class RegisterPacienteComponent {
   password!:string;
   nombre!:string;
   apellido!:string;
-  edad!:string;
+  edad!:number;
   dni!:number;
   obraSocial!:string;
   rol:string= "paciente";
 
-  constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService)
+  cargando:boolean = false;//bandera de cargando para el spiner
+
+
+  constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
   {
 
   }
@@ -56,6 +63,7 @@ export class RegisterPacienteComponent {
     //Add 'implements OnInit' to the class.
 
     this.formRegistro = new FormGroup({
+
       emailRegistro : new FormControl('', [Validators.required, Validators.email]),
       passwordRegistro : new FormControl('', [Validators.required, Validators.minLength(6)]),
       nombreregistro : new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
@@ -63,9 +71,12 @@ export class RegisterPacienteComponent {
       edadRegistro : new FormControl('', [Validators.required,  Validators.min(0), Validators.max(99)]),
       dniRegistro : new FormControl('', [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       obraSocialRegistro : new FormControl('', [Validators.required]),
+
     });
 
   }
+
+
 
 
   OpenDialog()
@@ -75,6 +86,7 @@ export class RegisterPacienteComponent {
 
 
   token:boolean = false;
+
   executeRecaptchaVisible(token:any)
   {
     this.token = !this.token;
@@ -96,23 +108,40 @@ export class RegisterPacienteComponent {
 
 
 
-  Register()
+  async Register()//registro de paciente
   {
-    
     
     if(this.formRegistro.valid)
     {
       if(this.token==true)
       {
-        console.log("registro exitoso");
+        this.cargando=true;
+
+        try
+        {
+          let usuario= new UsuarioPaciente(this.nombre, this.apellido, this.edad, this.dni, this. obraSocial, this.rol);
         
-        //this.auth.Register(this.formRegistro.get('emailRegistro')?.value, this.formRegistro.get('passwordRegistro')?.value);
+          console.log(usuario);
+          
+          await this.auth.RegisterPaciente(this.email, this.password, usuario);
+
+          console.log("registro exitoso");
+          
+          this.OpenDialog();//dialog de verificacion de email
+        }
+        catch(e:any)
+        {
+          console.log(e);
+        }
+        finally
+        {
+          this.cargando=false;
+        }
         
-        this.OpenDialog();//dialog de verificacion de email
       }
       else
       {
-        this.toast.danger("Verificar que no eres un robot!", "ERROR");
+        this.toast.danger("Verifica que no eres un robot!");
       }
       
     }
@@ -123,6 +152,13 @@ export class RegisterPacienteComponent {
     }
 
   }
+
+
+
+
+
+
+  
 
   get emailRegistro()
   {

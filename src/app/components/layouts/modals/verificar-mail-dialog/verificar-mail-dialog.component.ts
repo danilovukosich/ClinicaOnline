@@ -30,7 +30,7 @@ export class VerificarMailDialogComponent {
 
   readonly dialogRef = inject(MatDialogRef<VerificarMailDialogComponent>);
 
-  onNoClick(): void {
+  OkClick(): void {
     this.dialogRef.close();
   }
 }

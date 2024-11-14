@@ -99,7 +99,7 @@
                 <mat-form-field style="width: 94%;">
                     <mat-label>Contraseña</mat-label>
                     <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordRegistro">
-                    <button mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                     @if (passwordRegistro?.hasError('required')) 
@@ -147,10 +147,22 @@
             
             <div class="buttonsContainer" >
                 <button style="margin-top: 15px; width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
-                <button (click)="OpenDialog()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button>
+                <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button>
             </div>
         
         </form>
     </div>
+
+    <div *ngIf="cargando" class="spinner-overlay">
+        <mat-progress-spinner
+          mode="indeterminate"
+          diameter="50">
+        </mat-progress-spinner>
+      </div>
+      
+      <!-- Formulario o contenido principal -->
+      <div [class.loading]="cargando">
+        <!-- Aquí va tu formulario o contenido -->
+      </div>
     
 </div>
