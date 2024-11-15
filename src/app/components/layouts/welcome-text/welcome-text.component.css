@@ -12,7 +12,7 @@ h1{
     /* min-height: 75vh; Ocupa 3/4 de la pantalla */
     height: 100%;
     width: 100%;
-    background: url('../../../../assets/2.jpg') no-repeat center center/cover;
+    background: url('../../../../assets/1.jpg') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: space-between;
