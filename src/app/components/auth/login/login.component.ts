@@ -127,6 +127,13 @@ export class LoginComponent {
     return this.formLogin.get('passwordLogin');
   }
 
+  testAutocomlete()
+  {
+    this.email="danilovuk1001@yopmail.com";
+    this.password="123456";
+
+    this.drawer.toggle();
+  }
   
 
 }

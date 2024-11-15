@@ -1,1 +1,32 @@
-<p>home works!</p>
+<mat-drawer-container class="container">
+    
+    <mat-drawer #drawer  mode="side" opened>
+        <button mat-flat-button routerLink="welcomeText"><mat-icon>home</mat-icon>Home</button>
+        <button mat-flat-button routerLink="misTurnos" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Turnos</button>
+        <button mat-flat-button style="margin-top: 10px;">Boton 1</button>
+        <button mat-flat-button routerLink="miPerfil" style="margin-top: 10px;"> <mat-icon>person</mat-icon> Mi perfil</button>
+    </mat-drawer>
+    
+    
+    <mat-drawer-content >
+        <div class="row">
+            <div style="height: 100%; width: 100%;">
+                <router-outlet></router-outlet>            
+            </div>
+            
+        </div>
+        
+        <!-- SPINNER -->
+        <div *ngIf="cargando" class="spinner-overlay">
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="50">
+            </mat-progress-spinner>
+        </div>
+          
+        <div [class.loading]="cargando"></div>
+        <!-- SPINNER -->
+    </mat-drawer-content>
+
+      
+</mat-drawer-container>

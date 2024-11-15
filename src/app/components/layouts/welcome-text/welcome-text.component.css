@@ -1,0 +1,46 @@
+h1{
+    font-weight: 700;
+  }
+  
+  h3{
+    font-weight: 600;
+    font-size: 40px;
+  }
+
+  .welcome-section {
+    position: relative; /* Permite scroll */
+    /* min-height: 75vh; Ocupa 3/4 de la pantalla */
+    height: 100%;
+    width: 100%;
+    background: url('../../../../assets/2.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 20px;/* bordes redondos */
+   
+    
+  }
+  
+  .welcome-content{
+    background-color: rgba(53, 112, 221, 0.9);
+    color: white;
+    padding: 50px;
+    max-width: 500px;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    width: 500px;
+    
+  }
+  
+  .welcome-content a {
+    color: white;
+    text-decoration: underline;
+    margin-top: 10px;
+  }
+  
+  .slogan{
+    color: rgb(88, 87, 87);
+    margin-right: 150px;
+    
+  }

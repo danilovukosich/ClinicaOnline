@@ -139,7 +139,7 @@ export class AuthService {
         this.toast.success("Logueo exitoso", "Exito");
         this.Log();//logs en firestore
   
-        this.router.navigate(["home"]);
+        this.router.navigate(["home/welcomeText"]);
       }
       else
       {

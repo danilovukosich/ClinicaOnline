@@ -42,7 +42,7 @@ export class NavbarComponent {
   {
     if(this.VerifyCurrentUser())
     {
-      this.router.navigate(['home']);
+      this.router.navigate(['home/welcomeText']);
     }
     else
     {
