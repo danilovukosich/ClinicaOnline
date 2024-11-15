@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
@@ -22,7 +22,7 @@ export class NavbarComponent {
 
   items: MenuItem[] | undefined;
 
-  constructor(private auth:AuthService){}
+  constructor(private auth:AuthService, private router: Router){}
   ngOnInit() 
   {
       this.items = [
@@ -40,7 +40,15 @@ export class NavbarComponent {
 
   scrollToTop()
   {
-    this.scrollToEvent.emit('top');
+    if(this.VerifyCurrentUser())
+    {
+      this.router.navigate(['home']);
+    }
+    else
+    {
+      this.scrollToEvent.emit('top');
+    }
+
   }
 
 

@@ -3,6 +3,7 @@ import { LandingComponent } from './components/layouts/landing/landing.component
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterPacienteComponent } from './components/auth/register-paciente/register-paciente.component';
 import { RegisterEspecialistaComponent } from './components/auth/register-especialista/register-especialista.component';
+import { HomeComponent } from './components/layouts/home/home.component';
 
 export const routes: Routes = [
 
@@ -11,10 +12,11 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent},
     {path:'regitroPaciente', component:RegisterPacienteComponent},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent},
+    {path:'home', component:HomeComponent},
 
 
 
     
 
-    {path: "**", redirectTo:"home", pathMatch:'full'},
+    {path: "**", redirectTo:"landing", pathMatch:'full'},
 ];

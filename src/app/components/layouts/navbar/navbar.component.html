@@ -12,9 +12,12 @@
     
 
     <div>
-        <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
-        <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
-        <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
+        @if(!this.VerifyCurrentUser())
+        {
+            <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
+            <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
+            <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
+        }
     </div>
 
     

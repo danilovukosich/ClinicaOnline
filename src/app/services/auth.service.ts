@@ -122,25 +122,37 @@ export class AuthService {
     addDoc(col,{fecha:new Date(), "userMail":this.auth.currentUser?.email});
   }
 
-  LogUser(email:string,password:string):boolean // funcion de login
+
+
+  //LOGIN
+  async LogUser(email:string,password:string)// funcion de login
   {
-    signInWithEmailAndPassword(this.auth, email,password)
-    .then(()=>{
+    
+    try
+    {
+      const userCredential= await signInWithEmailAndPassword(this.auth, email,password)
+      const user = userCredential.user;
 
-      //console.log("Se logueo exitosamente!");
-      this.toast.success("Logueo exitoso", "Exito");
-      this.Log();//logs en firestore
 
-      this.router.navigate(["landing"]);//redireccion al home
+      if(user.emailVerified)
+      {
+        this.toast.success("Logueo exitoso", "Exito");
+        this.Log();//logs en firestore
+  
+        this.router.navigate(["home"]);
+      }
+      else
+      {
+        this.toast.danger("Verifique su cuenta con el link enviado a su casilla de correo.", "Error de verificacion", 3000);
+        await this.auth.signOut();
+      }
        
-      return true;
-    })
-    .catch((e)=>{
-
+    }
+    catch(e:any)
+    {
       switch(e.code)
       {
         case "auth/invalid-credential":
-        //agragar alert
         this.toast.danger("Credenciales invalidas", "Error");
         break;
         
@@ -153,9 +165,12 @@ export class AuthService {
         break;
       }
 
-      return false;
-    })
-    return false;
+      throw e;
+
+    }
+    
+    
+    
   } 
 
   LogOut()//Funcion de loogut

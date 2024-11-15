@@ -6,13 +6,16 @@ import { MatIcon } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import { AuthService } from '../../../services/auth.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [MatButtonModule,
     FormsModule,
-    ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule],
+    ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
+    MatProgressSpinnerModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -25,6 +28,8 @@ export class LoginComponent {
   password!:string;
 
   hide = true;
+
+  cargando= false;
 
   @ViewChild('drawer') drawer!: MatDrawer;
   // constructor(private auth:AuthService){}
@@ -74,16 +79,34 @@ export class LoginComponent {
     }
   }
 
-  LogIn()
+  async LogIn()
   {
     console.log("entro login");
     
+
+    
     if(this.formLogin.valid)
     {
-      this.auth.LogUser(this.formLogin.get('emailLogin')?.value, this.formLogin.get('passwordLogin')?.value); 
+      this.cargando=true;
       console.log("entro if");
+      try 
+      {
+        await this.auth.LogUser(this.formLogin.get('emailLogin')?.value, this.formLogin.get('passwordLogin')?.value); 
+      } 
+      catch (e:any) 
+      {
+        console.log(e);
+      }
+      finally
+      {
+        this.cargando=false;
+      }
+
+
       
     }   
+
+    
   }
 
   Register()

@@ -60,7 +60,18 @@
             </form>
         </div>
         
+        <!-- SPINNER -->
+        <div *ngIf="cargando" class="spinner-overlay">
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="50">
+            </mat-progress-spinner>
+        </div>
+          
+        <div [class.loading]="cargando"></div>
+        <!-- SPINNER -->
     </mat-drawer-content>
+
       
 </mat-drawer-container>
     <!-- <div class="row">
