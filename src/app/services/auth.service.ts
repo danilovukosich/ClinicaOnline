@@ -4,6 +4,7 @@ import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UsuarioPaciente } from '../models/usuario-paciente';
+import { UsuarioEspecialista } from '../models/usuario-especialista';
 
 @Injectable({
   providedIn: 'root'
@@ -82,19 +83,43 @@ export class AuthService {
     
   }
 
-  RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string)
+  async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista):Promise<any>
   {
-    createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
-    .then((res)=>{
+    try
+    {
 
-      // this.toast.success("Registro exitoso", "Exito");
-      // this.router.navigate(["home"]);
-      // this.LogUser(nuevoUsuarioMail, nuevoUsuarioContra);
-    })
-    .catch((e)=>{
+      const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
+      const user = userCredencial.user;
+      let col = collection(this.firestore, 'userInfo');
+
+      await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
+      
+      console.log(user.displayName);
+
+      await addDoc(col,
+        {
+          "id": user.uid,
+          "nombre": usuario.nombre,
+          "apellido": usuario.apellido,
+          "edad": usuario.edad,
+          "dni": usuario.dni,
+          "especialidades": usuario.especialidades,
+          "estado":usuario.estado
+        });
+
+      console.log("Usuario registrado");
+
+      await sendEmailVerification(user);//envio un mail de verificacion
+      
+      await signOut(this.auth);
+
+    }
+    catch(e:any)
+    {
       console.log(e.code);
 
-      switch (e.code) {
+      switch (e.code) 
+      {
         case "auth/invalid-email":
           this.toast.danger("Email Invalido", "Error");
         break;
@@ -102,7 +127,7 @@ export class AuthService {
           this.toast.danger("Email en uso", "Error");
         break;
         case "auth/weak-password":
-          this.toast.danger("Contraseña debil", "Error");
+          this.toast.danger("Contraseña menor a 6 digitos", "Error");
         break;
         case "auth/invalid-credential":
           this.toast.danger("Credenciales invalidas", "Error");
@@ -111,7 +136,10 @@ export class AuthService {
           this.toast.danger("Credenciales invalidas", "Error");
         break;
       }
-    })
+
+      throw e;
+
+    }
   }
 
 
@@ -136,10 +164,22 @@ export class AuthService {
 
       if(user.emailVerified)
       {
-        this.toast.success("Logueo exitoso", "Exito");
-        this.Log();//logs en firestore
+        if(user.displayName=='paciente')
+        {
+          this.toast.success("Logueo exitoso", "Exito");
+          this.Log();//logs en firestore
+          this.router.navigate(["home/welcomeText"]);
+
+        }
+        else
+        {
+          if(user.displayName=='paciente' || user.displayName=='admin')
+          {
+            let col = collection(this.firestore, 'userinfo');
+            
+          }
+        }
   
-        this.router.navigate(["home/welcomeText"]);
       }
       else
       {

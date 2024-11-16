@@ -45,13 +45,13 @@
                     {
                         <mat-error>Edad es <strong>requerida</strong></mat-error>
                     }
-                    @if (edadRegistro?.hasError('required')) 
+                    @if (edadRegistro?.hasError('min')) 
                     {
-                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                        <mat-error>Edad debe ser <strong>mayor a 0</strong></mat-error>
                     }
-                    @if (edadRegistro?.hasError('required')) 
+                    @if (edadRegistro?.hasError('max')) 
                     {
-                        <mat-error>Edad es <strong>requerida</strong></mat-error>
+                        <mat-error>Edad debe ser <strong>menor a 99</strong></mat-error>
                     }
 
                     

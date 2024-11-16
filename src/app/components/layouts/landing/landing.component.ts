@@ -37,7 +37,8 @@ export class LandingComponent {
   //   }
   // }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void 
+  {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.route.queryParams.subscribe((params) => {
@@ -50,7 +51,7 @@ export class LandingComponent {
   }
 
   onScrollToSection(sectionId: string) {
-    let offset = -140; // Ajusta este valor según el espacio que necesites en la parte superior
+    let offset = -300; // Ajusta este valor según el espacio que necesites en la parte superior
     
     if (sectionId === 'top') 
       {

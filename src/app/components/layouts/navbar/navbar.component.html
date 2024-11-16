@@ -1,8 +1,11 @@
 <mat-toolbar class="nav">
     <div>
-        <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" style="color: #fff;">
-            <mat-icon>menu</mat-icon>
-        </button> -->
+        @if(this.VerifyCurrentUser())
+        {
+            <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" style="color: #fff;">
+                <mat-icon>menu</mat-icon>
+            </button>
+        }
         <span (click)="scrollToTop()" routerLink="landing" style="font-size: 35px; color: azure; cursor: pointer; font-weight: 550;">Clinica Online</span>
         <mat-icon style="color: #fff; font-size: 28px; margin-left: 10px;">local_hospital</mat-icon>
         
