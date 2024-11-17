@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UsuarioPaciente } from '../models/usuario-paciente';
@@ -31,13 +31,13 @@ export class AuthService {
 
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
-      let col = collection(this.firestore, 'userInfo');
+      //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
-      
-      console.log(user.displayName);
+      const userDocRef= doc(this.firestore, "userInfo", user.uid);
+      //console.log(user.displayName);
 
-      await addDoc(col,
+      await setDoc(userDocRef,
         {
           "id": user.uid,
           "nombre": usuario.nombre,
@@ -90,15 +90,17 @@ export class AuthService {
 
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
-      let col = collection(this.firestore, 'userInfo');
+      //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
       
-      console.log(user.displayName);
+      //console.log(user.displayName);
 
-      await addDoc(col,
+      const userDocRef= doc(this.firestore, "userInfo", user.uid);//creo el doc con el id igual al user uid
+
+
+      await setDoc(userDocRef,
         {
-          "id": user.uid,
           "nombre": usuario.nombre,
           "apellido": usuario.apellido,
           "edad": usuario.edad,
@@ -173,17 +175,38 @@ export class AuthService {
         }
         else
         {
-          if(user.displayName=='paciente' || user.displayName=='admin')
+          if(user.displayName=='especialista' || user.displayName=='admin')
           {
-            let col = collection(this.firestore, 'userinfo');
-            
+            const docRef=doc(this.firestore, `userInfo/${user.uid}`);
+            const userInfo = await getDoc(docRef);
+
+            if(userInfo.exists())
+            {
+              let data = userInfo.data()
+              console.log(userInfo);
+
+              console.log(data['estado']);
+
+              if(data['estado']==1)
+              {
+                this.toast.success("Logueo exitoso", "Exito");
+                this.Log();//logs en firestore
+                this.router.navigate(["home/welcomeText"]);
+              }
+              else
+              {
+                this.toast.danger("Espere a que su cuenta sea aprobadoa por un administrador.", "Cuenta no validada", 3000);
+                await this.auth.signOut();
+              }
+            }
+
           }
         }
   
       }
       else
       {
-        this.toast.danger("Verifique su cuenta con el link enviado a su casilla de correo.", "Error de verificacion", 3000);
+        this.toast.danger("Verifique su cuenta con el link enviado a su casilla de correo.", "Cuenta no verificada", 3000);
         await this.auth.signOut();
       }
        

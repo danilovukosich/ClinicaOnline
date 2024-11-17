@@ -1,79 +1,83 @@
-
-<mat-drawer-container class="container">
+<div>
+    <mat-drawer-container class="container">
     
-    <mat-drawer #drawer  mode="push" >
-        <h3>Administrador</h3>
-        <button mat-raised-button (click)="testAutocomlete()" >Danilo</button>
-
-        <h3>Especialistas</h3>
-        >especialista ej
-        
-        <h3>Pacientes</h3>
-        >paciente ej
-        
-        
-    </mat-drawer>
+        <mat-drawer #drawer  mode="push" >
+            <h3>Administrador</h3>
+            <button mat-raised-button (click)="testAutocomlete()" >Danilo</button>
     
-    
-    <mat-drawer-content >
-        <div class="row">
-
-            <form class="form" [formGroup]="formLogin" (submit)="LogIn()">
-        
-                <h1 style="color:  rgb(52, 127, 212); font-weight: 600;">Inicio Sesión</h1>
-        
-        
-                <mat-form-field style="width: 100%;">
-                    <mat-label>Email</mat-label>
-                    <input [(ngModel)]="email" type="email" matInput formControlName="emailLogin"
-                        placeholder="Ingrese email">
-                    
-                    @if (emailLogin?.hasError('email') && !emailLogin?.hasError('required')) 
-                    {
-                        <mat-error>Igresar email valido</mat-error>
-                    }
-                    @if (emailLogin?.hasError('required')) 
-                    {
-                        <mat-error>Email es <strong>requerido</strong></mat-error>
-                    }
-                </mat-form-field>
-                <br>
-                
-                <mat-form-field style="width: 100%;">
-                    <mat-label>Contraseña</mat-label>
-                    <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordLogin">
-                    <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    @if (passwordLogin?.hasError('required')) 
-                    {
-                        <mat-error>Contraseña <strong>requerida</strong></mat-error>
-                    }
-                </mat-form-field>
-                <br>
-        
-                <div class="buttonsContainer" >
-                    <button type="submit" mat-raised-button >Iniciar sesion</button>
-                    <button type="button" (click)="drawer.toggle()"  style="margin-top: 15px; width: 75%; margin-left: 45px;"  mat-flat-button >Autocompletar</button>
-                </div>
+            <h3>Especialistas</h3>
+            >especialista ej
             
-            </form>
-        </div>
+            <h3>Pacientes</h3>
+            >paciente ej
+            
+            
+        </mat-drawer>
         
-        <!-- SPINNER -->
-        <div *ngIf="cargando" class="spinner-overlay">
-            <mat-progress-spinner
-              mode="indeterminate"
-              diameter="50">
-            </mat-progress-spinner>
-        </div>
-          
-        <div [class.loading]="cargando"></div>
-        <!-- SPINNER -->
-    </mat-drawer-content>
-
+        
+        <mat-drawer-content >
+            <div class="row">
+    
+                <form class="form" [formGroup]="formLogin" (submit)="LogIn()">
+            
+                    <h1 style="color:  rgb(52, 127, 212); font-weight: 600;">Inicio Sesión</h1>
+            
+            
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Email</mat-label>
+                        <input [(ngModel)]="email" type="email" matInput formControlName="emailLogin"
+                            placeholder="Ingrese email">
+                        
+                        @if (emailLogin?.hasError('email') && !emailLogin?.hasError('required')) 
+                        {
+                            <mat-error>Igresar email valido</mat-error>
+                        }
+                        @if (emailLogin?.hasError('required')) 
+                        {
+                            <mat-error>Email es <strong>requerido</strong></mat-error>
+                        }
+                    </mat-form-field>
+                    <br>
+                    
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Contraseña</mat-label>
+                        <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordLogin">
+                        <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        @if (passwordLogin?.hasError('required')) 
+                        {
+                            <mat-error>Contraseña <strong>requerida</strong></mat-error>
+                        }
+                    </mat-form-field>
+                    <br>
+            
+                    <div class="buttonsContainer" >
+                        <button type="submit" mat-raised-button >Iniciar sesion</button>
+                        <button type="button" (click)="drawer.toggle()"  style="margin-top: 15px; width: 45%;"  mat-flat-button >Autocompletar</button>
+                        
+                    </div>
+                
+                </form>
+            </div>
+            
+        </mat-drawer-content>
+        
+        
+    </mat-drawer-container>
+    
+    <!-- SPINNER -->
+    <div *ngIf="cargando" class="spinner-overlay">
+        <mat-progress-spinner
+          mode="indeterminate"
+          diameter="50">
+        </mat-progress-spinner>
+    </div>
       
-</mat-drawer-container>
+    <div [class.loading]="cargando"></div>
+    <!-- SPINNER -->
+    </div>
+
     <!-- <div class="row">
 
         <form class="form" [formGroup]="formLogin" (submit)="LogIn()">
