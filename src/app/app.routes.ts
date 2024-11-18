@@ -8,6 +8,7 @@ import { WelcomeTextComponent } from './components/layouts/welcome-text/welcome-
 import { MisTurnosComponent } from './components/mis-turnos/mis-turnos.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { authGuard } from './guards/auth.guard';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 
 export const routes: Routes = [
@@ -17,11 +18,12 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent },
     {path:'regitroPaciente', component:RegisterPacienteComponent},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent},
-    {path:'home', component:HomeComponent, canActivate: [authGuard],
+    {path:'home', component:HomeComponent/*, canActivate: [authGuard]*/,
         children:[
             {path:'welcomeText', component:WelcomeTextComponent},
             {path:'misTurnos', component:MisTurnosComponent},
-            {path:'miPerfil', component:MiPerfilComponent}
+            {path:'miPerfil', component:MiPerfilComponent},
+            {path:'usuarios', component:UsuariosComponent}
         ]
     },
 

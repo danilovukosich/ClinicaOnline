@@ -1,0 +1,47 @@
+
+.contenido{
+    width: 100%;
+    height: 100%;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+tbody>tr:hover {
+    background-color: rgb(129, 175, 216);
+}
+
+tbody>tr {
+    height: fit-content;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: transparent;
+}
+
+table thead {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    border: 1px solid #ccc;
+    text-align: left;
+    color: black;
+}
+
+table th {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+table td {
+    background-color: transparent;
+    padding: 5px 5px; /* Reducir el padding a 5px */
+}
+
+table th, table td {
+    border-color: gray;
+}

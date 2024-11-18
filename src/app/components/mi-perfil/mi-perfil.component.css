@@ -1,0 +1,46 @@
+span{
+    font-size: 50px;
+    font-weight: 700;
+  }
+  
+  h3, h1{
+    font-weight: 600;
+    font-size: 40px;
+  }
+
+  p{
+    font-size: 20px;
+  }
+
+  .welcome-section {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 20px;
+   
+    
+  }
+
+  .contenido
+  {
+    padding: 120px;
+
+  }
+
+  .profile-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .welcome-content{
+    margin-top: 100px;
+    
+  }
+
+  
