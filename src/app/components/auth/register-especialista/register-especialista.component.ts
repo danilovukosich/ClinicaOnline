@@ -18,22 +18,21 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UsuarioEspecialista } from '../../../models/usuario-especialista';
 
 @Component({
-  selector: 'app-register-especialista',
-  standalone: true,
-  imports: [MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatIcon,
-    MatSelectModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
-    CommonModule,
-    MatDialogModule,
-    MatProgressSpinnerModule],
-  templateUrl: './register-especialista.component.html',
-  styleUrl: './register-especialista.component.css'
+    selector: 'app-register-especialista',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIcon,
+        MatSelectModule,
+        RecaptchaModule,
+        RecaptchaFormsModule,
+        CommonModule,
+        MatDialogModule,
+        MatProgressSpinnerModule],
+    templateUrl: './register-especialista.component.html',
+    styleUrl: './register-especialista.component.css'
 })
 export class RegisterEspecialistaComponent {
 

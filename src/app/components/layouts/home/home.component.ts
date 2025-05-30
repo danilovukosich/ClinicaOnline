@@ -10,14 +10,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
-    MatProgressSpinnerModule, CommonModule, RouterOutlet, RouterLink],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
+        MatProgressSpinnerModule, CommonModule, RouterOutlet, RouterLink],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent {
 

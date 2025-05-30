@@ -5,12 +5,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-landing',
-  standalone: true,
-  imports: [MatGridListModule, MatButtonModule, FooterComponent, RouterLink],
-  templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css',
-  
+    selector: 'app-landing',
+    imports: [MatGridListModule, MatButtonModule, FooterComponent, RouterLink],
+    templateUrl: './landing.component.html',
+    styleUrl: './landing.component.css'
 })
 export class LandingComponent {
 

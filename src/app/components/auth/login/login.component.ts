@@ -10,14 +10,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
-    MatProgressSpinnerModule, CommonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+    selector: 'app-login',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
+        MatProgressSpinnerModule, CommonModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent {
 

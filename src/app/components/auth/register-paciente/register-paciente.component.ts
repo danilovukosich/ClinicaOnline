@@ -18,22 +18,21 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
-  selector: 'app-register-paciente',
-  standalone: true,
-  imports: [MatButtonModule,
-            FormsModule,
-            ReactiveFormsModule,
-            MatFormFieldModule, 
-            MatInputModule, 
-            MatIcon,
-            MatSelectModule,
-            RecaptchaModule,
-            RecaptchaFormsModule,
-            CommonModule,
-            MatDialogModule,
-            MatProgressSpinnerModule],
-  templateUrl: './register-paciente.component.html',
-  styleUrl: './register-paciente.component.css'
+    selector: 'app-register-paciente',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIcon,
+        MatSelectModule,
+        RecaptchaModule,
+        RecaptchaFormsModule,
+        CommonModule,
+        MatDialogModule,
+        MatProgressSpinnerModule],
+    templateUrl: './register-paciente.component.html',
+    styleUrl: './register-paciente.component.css'
 })
 export class RegisterPacienteComponent {
 
