@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-landing',
-    imports: [MatGridListModule, MatButtonModule, FooterComponent, RouterLink],
+    imports: [MatGridListModule, MatButtonModule, FooterComponent],
     templateUrl: './landing.component.html',
     styleUrl: './landing.component.css'
 })
