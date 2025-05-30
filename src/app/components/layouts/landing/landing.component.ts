@@ -1,14 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { FooterComponent } from '../footer/footer.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [MatGridListModule,AnimateOnScrollModule, MatButtonModule, FooterComponent, RouterLink],
+  imports: [MatGridListModule, MatButtonModule, FooterComponent, RouterLink],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
   
