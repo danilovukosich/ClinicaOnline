@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true
   }
 
-  toast.danger("","Debe estar logueado!", 3000)
+  toast.danger("","Debe estar logueado!", 4000)
   router.navigate(['login']);
   return false;
 };

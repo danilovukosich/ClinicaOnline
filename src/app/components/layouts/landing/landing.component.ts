@@ -51,26 +51,27 @@ export class LandingComponent {
   }
 
   onScrollToSection(sectionId: string) {
-    let offset = -300; // Ajusta este valor según el espacio que necesites en la parte superior
-    
-    if (sectionId === 'top') 
-      {
-      // Scrollea hasta arriba de la página
+    let offset = 0;
+  
+    if (sectionId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-
-    let element;
-    switch (sectionId) 
-    {
+  
+    let element: ElementRef | undefined;
+  
+    //agrego fooset para los que estan desfasados 
+    switch (sectionId) {
       case 'section2':
         element = this.section2;
+        offset = -150;
         break;
       case 'sectionDoble':
-        this.sectionDoble.nativeElement.scrollIntoView({ behavior: 'smooth' });
+        element = this.sectionDoble;
         break;
       case 'section3':
         element = this.section3;
+        offset= -150;
         break;
     }
   
@@ -80,6 +81,7 @@ export class LandingComponent {
       window.scrollTo({ top: yOffset, behavior: 'smooth' });
     }
   }
+  
 
   navegarLogin()
   {
@@ -88,7 +90,7 @@ export class LandingComponent {
 
   navegarRegistroPaciente()
   {
-    this.router.navigate(['/regitroPaciente']);
+    this.router.navigate(['/registroPaciente']);
   }
 
   navegarEspecialista()

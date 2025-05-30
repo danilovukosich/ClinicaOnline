@@ -16,7 +16,7 @@ export const routes: Routes = [
     {path: "", redirectTo:"landing", pathMatch:'full' },
     {path:'landing', component:LandingComponent },
     {path:'login', component:LoginComponent },
-    {path:'regitroPaciente', component:RegisterPacienteComponent},
+    {path:'registroPaciente', component:RegisterPacienteComponent},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent},
     {path:'home', component:HomeComponent/*, canActivate: [authGuard]*/,
         children:[
