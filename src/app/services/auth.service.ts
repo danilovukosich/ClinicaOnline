@@ -44,7 +44,8 @@ export class AuthService {
           "apellido": usuario.apellido,
           "edad": usuario.edad,
           "dni": usuario.dni,
-          "obraSocial": usuario.obraSocial
+          "obraSocial": usuario.obraSocial,
+          "rol":'paciente'
         });
 
       console.log("Usuario registrado");
@@ -106,7 +107,8 @@ export class AuthService {
           "edad": usuario.edad,
           "dni": usuario.dni,
           "especialidades": usuario.especialidades,
-          "estado":usuario.estado
+          "estado":usuario.estado,
+          "rol":'especialista'
         });
 
       console.log("Usuario registrado");

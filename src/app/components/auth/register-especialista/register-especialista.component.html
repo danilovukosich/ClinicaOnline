@@ -7,7 +7,7 @@
             <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro especialistas</h1>
     
             <div style="display: flex; justify-content: space-evenly;">
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>Nombre</mat-label>
                     <input [(ngModel)]="nombre"  matInput formControlName="nombreregistro" placeholder="Ingrese Nombre">
                     @if (nombreregistro?.hasError('required')) 
@@ -21,7 +21,7 @@
 
                 </mat-form-field>
                 
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>Apellido</mat-label>
                     <input [(ngModel)]="apellido" matInput placeholder="Ingrese Apellido" formControlName="apellidoRegistro">
                     
@@ -37,7 +37,7 @@
             </div>
 
             <div style="display: flex; justify-content: space-evenly;">
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
 
                     <mat-label>Edad</mat-label>
                     <input type="number" [(ngModel)]="edad"  matInput formControlName="edadRegistro" placeholder="Ingrese edad">
@@ -57,7 +57,7 @@
                     
                 </mat-form-field>
                 
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>DNI</mat-label>
                     <input type="number" [(ngModel)]="dni" matInput placeholder="Ingrese DNI" formControlName="dniRegistro">
                     
@@ -82,7 +82,7 @@
             </div>
 
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <mat-form-field style="width: 93%;">
+                <mat-form-field style="width: 93%;" class="text-sm h-17">
                     <mat-label>Email</mat-label>
                     <input [(ngModel)]="email" type="email" matInput formControlName="emailRegistro" placeholder="Ingrese email">
                     
@@ -96,7 +96,7 @@
                     }
                 </mat-form-field>
                 
-                <mat-form-field style="width: 94%;">
+                <mat-form-field style="width: 94%;" class="text-sm h-17">
                     <mat-label>Contraseña</mat-label>
                     <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordRegistro">
                     <button style="margin-right: 20px;" type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -116,7 +116,7 @@
             </div>
 
             <div style="display: flex; justify-content: space-evenly; align-items: center;">
-                <mat-form-field style="margin-top: 10px; width: 45%;" appearance="fill">
+                <mat-form-field style="margin-top: 10px; width: 45%;" appearance="fill" class="text-sm h-17">
                     <mat-label>Seleccionar Especialidad</mat-label>
                     <mat-select
                       formControlName="especialidadesRegistro"
@@ -130,7 +130,7 @@
                 
                   <!-- Campo para agregar nuevas especialidades -->
                   <div style="margin-top: 10px; width: 45%;">
-                    <mat-form-field style="width: 100%;">
+                    <mat-form-field style="width: 100%;" class="text-sm h-17">
                       <mat-label>Agregar Especialidad</mat-label>
                       <input
                         [(ngModel)]="nuevaEspecialidad"
