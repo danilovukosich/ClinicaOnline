@@ -51,6 +51,8 @@ export class RegisterPacienteComponent {
 
   cargando:boolean = false;//bandera de cargando para el spiner
 
+  archivoSeleccionado!:File;
+
 
   constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
   {
@@ -126,7 +128,7 @@ export class RegisterPacienteComponent {
 
           
           
-          await this.auth.RegisterPaciente(this.email, this.password, usuario);
+          await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado);
 
 
           console.log("registro exitoso");
@@ -158,6 +160,16 @@ export class RegisterPacienteComponent {
   }
 
 
+  onFileSelected(event: any) 
+  {
+    const file = event.target.files[0];
+    if (file) 
+    {
+      this.archivoSeleccionado = file;
+      console.log(this.archivoSeleccionado);
+      
+    }
+  }
 
 
 

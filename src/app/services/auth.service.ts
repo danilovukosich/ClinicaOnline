@@ -25,7 +25,7 @@ export class AuthService {
     },1000);
   }
 
-  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente):Promise <any>
+  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente, archivo:File):Promise <any>
   {
 
     try
@@ -36,6 +36,14 @@ export class AuthService {
       //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
+
+       if (archivo) {
+        const urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log('URL FOTO:');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
       const userDocRef= doc(this.firestore, "userInfo", user.uid);
       //console.log(user.displayName);
 
@@ -98,6 +106,7 @@ export class AuthService {
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
       if (archivo) {
         const urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log('URL FOTO:');
         console.log(urlFoto);
         
         await updateProfile(user, {photoURL:urlFoto});
@@ -271,6 +280,11 @@ export class AuthService {
         return userInfo.data(); 
       })()
     );
-}
+  }
+
+  GetUsers()
+  {
+
+  }
 
 }
