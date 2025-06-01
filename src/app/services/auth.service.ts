@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UsuarioPaciente } from '../models/usuario-paciente';
 import { UsuarioEspecialista } from '../models/usuario-especialista';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -251,5 +252,19 @@ export class AuthService {
   {
     return this.auth.currentUser;
   }
+
+  GetUserInfo(): Observable<any> 
+  {
+    return from(
+      (async () => {
+        const user = this.auth.currentUser;
+        if (!user) throw new Error('Usuario no autenticado');
+
+        const docRef = doc(this.firestore, `userInfo/${user.uid}`);
+        const userInfo = await getDoc(docRef);
+        return userInfo.data(); 
+      })()
+    );
+}
 
 }

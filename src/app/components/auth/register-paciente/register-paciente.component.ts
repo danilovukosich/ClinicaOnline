@@ -121,8 +121,13 @@ export class RegisterPacienteComponent {
           let usuario= new UsuarioPaciente(this.nombre, this.apellido, this.edad, this.dni, this. obraSocial, this.rol);
         
           console.log(usuario);
+
+          //subo la foto
+
+          
           
           await this.auth.RegisterPaciente(this.email, this.password, usuario);
+
 
           console.log("registro exitoso");
           

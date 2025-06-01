@@ -1,19 +1,25 @@
 <div class="welcome-section">
-    <div class="contenido">
+    <div class="contenido flex gap-12" >
 
-        <div class="foto">
-            <img src="assets/user-default.png" class="profile-image">
-            <span class="profile-name">Test Usuario</span>
+        <div class="foto mr-10 ml-6">
+            <img [src]="user.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg' " class="profile-image">
         </div>
-        <div class="welcome-content">
-          <h1>Informacion del usuario:</h1>
-          <div style="margin-left: 40px;">
-              <p>DNI: </p>
-              <p>Mail: </p>
-              <p>Edad:</p>
-              <p>Obra social:</p>
-          </div>
-          
+
+        <div class=" w-2/3" *ngIf="userInfo$ | async as userInfo">
+
+            <section class="shadow-lg p-6 w-3/4 bg-blue-300 rounded-2xl">
+                <h1 class="text-4xl mb-6 font-semibold">Informacion del usuario:</h1>
+                <div class=" ml-10">
+                    <span class="text-3xl font-medium ">
+                        {{userInfo.nombre ?? ''}} {{userInfo.apellido ?? ''}}
+                    </span>
+                    <div class="flex gap-2 mt-4"><strong class="text-xl">DNI: </strong><p class=" text-lg"> {{userInfo.dni ?? 'No tiene'}}</p></div>
+                    <div class="flex gap-2"><strong class="text-xl">Email: </strong><p class=" text-lg"> {{user.email}}</p></div>
+                    <div class="flex gap-2"><strong class="text-xl">Documento: </strong><p class=" text-lg"> {{userInfo.dni ?? 'No tiene'}}</p></div>
+                    <div class="flex gap-2"><strong class="text-xl">Obra social: </strong><p class=" text-lg"> {{userInfo.obraSocial ?? 'No tiene'}}</p></div>
+                </div>
+
+            </section>
 
         </div>
     
