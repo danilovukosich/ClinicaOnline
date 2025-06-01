@@ -1,3 +1,4 @@
+import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
 import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
@@ -12,7 +13,7 @@ import { from, Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(private auth:Auth, private firestore:Firestore, private router:Router, private toast:NgToastService) { }
+  constructor(private auth:Auth, private firestore:Firestore, private router:Router, private toast:NgToastService, private storageService:StorageService) { }
 
 
   ngOnInit(): void 
@@ -85,7 +86,7 @@ export class AuthService {
     
   }
 
-  async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista):Promise<any>
+  async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista, archivo:File):Promise<any>
   {
     try
     {
@@ -95,8 +96,13 @@ export class AuthService {
       //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
-      
-      //console.log(user.displayName);
+      if (archivo) {
+        const urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
+      console.log(user.displayName);
 
       const userDocRef= doc(this.firestore, "userInfo", user.uid);//creo el doc con el id igual al user uid
 

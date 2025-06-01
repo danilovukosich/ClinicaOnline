@@ -8,9 +8,8 @@
         <div class=" w-2/3" *ngIf="userInfo$ | async as userInfo">
 
             <section class="shadow-lg p-6 w-3/4 bg-blue-300 rounded-2xl">
-                <h1 class="text-4xl mb-6 font-semibold">Informacion del usuario:</h1>
                 <div class=" ml-10">
-                    <span class="text-3xl font-medium ">
+                    <span class="text-4xl font-bold ">
                         {{userInfo.nombre ?? ''}} {{userInfo.apellido ?? ''}}
                     </span>
                     <div class="flex gap-2 mt-4"><strong class="text-xl">DNI: </strong><p class=" text-lg"> {{userInfo.dni ?? 'No tiene'}}</p></div>

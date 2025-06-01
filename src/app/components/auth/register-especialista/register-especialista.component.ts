@@ -16,6 +16,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { UsuarioPaciente } from '../../../models/usuario-paciente';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UsuarioEspecialista } from '../../../models/usuario-especialista';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
     selector: 'app-register-especialista',
@@ -55,13 +56,17 @@ export class RegisterEspecialistaComponent {
 
   cargando:boolean = false;//bandera de cargando para el spiner
 
+  archivoSeleccionado!: File;
+
 
   constructor(private router: Router,
               private dialog:MatDialog,
               private auth:AuthService, 
               private toast: NgToastService, 
               private firestore:Firestore,
-              private fb:FormBuilder)
+              private fb:FormBuilder,
+              private storageService:StorageService
+            )
   {
     this.formRegistro = this.fb.group({
       especialidades: [[]] // Inicializa con un array vacío
@@ -165,7 +170,7 @@ export class RegisterEspecialistaComponent {
         
           console.log(usuario);
           
-          await this.auth.RegisterEspecialista(this.email, this.password, usuario);
+          await this.auth.RegisterEspecialista(this.email, this.password, usuario, this.archivoSeleccionado);
 
           console.log("registro exitoso");
           
@@ -198,6 +203,21 @@ export class RegisterEspecialistaComponent {
     }
 
   }
+
+
+
+  onFileSelected(event: any) 
+  {
+    const file = event.target.files[0];
+    if (file) 
+    {
+      this.archivoSeleccionado = file;
+      console.log(this.archivoSeleccionado);
+      
+    }
+  }
+
+
 
 
 
