@@ -30,7 +30,8 @@ export class AuthService {
 
     try
     {
-
+      let urlFoto!:string;
+      
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
       //let col = collection(this.firestore, 'userInfo');
@@ -38,7 +39,7 @@ export class AuthService {
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
 
        if (archivo) {
-        const urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
         console.log('URL FOTO:');
         console.log(urlFoto);
         
@@ -55,7 +56,8 @@ export class AuthService {
           "edad": usuario.edad,
           "dni": usuario.dni,
           "obraSocial": usuario.obraSocial,
-          "rol":'paciente'
+          "rol":'paciente',
+          "imagen":urlFoto
         });
 
       console.log("Usuario registrado");
@@ -98,14 +100,15 @@ export class AuthService {
   {
     try
     {
-
+      let urlFoto!:string;
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
       //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
-      if (archivo) {
-        const urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+      if (archivo) 
+      {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
         console.log('URL FOTO:');
         console.log(urlFoto);
         
@@ -124,7 +127,8 @@ export class AuthService {
           "dni": usuario.dni,
           "especialidades": usuario.especialidades,
           "estado":usuario.estado,
-          "rol":'especialista'
+          "rol":'especialista',
+          "imagen":urlFoto
         });
 
       console.log("Usuario registrado");

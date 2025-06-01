@@ -1,13 +1,14 @@
-<div class="welcome-section">
-    <div class="contenido flex gap-12" >
+<div class="welcome-section ">
+    <section class="contenido flex gap-12 bg-linear-to-l from-blue-400 to-blue-300" >
 
+        
         <div class="foto mr-10 ml-6">
-            <img [src]="user.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg' " class="profile-image">
+            <img [src]="user?.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg' " class="profile-image">
         </div>
 
         <div class=" w-2/3" *ngIf="userInfo$ | async as userInfo">
 
-            <section class="shadow-lg p-6 w-3/4 bg-blue-300 rounded-2xl">
+            <section class=" mt-6 shadow-lg p-6 w-3/4 bg-blue-200 rounded-2xl">
                 <div class=" ml-10">
                     <span class="text-4xl font-bold ">
                         {{userInfo.nombre ?? ''}} {{userInfo.apellido ?? ''}}
@@ -21,9 +22,15 @@
             </section>
 
         </div>
-    
 
         
-    </div>
+    </section>
+
+    <section class=" w-full h-full bg-gray-100 text-center justify-center pt-6">
+        <div class="flex w-full justify-center">
+            <mat-icon class="mt-1.5 mr-2">history</mat-icon>
+            <h2 class=" text-3xl font-semibold">Mi historial</h2>
+        </div>
+    </section>
 </div>
 

@@ -167,7 +167,6 @@ export class RegisterPacienteComponent {
     {
       this.archivoSeleccionado = file;
       console.log(this.archivoSeleccionado);
-      
     }
   }
 
