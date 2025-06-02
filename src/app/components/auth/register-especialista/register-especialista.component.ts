@@ -94,6 +94,8 @@ export class RegisterEspecialistaComponent {
 
   onSelectionChange(event: any) {
     console.log('Especialidades seleccionadas:', this.formRegistro.value.especialidades);
+    console.log('Especialidades form: ', this.formRegistro.value.especialidadesRegistro);
+    
   }
 
   // Agregar nueva especialidad
@@ -166,7 +168,7 @@ export class RegisterEspecialistaComponent {
 
         try
         {
-          let usuario= new UsuarioEspecialista(this.nombre, this.apellido, this.edad, this.dni, this.especialidades,this.estado, this.rol);
+          let usuario= new UsuarioEspecialista(this.nombre, this.apellido, this.edad, this.dni, this.formRegistro.value.especialidadesRegistro,this.estado, this.rol);
         
           console.log(usuario);
           
