@@ -55,6 +55,7 @@ export class RegisterEspecialistaComponent {
   nuevaEspecialidad: string = '';
 
   cargando:boolean = false;//bandera de cargando para el spiner
+  submitted:boolean=false;
 
   archivoSeleccionado!: File;
 
@@ -87,6 +88,8 @@ export class RegisterEspecialistaComponent {
       dniRegistro : new FormControl('', [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       especialidadesRegistro : new FormControl('', [Validators.required]),
       nuevaEspecialidadRegistro : new FormControl(''),
+      archivoSeleccionadoRegistro : new FormControl('', [Validators.required]),
+
     });
 
   }
@@ -159,7 +162,7 @@ export class RegisterEspecialistaComponent {
 
   async Register()//registro de paciente
   {
-    
+    this.submitted=true;
     if(this.formRegistro.valid)
     {
       if(this.token==true)
@@ -207,13 +210,15 @@ export class RegisterEspecialistaComponent {
   }
 
 
-
+  nombreArchivoSeleccionado: string = '';
   onFileSelected(event: any) 
   {
     const file = event.target.files[0];
     if (file) 
     {
       this.archivoSeleccionado = file;
+      this.nombreArchivoSeleccionado = file.name;
+
       console.log(this.archivoSeleccionado);
       
     }
@@ -268,6 +273,13 @@ export class RegisterEspecialistaComponent {
   {
     return this.formRegistro.get('especialidadesRegistro');
   }
+
+  get archivoSeleccionadoRegistro()
+  {
+    return this.formRegistro.get('archivoSeleccionadoRegistro');
+  }
+
+
 
   
 

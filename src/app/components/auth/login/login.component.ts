@@ -66,16 +66,26 @@ export class LoginComponent {
 
   AutoComplete(tipoUsuario:string):void
   {
-    if(tipoUsuario=='admin')
+    switch(tipoUsuario)
     {
-      this.email="admin@admin.com";
-      this.password="123456";
+      case 'admin':
+        this.email="administrador@yopmail.com";
+        this.password="123456";
+        break;
+      case 'especialista':
+        this.email="especialista@yopmail.com";
+        this.password="123456";
+        break;
+      case 'paciente':
+        this.email="paciente@yopmail.com";
+        this.password="123456";
+        break;
+
+
     }
-    else
-    {
-      this.email="user@user.com";
-      this.password="123456";
-    }
+    
+
+    this.drawer.toggle();
   }
 
   async LogIn()

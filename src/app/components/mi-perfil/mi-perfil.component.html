@@ -1,9 +1,9 @@
 <div class="welcome-section ">
-    <section class="contenido flex gap-12 bg-linear-to-l from-blue-400 to-blue-300" >
+    <section class="contenido flex gap-12"  [ngStyle]="{'background-image': 'url(' + (imagen2 ?? fondoDePortada) + ')'}">
 
         
         <div class="foto mr-10 ml-6">
-            <img [src]="user?.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg' " class="profile-image">
+            <img [src]="user?.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg'" class="profile-image">
         </div>
 
         <div class=" w-2/3" *ngIf="userInfo$ | async as userInfo">

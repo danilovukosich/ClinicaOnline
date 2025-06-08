@@ -146,12 +146,35 @@
             </div>
 
             <div style="display: flex; justify-content: space-evenly;">
-                
-                <div style="width: 45%; text-align: start;">
-                    <mat-label>Foto de perfil</mat-label>
-                    <br>
-                    <input type="file" (change)="onFileSelected($event)">
+                 <div class="w-1/2 mb-2 text-center justify-center">
+                    <div class="flex justify-center">
+                        <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de Perfil</mat-label>
+                        @if (archivoSeleccionadoRegistro?.hasError('required') && submitted) 
+                        {
+                            <mat-error class="ml-2 block text-sm text-red-600">Elija una foto de perfil</mat-error>
+                        }   
+                    </div>
+
+                    <div class="flex justify-center gap-2">
+                        <!-- Botón "+" con tooltip -->
+                        <label for="fileInput" 
+                            class="cursor-pointer flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-xl font-bold rounded-full shadow hover:bg-blue-700 transition relative"
+                            matTooltip="Seleccione imagen">
+                            +
+                        </label>
+                        <!-- Mostrar nombre del archivo -->
+                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="archivoSeleccionado">{{ nombreArchivoSeleccionado }}</span>
+                        <span class="text-gray-400 text-sm mt-2" *ngIf="!archivoSeleccionado">No se ha seleccionado archivo</span>
+                    </div>
+
+                    <!-- Input oculto -->
+                    <input id="fileInput" type="file" accept="image/*" 
+                        (change)="onFileSelected($event)" 
+                        formControlName="archivoSeleccionadoRegistro"
+                        class="hidden">
+                    
                 </div>
+                
 
                 <div class="capcha">
                     <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcnzlMrAAAAAAHepo-g-hini-Ah0SQZd-wQUMfH"></re-captcha>

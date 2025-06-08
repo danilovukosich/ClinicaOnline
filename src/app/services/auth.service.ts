@@ -25,12 +25,13 @@ export class AuthService {
     },1000);
   }
 
-  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente, archivo:File):Promise <any>
+  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente, archivo:File, archivo2:File):Promise <any>
   {
 
     try
     {
-      let urlFoto!:string;
+      let urlFoto:string = '';
+      let urlFoto2:string = '';
       
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
@@ -38,13 +39,21 @@ export class AuthService {
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
 
-       if (archivo) {
+      console.log('llego 1');
+      
+      if (archivo) 
+      {
         urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        urlFoto2 = await this.storageService.subirImagen(user.uid, archivo2, 'fotosPortada');
+
         console.log('URL FOTO:');
         console.log(urlFoto);
         
         await updateProfile(user, {photoURL:urlFoto});
       }
+      console.log('salio de if');
+      
+
       const userDocRef= doc(this.firestore, "userInfo", user.uid);
       //console.log(user.displayName);
 
@@ -57,7 +66,8 @@ export class AuthService {
           "dni": usuario.dni,
           "obraSocial": usuario.obraSocial,
           "rol":'paciente',
-          "imagen":urlFoto
+          "imagen":urlFoto,
+          "imagen2":urlFoto2
         });
 
       console.log("Usuario registrado");

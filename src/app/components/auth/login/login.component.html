@@ -2,14 +2,14 @@
     <mat-drawer-container >
     
         <mat-drawer #drawer  mode="push" >
-            <h3>Administrador</h3>
-            <button mat-raised-button (click)="testAutocomlete()" >Danilo</button>
+            <h3 class="text-3xl mb-4">Administrador</h3>
+            <button mat-raised-button (click)="AutoComplete('admin')" >Admin</button>
     
-            <h3>Especialistas</h3>
-            >especialista ej
+            <h3 class="text-3xl mb-4 mt-10">Especialistas</h3>
+            <button mat-raised-button (click)="AutoComplete('especialista')" >Especialista</button>
             
-            <h3>Pacientes</h3>
-            >paciente ej
+            <h3 class="text-3xl mb-4 mt-10">Pacientes</h3>
+            <button mat-raised-button (click)="AutoComplete('paciente')" >Paciente</button>
             
             
         </mat-drawer>
