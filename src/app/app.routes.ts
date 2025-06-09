@@ -18,7 +18,7 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent },
     {path:'registroPaciente', component:RegisterPacienteComponent},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent},
-    {path:'home', component:HomeComponent/*, canActivate: [authGuard]*/,
+    {path:'home', component:HomeComponent, canActivate: [authGuard],
         children:[
             {path:'welcomeText', component:WelcomeTextComponent},
             {path:'misTurnos', component:MisTurnosComponent},
