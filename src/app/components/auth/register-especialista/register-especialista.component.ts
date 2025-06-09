@@ -16,24 +16,24 @@ import { Firestore } from '@angular/fire/firestore';
 import { UsuarioPaciente } from '../../../models/usuario-paciente';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UsuarioEspecialista } from '../../../models/usuario-especialista';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
-  selector: 'app-register-especialista',
-  standalone: true,
-  imports: [MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatIcon,
-    MatSelectModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
-    CommonModule,
-    MatDialogModule,
-    MatProgressSpinnerModule],
-  templateUrl: './register-especialista.component.html',
-  styleUrl: './register-especialista.component.css'
+    selector: 'app-register-especialista',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIcon,
+        MatSelectModule,
+        RecaptchaModule,
+        RecaptchaFormsModule,
+        CommonModule,
+        MatDialogModule,
+        MatProgressSpinnerModule],
+    templateUrl: './register-especialista.component.html',
+    styleUrl: './register-especialista.component.css'
 })
 export class RegisterEspecialistaComponent {
 
@@ -55,6 +55,9 @@ export class RegisterEspecialistaComponent {
   nuevaEspecialidad: string = '';
 
   cargando:boolean = false;//bandera de cargando para el spiner
+  submitted:boolean=false;
+
+  archivoSeleccionado!: File;
 
 
   constructor(private router: Router,
@@ -62,7 +65,9 @@ export class RegisterEspecialistaComponent {
               private auth:AuthService, 
               private toast: NgToastService, 
               private firestore:Firestore,
-              private fb:FormBuilder)
+              private fb:FormBuilder,
+              private storageService:StorageService
+            )
   {
     this.formRegistro = this.fb.group({
       especialidades: [[]] // Inicializa con un array vacío
@@ -83,6 +88,8 @@ export class RegisterEspecialistaComponent {
       dniRegistro : new FormControl('', [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       especialidadesRegistro : new FormControl('', [Validators.required]),
       nuevaEspecialidadRegistro : new FormControl(''),
+      archivoSeleccionadoRegistro : new FormControl('', [Validators.required]),
+
     });
 
   }
@@ -90,6 +97,8 @@ export class RegisterEspecialistaComponent {
 
   onSelectionChange(event: any) {
     console.log('Especialidades seleccionadas:', this.formRegistro.value.especialidades);
+    console.log('Especialidades form: ', this.formRegistro.value.especialidadesRegistro);
+    
   }
 
   // Agregar nueva especialidad
@@ -153,7 +162,7 @@ export class RegisterEspecialistaComponent {
 
   async Register()//registro de paciente
   {
-    
+    this.submitted=true;
     if(this.formRegistro.valid)
     {
       if(this.token==true)
@@ -162,11 +171,11 @@ export class RegisterEspecialistaComponent {
 
         try
         {
-          let usuario= new UsuarioEspecialista(this.nombre, this.apellido, this.edad, this.dni, this.especialidades,this.estado, this.rol);
+          let usuario= new UsuarioEspecialista(this.nombre, this.apellido, this.edad, this.dni, this.formRegistro.value.especialidadesRegistro,this.estado, this.rol);
         
           console.log(usuario);
           
-          await this.auth.RegisterEspecialista(this.email, this.password, usuario);
+          await this.auth.RegisterEspecialista(this.email, this.password, usuario, this.archivoSeleccionado);
 
           console.log("registro exitoso");
           
@@ -199,6 +208,23 @@ export class RegisterEspecialistaComponent {
     }
 
   }
+
+
+  nombreArchivoSeleccionado: string = '';
+  onFileSelected(event: any) 
+  {
+    const file = event.target.files[0];
+    if (file) 
+    {
+      this.archivoSeleccionado = file;
+      this.nombreArchivoSeleccionado = file.name;
+
+      console.log(this.archivoSeleccionado);
+      
+    }
+  }
+
+
 
 
 
@@ -247,6 +273,13 @@ export class RegisterEspecialistaComponent {
   {
     return this.formRegistro.get('especialidadesRegistro');
   }
+
+  get archivoSeleccionadoRegistro()
+  {
+    return this.formRegistro.get('archivoSeleccionadoRegistro');
+  }
+
+
 
   
 

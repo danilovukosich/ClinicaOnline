@@ -1,3 +1,4 @@
+import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
 import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
@@ -5,13 +6,14 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UsuarioPaciente } from '../models/usuario-paciente';
 import { UsuarioEspecialista } from '../models/usuario-especialista';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth:Auth, private firestore:Firestore, private router:Router, private toast:NgToastService) { }
+  constructor(private auth:Auth, private firestore:Firestore, private router:Router, private toast:NgToastService, private storageService:StorageService) { }
 
 
   ngOnInit(): void 
@@ -23,17 +25,35 @@ export class AuthService {
     },1000);
   }
 
-  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente):Promise <any>
+  async RegisterPaciente(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioPaciente, archivo:File, archivo2:File):Promise <any>
   {
 
     try
     {
-
+      let urlFoto:string = '';
+      let urlFoto2:string = '';
+      
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
       //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
+
+      console.log('llego 1');
+      
+      if (archivo) 
+      {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        urlFoto2 = await this.storageService.subirImagen(user.uid, archivo2, 'fotosPortada');
+
+        console.log('URL FOTO:');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
+      console.log('salio de if');
+      
+
       const userDocRef= doc(this.firestore, "userInfo", user.uid);
       //console.log(user.displayName);
 
@@ -44,7 +64,10 @@ export class AuthService {
           "apellido": usuario.apellido,
           "edad": usuario.edad,
           "dni": usuario.dni,
-          "obraSocial": usuario.obraSocial
+          "obraSocial": usuario.obraSocial,
+          "rol":'paciente',
+          "imagen":urlFoto,
+          "imagen2":urlFoto2
         });
 
       console.log("Usuario registrado");
@@ -83,18 +106,25 @@ export class AuthService {
     
   }
 
-  async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista):Promise<any>
+  async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista, archivo:File):Promise<any>
   {
     try
     {
-
+      let urlFoto!:string;
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
       //let col = collection(this.firestore, 'userInfo');
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
-      
-      //console.log(user.displayName);
+      if (archivo) 
+      {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log('URL FOTO:');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
+      console.log(user.displayName);
 
       const userDocRef= doc(this.firestore, "userInfo", user.uid);//creo el doc con el id igual al user uid
 
@@ -106,7 +136,9 @@ export class AuthService {
           "edad": usuario.edad,
           "dni": usuario.dni,
           "especialidades": usuario.especialidades,
-          "estado":usuario.estado
+          "estado":usuario.estado,
+          "rol":'especialista',
+          "imagen":urlFoto
         });
 
       console.log("Usuario registrado");
@@ -248,6 +280,25 @@ export class AuthService {
   GetUser()//trae el usuario si esta logueado, sino devuelve null
   {
     return this.auth.currentUser;
+  }
+
+  GetUserInfo(): Observable<any> 
+  {
+    return from(
+      (async () => {
+        const user = this.auth.currentUser;
+        if (!user) throw new Error('Usuario no autenticado');
+
+        const docRef = doc(this.firestore, `userInfo/${user.uid}`);
+        const userInfo = await getDoc(docRef);
+        return userInfo.data(); 
+      })()
+    );
+  }
+
+  GetUsers()
+  {
+
   }
 
 }

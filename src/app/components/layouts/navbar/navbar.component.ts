@@ -6,11 +6,10 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterLink],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+    selector: 'app-navbar',
+    imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterLink],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
 

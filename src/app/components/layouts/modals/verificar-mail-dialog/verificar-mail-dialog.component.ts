@@ -13,17 +13,15 @@ import {
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-verificar-mail-dialog',
-  standalone: true,
-  imports: [MatDialogModule, 
-            MatDialogTitle,
-            MatDialogContent,
-            MatDialogActions,
-            MatDialogClose,
-            MatButtonModule,
-            RouterLink],
-  templateUrl: './verificar-mail-dialog.component.html',
-  styleUrl: './verificar-mail-dialog.component.css'
+    selector: 'app-verificar-mail-dialog',
+    imports: [MatDialogModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatButtonModule,
+        RouterLink],
+    templateUrl: './verificar-mail-dialog.component.html',
+    styleUrl: './verificar-mail-dialog.component.css'
 })
 export class VerificarMailDialogComponent {
 

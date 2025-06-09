@@ -10,14 +10,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
-    MatProgressSpinnerModule, CommonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+    selector: 'app-login',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
+        MatProgressSpinnerModule, CommonModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
@@ -67,16 +66,26 @@ export class LoginComponent {
 
   AutoComplete(tipoUsuario:string):void
   {
-    if(tipoUsuario=='admin')
+    switch(tipoUsuario)
     {
-      this.email="admin@admin.com";
-      this.password="123456";
+      case 'admin':
+        this.email="administrador@yopmail.com";
+        this.password="123456";
+        break;
+      case 'especialista':
+        this.email="especialista@yopmail.com";
+        this.password="123456";
+        break;
+      case 'paciente':
+        this.email="paciente@yopmail.com";
+        this.password="123456";
+        break;
+
+
     }
-    else
-    {
-      this.email="user@user.com";
-      this.password="123456";
-    }
+    
+
+    this.drawer.toggle();
   }
 
   async LogIn()

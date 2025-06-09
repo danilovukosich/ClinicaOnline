@@ -6,7 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-//import { provideStorage, getStorage } from '@angular/fire/storage';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -20,7 +20,8 @@ export const appConfig: ApplicationConfig = {
                                                       "authDomain":"clinicaonline-27fd8.firebaseapp.com",
                                                       "messagingSenderId":"919321728060"})), 
               provideAuth(() => getAuth()),
-              provideFirestore(() => getFirestore(),
-              )]
+              provideFirestore(() => getFirestore()),
+              provideStorage(()=> getStorage()),
+              ]
 };
 // provideStorage(() => getStorage())

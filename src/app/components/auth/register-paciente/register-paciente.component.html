@@ -1,13 +1,13 @@
-<div class="container">
+<div class="flex h-full w-full items-center align-middle justify-center">
 
-    <div class="row">
+    <div class="appear-animation w-4xl h-10/12 bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center">
 
-        <form class="form" [formGroup]="formRegistro" (submit)="Register()">
+        <form class="" [formGroup]="formRegistro" (submit)="Register()">
     
-            <h1 style="color:  rgb(52, 127, 212); font-weight: 600;">Registro pacientes</h1>
+            <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro pacientes</h1>
     
             <div style="display: flex; justify-content: space-evenly;">
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>Nombre</mat-label>
                     <input [(ngModel)]="nombre"  matInput formControlName="nombreregistro" placeholder="Ingrese Nombre">
                     @if (nombreregistro?.hasError('required')) 
@@ -21,7 +21,7 @@
 
                 </mat-form-field>
                 
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;"  class="text-sm h-17">
                     <mat-label>Apellido</mat-label>
                     <input [(ngModel)]="apellido" matInput placeholder="Ingrese Apellido" formControlName="apellidoRegistro">
                     
@@ -37,7 +37,7 @@
             </div>
 
             <div style="display: flex; justify-content: space-evenly;">
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
 
                     <mat-label>Edad</mat-label>
                     <input type="number" [(ngModel)]="edad"  matInput formControlName="edadRegistro" placeholder="Ingrese edad">
@@ -57,7 +57,7 @@
                     
                 </mat-form-field>
                 
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>DNI</mat-label>
                     <input type="number" [(ngModel)]="dni" matInput placeholder="Ingrese DNI" formControlName="dniRegistro">
                     
@@ -82,7 +82,7 @@
             </div>
 
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <mat-form-field style="width: 93%;">
+                <mat-form-field style="width: 93%;" class="text-sm h-17">
                     <mat-label>Email</mat-label>
                     <input [(ngModel)]="email" type="email" matInput formControlName="emailRegistro" placeholder="Ingrese email">
                     
@@ -96,7 +96,7 @@
                     }
                 </mat-form-field>
                 
-                <mat-form-field style="width: 94%;">
+                <mat-form-field style="width: 94%;" class="text-sm h-17">
                     <mat-label>Contraseña</mat-label>
                     <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordRegistro">
                     <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -115,32 +115,87 @@
 
             </div>
 
-            <div style="display: flex; justify-content: space-evenly;">
-                <mat-form-field style="width: 45%;">
+            <mat-form-field style="width: 45%;" class="text-sm h-17">
 
-                    <mat-label>Obra social</mat-label>
-                    <mat-select [(ngModel)]="obraSocial" formControlName="obraSocialRegistro">
-                      <mat-option value="osde">OSDE</mat-option>
-                      <mat-option value="swiss">Swiss medical</mat-option>
-                      <mat-option value="osecac">OSECAC</mat-option>
-                      <mat-option value="ioma">IOMA</mat-option>
-                    </mat-select>
-                    @if (edadRegistro?.hasError('required')) 
-                    {
-                        <mat-error>Edad es <strong>requerida</strong></mat-error>
-                    }
-                    
-                </mat-form-field>
+                <mat-label>Obra social</mat-label>
+                <mat-select [(ngModel)]="obraSocial" formControlName="obraSocialRegistro">
+                  <mat-option value="osde">OSDE</mat-option>
+                  <mat-option value="swiss">Swiss medical</mat-option>
+                  <mat-option value="osecac">OSECAC</mat-option>
+                  <mat-option value="ioma">IOMA</mat-option>
+                </mat-select>
+                @if (edadRegistro?.hasError('required')) 
+                {
+                    <mat-error>Edad es <strong>requerida</strong></mat-error>
+                }
                 
-                <div style="width: 45%; text-align: start;">
-                    <mat-label>Foto de perfil</mat-label>
-                    <br>
-                    <input type="file">
+            </mat-form-field>
+            <div class="flex justify-center">
+                
+                <div class="w-1/2 mb-2 text-center justify-center">
+                    <div class="flex justify-center">
+                        <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de Perfil</mat-label>
+                        @if (archivoSeleccionadoRegistro?.hasError('required') && submitted) 
+                        {
+                            <mat-error class="ml-2 block text-sm text-red-600">Elija una foto de perfil</mat-error>
+                        }   
+                    </div>
+
+                    <div class="flex justify-center gap-2">
+                        <!-- Botón "+" con tooltip -->
+                        <label for="fileInput" 
+                            class="cursor-pointer flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-xl font-bold rounded-full shadow hover:bg-blue-700 transition relative"
+                            matTooltip="Seleccione imagen">
+                            +
+                        </label>
+                        <!-- Mostrar nombre del archivo -->
+                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="nombreArchivoSeleccionado">{{ nombreArchivoSeleccionado }}</span>
+                        <span class="text-gray-400 text-sm mt-2" *ngIf="!nombreArchivoSeleccionado">No se ha seleccionado archivo</span>
+                    </div>
+
+                    <!-- Input oculto -->
+                    <input id="fileInput" type="file" accept="image/*" 
+                        (change)="onFileSelected($event, 'perfil')" 
+                        formControlName="archivoSeleccionadoRegistro"
+                        class="hidden">
+                    
                 </div>
+                <div class="w-1/2 mb-2 text-center justify-center">
+                    <div class="flex justify-center">
+                        <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de portada</mat-label>
+                        @if (archivoSeleccionado2Registro?.hasError('required') && submitted) 
+                        {
+                            <mat-error class="ml-2 block text-sm text-red-600">Elija una foto de portada</mat-error>
+                        }   
+                    </div>
+
+                    <div class="flex justify-center gap-2">
+                        <!-- Botón "+" con tooltip -->
+                        <label for="fileInput2" 
+                            class="cursor-pointer flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-xl font-bold rounded-full shadow hover:bg-blue-700 transition relative"
+                            matTooltip="Seleccione imagen">
+                            +
+                        </label>
+                        <!-- Mostrar nombre del archivo -->
+                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="archivoSeleccionado2">{{ nombreArchivoSeleccionado2 }}</span>
+                        <span class="text-gray-400 text-sm mt-2" *ngIf="!archivoSeleccionado2">No se ha seleccionado archivo</span>
+                    </div>
+
+                    <!-- Input oculto -->
+                    <input id="fileInput2" type="file" accept="image/*" 
+                        (change)="onFileSelected($event, 'portada')" 
+                        formControlName="archivoSeleccionado2Registro"
+                        class="hidden">
+                    
+                </div>
+
+
             </div>
 
-            <div class="capcha">
-                <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcPE3sqAAAAADhl6VcekFc5zSE-yiYC-JSt9IC9"></re-captcha>
+
+
+            <div class="capcha mt-2">
+                <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcnzlMrAAAAAAHepo-g-hini-Ah0SQZd-wQUMfH"></re-captcha>
             </div>
 
 

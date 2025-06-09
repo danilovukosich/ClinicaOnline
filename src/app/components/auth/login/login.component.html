@@ -1,26 +1,26 @@
-<div>
-    <mat-drawer-container class="container">
+<div class="h-full w-full">
+    <mat-drawer-container >
     
         <mat-drawer #drawer  mode="push" >
-            <h3>Administrador</h3>
-            <button mat-raised-button (click)="testAutocomlete()" >Danilo</button>
+            <h3 class="text-3xl mb-4">Administrador</h3>
+            <button mat-raised-button (click)="AutoComplete('admin')" >Admin</button>
     
-            <h3>Especialistas</h3>
-            >especialista ej
+            <h3 class="text-3xl mb-4 mt-10">Especialistas</h3>
+            <button mat-raised-button (click)="AutoComplete('especialista')" >Especialista</button>
             
-            <h3>Pacientes</h3>
-            >paciente ej
+            <h3 class="text-3xl mb-4 mt-10">Pacientes</h3>
+            <button mat-raised-button (click)="AutoComplete('paciente')" >Paciente</button>
             
             
         </mat-drawer>
         
         
         <mat-drawer-content >
-            <div class="row">
+            <div class="row w-96 h-[32rem] bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center">
     
-                <form class="form" [formGroup]="formLogin" (submit)="LogIn()">
+                <form class="" [formGroup]="formLogin" (submit)="LogIn()">
             
-                    <h1 style="color:  rgb(52, 127, 212); font-weight: 600;">Inicio Sesión</h1>
+                    <h1 class=" text-4xl text-center text-blue-500 font-bold mb-10" >Inicio Sesión</h1>
             
             
                     <mat-form-field style="width: 100%;">
@@ -76,7 +76,7 @@
       
     <div [class.loading]="cargando"></div>
     <!-- SPINNER -->
-    </div>
+</div>
 
     <!-- <div class="row">
 

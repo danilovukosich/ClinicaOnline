@@ -18,28 +18,28 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
-  selector: 'app-register-paciente',
-  standalone: true,
-  imports: [MatButtonModule,
-            FormsModule,
-            ReactiveFormsModule,
-            MatFormFieldModule, 
-            MatInputModule, 
-            MatIcon,
-            MatSelectModule,
-            RecaptchaModule,
-            RecaptchaFormsModule,
-            CommonModule,
-            MatDialogModule,
-            MatProgressSpinnerModule],
-  templateUrl: './register-paciente.component.html',
-  styleUrl: './register-paciente.component.css'
+    selector: 'app-register-paciente',
+    imports: [MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIcon,
+        MatSelectModule,
+        RecaptchaModule,
+        RecaptchaFormsModule,
+        CommonModule,
+        MatDialogModule,
+        MatProgressSpinnerModule],
+    templateUrl: './register-paciente.component.html',
+    styleUrl: './register-paciente.component.css'
 })
 export class RegisterPacienteComponent {
 
   formRegistro!:FormGroup;
   
   hide = true;//contraseña
+  submitted = false;
 
   email!:string;
   password!:string;
@@ -51,6 +51,9 @@ export class RegisterPacienteComponent {
   rol:string= "paciente";
 
   cargando:boolean = false;//bandera de cargando para el spiner
+
+  archivoSeleccionado!:File;
+  archivoSeleccionado2!:File;
 
 
   constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
@@ -71,6 +74,8 @@ export class RegisterPacienteComponent {
       edadRegistro : new FormControl('', [Validators.required,  Validators.min(0), Validators.max(99)]),
       dniRegistro : new FormControl('', [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       obraSocialRegistro : new FormControl('', [Validators.required]),
+      archivoSeleccionadoRegistro : new FormControl('', [Validators.required]),
+      archivoSeleccionado2Registro : new FormControl('', [Validators.required]),
 
     });
 
@@ -110,7 +115,7 @@ export class RegisterPacienteComponent {
 
   async Register()//registro de paciente
   {
-    
+    this.submitted = true;
     if(this.formRegistro.valid)
     {
       if(this.token==true)
@@ -122,8 +127,12 @@ export class RegisterPacienteComponent {
           let usuario= new UsuarioPaciente(this.nombre, this.apellido, this.edad, this.dni, this. obraSocial, this.rol);
         
           console.log(usuario);
+          console.log('Acrchivo 1',this.archivoSeleccionado);
+          console.log('Acrchivo 2',this.archivoSeleccionado2);
           
-          await this.auth.RegisterPaciente(this.email, this.password, usuario);
+
+          await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+
 
           console.log("registro exitoso");
           
@@ -153,7 +162,36 @@ export class RegisterPacienteComponent {
 
   }
 
+  nombreArchivoSeleccionado: string = '';
+  nombreArchivoSeleccionado2: string = '';
+  onFileSelected(event: any, tipo: 'perfil'|'portada') 
+  {
+    const file = event.target.files[0];
 
+    if (file) 
+    {
+        if (tipo === 'perfil') {
+            this.archivoSeleccionado = file;
+            this.nombreArchivoSeleccionado = file.name;
+            console.log(this.archivoSeleccionado);
+        } 
+        else if (tipo === 'portada') {
+            this.archivoSeleccionado2 = file;
+            this.nombreArchivoSeleccionado2 = file.name;
+        }
+    } 
+    else 
+    {
+        if (tipo === 'perfil') {
+            this.nombreArchivoSeleccionado = '';
+        } 
+        else if (tipo === 'portada') {
+            this.nombreArchivoSeleccionado2 = '';
+        }
+    }
+  }
+
+  
 
 
 
@@ -193,6 +231,16 @@ export class RegisterPacienteComponent {
   get obraSocialRegistro()
   {
     return this.formRegistro.get('obraSocialRegistro');
+  }
+
+  get archivoSeleccionadoRegistro()
+  {
+    return this.formRegistro.get('archivoSeleccionadoRegistro');
+  }
+
+  get archivoSeleccionado2Registro()
+  {
+    return this.formRegistro.get('archivoSeleccionado2Registro');
   }
   
 

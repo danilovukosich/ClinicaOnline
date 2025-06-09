@@ -64,7 +64,7 @@
     height: 100%; /* Centrado vertical */
 }
 
-  .row{
+  /* .row{
     height: 95%;
     width: 95%;
     display: flex;
@@ -76,7 +76,7 @@
     border-radius: 20px;
     animation: appear .5s linear;
     overflow: hidden;
-  }
+  } */
 
   
   button {

@@ -1,16 +1,6 @@
-span{
-    font-size: 50px;
-    font-weight: 700;
-  }
-  
-  h3, h1{
-    font-weight: 600;
-    font-size: 40px;
-  }
 
-  p{
-    font-size: 20px;
-  }
+  
+ 
 
   .welcome-section {
     position: relative;
@@ -26,7 +16,7 @@ span{
 
   .contenido
   {
-    padding: 120px;
+    padding: 5%;
 
   }
 
@@ -38,9 +28,5 @@ span{
     margin-right: 15px;
   }
   
-  .welcome-content{
-    margin-top: 100px;
-    
-  }
 
   
