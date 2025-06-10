@@ -24,9 +24,7 @@ export class UsuariosComponent {
     }
 
     ngOnInit(): void {
-       console.log('HOLAAAAAAAA');
        
-        
         this.usuarios.GetUsuarios('paciente').subscribe((usuarios:any[])=>{
             this.pacientes = usuarios;
             console.log('PACIENTES:', this.pacientes);
@@ -41,8 +39,17 @@ export class UsuariosComponent {
             console.log('ADMINISTRADORES:', this.administradores);
         });
         
-        
     }
 
+
+    DarBajaUsuario(id:any)
+    {
+        this.usuarios.SetEstadoCero(id);
+    }
+
+    DarAltaUsuario(id:any)
+    {
+        this.usuarios.SetEstadoUno(id);
+    }
 
 }

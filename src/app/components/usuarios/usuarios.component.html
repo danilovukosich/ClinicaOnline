@@ -47,8 +47,14 @@
                             </mat-card-header>
             
                             <mat-card-actions class="justify-evenly">
-            
-                                <button mat-button class="!text-red-400">Dar Baja</button>
+                                @if (especialista.estado == 1)
+                                {
+                                    <button mat-button class="!text-red-400" (click)="DarBajaUsuario(especialista.id)">Dar de Baja</button>
+                                }
+                                @else
+                                {
+                                    <button mat-button class="!text-green-400" (click)="DarAltaUsuario(especialista.id)">Dar de Alta</button>
+                                }
                                 <button mat-button>Perfil</button>
                             </mat-card-actions>
                         </mat-card>

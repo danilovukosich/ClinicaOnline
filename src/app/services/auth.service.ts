@@ -131,6 +131,7 @@ export class AuthService {
 
       await setDoc(userDocRef,
         {
+          "id": user.uid,
           "nombre": usuario.nombre,
           "apellido": usuario.apellido,
           "edad": usuario.edad,
@@ -296,9 +297,9 @@ export class AuthService {
     );
   }
 
-  GetUsers()
+  GetRole()
   {
-
+    return this.auth.currentUser?.displayName;
   }
 
 }

@@ -20,6 +20,15 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class HomeComponent {
 
-cargando:boolean=false;
+    cargando:boolean=false;
+    rol!:any;
+
+    constructor(private auth:AuthService)
+    {
+        this.rol=this.auth.GetRole();
+        console.log(this.rol);
+        
+    }
+
 
 }
