@@ -114,6 +114,7 @@ export class AuthService {
       const userCredencial = await createUserWithEmailAndPassword(this.auth, nuevoUsuarioMail,nuevoUsuarioContra)
       const user = userCredencial.user;
       //let col = collection(this.firestore, 'userInfo');
+      await signOut(this.auth);
 
       await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
       if (archivo) 
@@ -146,7 +147,6 @@ export class AuthService {
 
       await sendEmailVerification(user);//envio un mail de verificacion
       
-      await signOut(this.auth);
 
     }
     catch(e:any)

@@ -26,7 +26,9 @@ export class MiPerfilComponent {
       
        this.user=this.authService.GetUser();
        this.userInfo$ = this.authService.GetUserInfo();
-
+    
+       
+       
 
        
        

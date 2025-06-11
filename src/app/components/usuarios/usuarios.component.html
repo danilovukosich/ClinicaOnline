@@ -11,7 +11,7 @@
                     {
             
                         <mat-card class="w-72 h-96 !bg-blue-100">
-                            <img mat-card-image src="{{paciente.imagen}}" alt="">
+                            <img mat-card-image class="h-52 " src="{{paciente.imagen}}" alt="">
                             <mat-card-header>
                                 <mat-card-title class="!font-medium">{{paciente.nombre}} {{paciente.apellido}}</mat-card-title>
                                 <mat-card-subtitle>{{paciente.obraSocial}}</mat-card-subtitle>
@@ -40,7 +40,7 @@
                     {
             
                         <mat-card class="w-72 h-96 !bg-blue-100">
-                            <img mat-card-image src="{{especialista.imagen}}" alt="">
+                            <img mat-card-image class="h-52" src="{{especialista.imagen}}" alt="">
                             <mat-card-header>
                                 <mat-card-title class="!font-medium">{{especialista.nombre}} {{especialista.apellido}}</mat-card-title>
                                 <mat-card-subtitle>{{especialista.obraSocial}}</mat-card-subtitle>
@@ -70,13 +70,14 @@
             <section class="w-full mb-6">
                 <div class="w-full text-center mt-4 ">
                     <h1 class="text-4xl font-medium mb-6">Administradores</h1>
+                    
                 </div>
                 <div class="flex gap-x-6">
                     @for (admin of administradores; track $index) 
                     {
             
                         <mat-card class="w-72 h-96 !bg-blue-100">
-                            <img mat-card-image src="{{admin.imagen}}" alt="">
+                            <img mat-card-image class="h-52" src="{{admin.imagen}}" alt="">
                             <mat-card-header>
                                 <mat-card-title class="!font-medium">{{admin.nombre}} {{admin.apellido}}</mat-card-title>
                                 <mat-card-subtitle>{{admin.obraSocial}}</mat-card-subtitle>
