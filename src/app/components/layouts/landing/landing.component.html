@@ -28,9 +28,9 @@
     
   </div>
 
-  <div #sectionDoble id="welcome-section-doble" class="welcome-section-doble">
+  <div #sectionDoble id="welcome-section-doble" class="w-full mt-52 px-96 ">
 
-    <div class="welcome-section-doble-hijo-1">
+    <div (click)="navegarRegistroPaciente()" class="welcome-section-doble-hijo-1 h-80 transition ease-in hover:scale-105 cursor-pointer">
 
       <div class="welcome-content-doble-hijo-1">
         <h2 class="text-3xl font-medium">Soy paciente</h2>
@@ -38,18 +38,18 @@
       </div>
       
       
-      <button (click)="navegarRegistroPaciente()" class="center-button" mat-raised-button style="color:#fff; background-color: rgb(14, 100, 191);">Asociate</button>
+      <!-- <button (click)="navegarRegistroPaciente()" class="center-button" mat-raised-button style="color:#fff; background-color: rgb(14, 100, 191);">Asociate</button> -->
       
     </div>
 
-    <div class="welcome-section-doble-hijo-2">
+    <div (click)="navegarEspecialista()" class="welcome-section-doble-hijo-2 h-80 mt-10 transition ease-in hover:scale-105  cursor-pointer">
 
       <div class="welcome-content-doble-hijo-2">
         <h2 class="text-3xl font-medium">Soy especialista</h2>
         <p>¿Queres formar parte de nuestro equipo?</p>
       </div>
     
-      <button (click)="navegarEspecialista()" class="center-button" mat-raised-button style="color:#fff; background-color: rgb(14, 100, 191);">Trabaja con nosotros</button>
+      <!-- <button (click)="navegarEspecialista()" class="center-button" mat-raised-button style="color:#fff; background-color: rgb(14, 100, 191);">Trabaja con nosotros</button> -->
       
     </div>
     

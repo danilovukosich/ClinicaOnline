@@ -65,6 +65,7 @@ export class LandingComponent {
         break;
       case 'sectionDoble':
         element = this.sectionDoble;
+         offset = -150;
         break;
       case 'section3':
         element = this.section3;
