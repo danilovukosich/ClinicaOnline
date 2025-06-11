@@ -63,8 +63,9 @@ export class RegisterPacienteComponent {
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-
+    //Add 'implements 2OnInit' to the class.
+    
+     
     this.formRegistro = new FormGroup({
 
       emailRegistro : new FormControl('', [Validators.required, Validators.email]),
@@ -180,7 +181,7 @@ export class RegisterPacienteComponent {
             this.nombreArchivoSeleccionado2 = file.name;
         }
     } 
-    else 
+    else
     {
         if (tipo === 'perfil') {
             this.nombreArchivoSeleccionado = '';

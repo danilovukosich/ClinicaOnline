@@ -23,6 +23,14 @@
 
         </div>
 
+         <!-- SPINNER -->
+        <div *ngIf="cargando" class="spinner-overlay">
+            <mat-progress-spinner
+            mode="indeterminate"
+            diameter="50">
+            </mat-progress-spinner>
+        </div>
+        <div [class.loading]="cargando"></div>
         
     </section>
 
@@ -32,5 +40,8 @@
             <h2 class=" text-3xl font-semibold">Mi historial</h2>
         </div>
     </section>
+
+    
+    
 </div>
 
