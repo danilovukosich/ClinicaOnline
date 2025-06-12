@@ -21,7 +21,6 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
 
   formLogin!:FormGroup;
-  formRegistro!:FormGroup;
   
   email!:string;
   password!:string;
@@ -45,18 +44,6 @@ export class LoginComponent {
       passwordLogin : new FormControl('', [Validators.required])
     });
 
-
-    this.formRegistro = new FormGroup({
-      emailRegistro : new FormControl('', [Validators.required, Validators.email]),
-      passwordRegistro : new FormControl('', [Validators.required]),
-      rol : new FormControl('', [Validators.required])
-    });
-
-  }
-
-
-  openSidenav() {
-    this.drawer.toggle();
   }
 
   togglePasswordVisibility() 
@@ -72,12 +59,24 @@ export class LoginComponent {
         this.email="administrador@yopmail.com";
         this.password="123456";
         break;
-      case 'especialista':
+      case 'especialista1':
         this.email="especialista@yopmail.com";
         this.password="123456";
         break;
-      case 'paciente':
+      case 'especialista2':
+        this.email="juanperez@yopmail.com";
+        this.password="123456";
+        break;
+      case 'paciente1':
         this.email="paciente@yopmail.com";
+        this.password="123456";
+        break;
+      case 'paciente2':
+        this.email="pepepepon@yopmail.com";
+        this.password="123456";
+        break;
+      case 'paciente3':
+        this.email="maxverstappen@yopmail.com";
         this.password="123456";
         break;
 
@@ -118,13 +117,6 @@ export class LoginComponent {
     
   }
 
-  Register()
-  {
-    if(this.formRegistro.valid)
-    {
-      // this.auth.Register(this.formRegistro.get('emailRegistro')?.value, this.formRegistro.get('passwordRegistro')?.value);
-    }
-  }
 
   get emailLogin()
   {
