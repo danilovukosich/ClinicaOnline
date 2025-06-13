@@ -3,10 +3,14 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { VerificarMailDialogComponent } from '../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
+import { RegisterPacienteComponent } from '../auth/register-paciente/register-paciente.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-usuarios',
-    imports: [MatCardModule, MatButtonModule, MatTabsModule],
+    imports: [MatCardModule, MatButtonModule, MatTabsModule, MatDialogModule, MatIcon],
     templateUrl: './usuarios.component.html',
     styleUrl: './usuarios.component.css'
 })
@@ -18,7 +22,7 @@ export class UsuariosComponent {
 
 
 
-    constructor(private usuarios:UsuariosService)
+    constructor(private usuarios:UsuariosService, private dialog:MatDialog)
     {
 
     }
@@ -52,4 +56,8 @@ export class UsuariosComponent {
         this.usuarios.SetEstadoUno(id);
     }
 
+    OpenDialog()
+    {
+        this.dialog.open(RegisterPacienteComponent);
+    }
 }

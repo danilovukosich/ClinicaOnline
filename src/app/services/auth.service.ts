@@ -1,12 +1,13 @@
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
 import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { UsuarioPaciente } from '../models/usuario-paciente';
 import { UsuarioEspecialista } from '../models/usuario-especialista';
 import { from, Observable } from 'rxjs';
+import { deleteApp, initializeApp } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,95 @@ export class AuthService {
     }
     
   }
+
+  async RegisterPacienteAdministrador(nuevoUsuarioMail: string,nuevoUsuarioContra: string, usuario: UsuarioPaciente, archivo: File, archivo2: File): Promise<any> 
+  {
+    let secondaryAuth: Auth | null = null;
+
+    try {
+      let urlFoto: string = '';
+      let urlFoto2: string = '';
+
+      // 1. Inicializar app secundaria
+      const secondaryApp = initializeApp({
+        apiKey: "AIzaSyDWkq7gVfOEcz-gXSiDI72HUMg7KhrDwp4",
+        authDomain: "clinicaonline-27fd8.firebaseapp.com",
+        projectId: "clinicaonline-27fd8",
+        storageBucket: "clinicaonline-27fd8.firebasestorage.app",
+        appId: "1:919321728060:web:fb7c80ed319f4dc8775f39",
+        messagingSenderId: "919321728060"
+      }, 'SecondaryApp');
+
+      secondaryAuth = getAuth(secondaryApp);
+
+      // 2. Crear usuario con secondary auth
+      const userCredencial = await createUserWithEmailAndPassword(secondaryAuth, nuevoUsuarioMail, nuevoUsuarioContra);
+      const user = userCredencial.user;
+
+      await updateProfile(user, { displayName: usuario.rol });
+
+      // 3. Subir imágenes (si hay)
+      if (archivo) {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        urlFoto2 = await this.storageService.subirImagen(user.uid, archivo2, 'fotosPortada');
+
+        await updateProfile(user, { photoURL: urlFoto });
+      }
+
+      // 4. Guardar en Firestore
+      const userDocRef = doc(this.firestore, "userInfo", user.uid);
+
+      await setDoc(userDocRef, {
+        "id": user.uid,
+        "nombre": usuario.nombre,
+        "apellido": usuario.apellido,
+        "edad": usuario.edad,
+        "dni": usuario.dni,
+        "obraSocial": usuario.obraSocial,
+        "rol": 'paciente',
+        "imagen": urlFoto,
+        "imagen2": urlFoto2
+      });
+
+      // 5. Verificar email
+      await sendEmailVerification(user);
+
+      // 6. Cerrar sesión de la instancia secundaria
+      await signOut(secondaryAuth);
+      
+      await deleteApp(secondaryApp);
+
+      console.log("Usuario registrado con secondary auth");
+    } catch (e: any) {
+      console.error(e.code);
+
+      switch (e.code) {
+        case "auth/invalid-email":
+          this.toast.danger("Email Invalido", "Error");
+          break;
+        case "auth/email-already-in-use":
+          this.toast.danger("Email en uso", "Error");
+          break;
+        case "auth/weak-password":
+          this.toast.danger("Contraseña menor a 6 dígitos", "Error");
+          break;
+        case "auth/invalid-credential":
+          this.toast.danger("Credenciales inválidas", "Error");
+          break;
+        default:
+          this.toast.danger("Error desconocido al registrar usuario", "Error");
+          break;
+      }
+
+      if (secondaryAuth) await signOut(secondaryAuth); // por si quedó sesión abierta
+      throw e;
+    }
+  }
+
+
+
+
+
 
   async RegisterEspecialista(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista, archivo:File):Promise<any>
   {

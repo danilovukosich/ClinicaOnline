@@ -55,6 +55,9 @@ export class RegisterPacienteComponent {
   archivoSeleccionado!:File;
   archivoSeleccionado2!:File;
 
+  nombreArchivoSeleccionado: string = '';
+  nombreArchivoSeleccionado2: string = '';
+
 
   constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
   {
@@ -114,9 +117,12 @@ export class RegisterPacienteComponent {
 
 
 
-  async Register()//registro de paciente
+  async Register()
   {
+    console.log(this.auth);
+    
     this.submitted = true;
+
     if(this.formRegistro.valid)
     {
       if(this.token==true)
@@ -127,17 +133,27 @@ export class RegisterPacienteComponent {
         {
           let usuario= new UsuarioPaciente(this.nombre, this.apellido, this.edad, this.dni, this. obraSocial, this.rol);
         
-          console.log(usuario);
-          console.log('Acrchivo 1',this.archivoSeleccionado);
-          console.log('Acrchivo 2',this.archivoSeleccionado2);
+          // console.log(usuario);
+          // console.log('Acrchivo 1',this.archivoSeleccionado);
+          // console.log('Acrchivo 2',this.archivoSeleccionado2);
           
+          const rolActual=this.auth.GetRole();
 
-          await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
-
+          
+          if(rolActual!='admin')
+          { 
+            await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+            this.OpenDialog();
+            this.router.navigate(['/login']);
+          }
+          else
+          {
+            await this.auth.RegisterPacienteAdministrador(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+          }
+          
 
           console.log("registro exitoso");
           
-          this.OpenDialog();//dialog de verificacion de email
         }
         catch(e:any)
         {
@@ -157,14 +173,12 @@ export class RegisterPacienteComponent {
     }
     else
     {
-      console.log("no valido");
       this.toast.danger("Verificar formulario!", "ERROR");
     }
 
   }
 
-  nombreArchivoSeleccionado: string = '';
-  nombreArchivoSeleccionado2: string = '';
+  
   onFileSelected(event: any, tipo: 'perfil'|'portada') 
   {
     const file = event.target.files[0];

@@ -1,6 +1,6 @@
 <div class="flex h-full w-full items-center align-middle justify-center">
 
-    <div class="appear-animation w-4xl h-10/12 bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center">
+    <div class="appear-animation w-full h-full bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center p-12">
 
         <form class="" [formGroup]="formRegistro" (submit)="Register()">
     
@@ -132,7 +132,7 @@
             </mat-form-field>
             <div class="flex justify-center">
                 
-                <div class="w-1/2 mb-2 text-center justify-center">
+                <div class="w-2/5 mb-2 text-center justify-center">
                     <div class="flex justify-center">
                         <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de Perfil</mat-label>
                         @if (archivoSeleccionadoRegistro?.hasError('required') && submitted) 
@@ -160,7 +160,7 @@
                         class="hidden">
                     
                 </div>
-                <div class="w-1/2 mb-2 text-center justify-center">
+                <div class="w-2/5 mb-2 text-center justify-center">
                     <div class="flex justify-center">
                         <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de portada</mat-label>
                         @if (archivoSeleccionado2Registro?.hasError('required') && submitted) 
@@ -200,9 +200,9 @@
 
 
             
-            <div class="buttonsContainer" >
-                <button style="margin-top: 15px; width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
-                <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button>
+            <div class="buttonsContainer mt-10" >
+                <button style="width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
+                <!-- <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button> -->
             </div>
         
         </form>
