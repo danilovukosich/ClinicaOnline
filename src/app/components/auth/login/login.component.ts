@@ -60,11 +60,11 @@ export class LoginComponent {
         this.password="123456";
         break;
       case 'especialista1':
-        this.email="especialista@yopmail.com";
+        this.email="ezio@yopmail.com";
         this.password="123456";
         break;
       case 'especialista2':
-        this.email="juanperez@yopmail.com";
+        this.email="jimhawkins@yopmail.com";
         this.password="123456";
         break;
       case 'paciente1':
@@ -72,7 +72,7 @@ export class LoginComponent {
         this.password="123456";
         break;
       case 'paciente2':
-        this.email="pepepepon@yopmail.com";
+        this.email="familia@yopmail.com";
         this.password="123456";
         break;
       case 'paciente3':

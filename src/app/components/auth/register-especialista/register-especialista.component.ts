@@ -18,6 +18,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UsuarioEspecialista } from '../../../models/usuario-especialista';
 import { StorageService } from '../../../services/storage.service';
 import { RegisterPacienteComponent } from '../register-paciente/register-paciente.component';
+import { EspecialistaService } from '../../../services/especialista.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-register-especialista',
@@ -52,7 +54,7 @@ export class RegisterEspecialistaComponent {
   rol:string= "especialista";
   estado:number=0;
 
-  especialidades: string[] = ['Cardiologia', 'Neurologia', 'Pediatria', 'Dermatologia', 'Traumatologia'];
+  especialidades!: Observable<any[]>;
   nuevaEspecialidad: string = '';
 
   cargando:boolean = false;//bandera de cargando para el spiner
@@ -68,12 +70,16 @@ export class RegisterEspecialistaComponent {
               private firestore:Firestore,
               private fb:FormBuilder,
               private storageService:StorageService,
+              private especialista:EspecialistaService,
               @Optional() private dialogRef?:MatDialogRef<RegisterPacienteComponent>
             )
   {
     this.formRegistro = this.fb.group({
       especialidades: [[]] // Inicializa con un array vacío
     });
+
+     this.especialidades = this.especialista.GetEspecialidades();
+
   }
 
   ngOnInit(): void {
@@ -94,6 +100,8 @@ export class RegisterEspecialistaComponent {
 
     });
 
+    
+
   }
 
 
@@ -110,17 +118,11 @@ export class RegisterEspecialistaComponent {
     
       if(especialidad)
       {
-        if(!this.especialidades.includes(especialidad))
-        {
-          this.especialidades.push(especialidad);
-          
-          this.nuevaEspecialidad=''; // Limpia el campo
+        
+        this.especialista.AddEspecialidad(especialidad);
+        this.nuevaEspecialidad=''; // Limpia el campo
 
-        }
-        else
-        {
-          this.toast.warning('Ya existe esta especialidad!')
-        }
+        
       }
       else
       {
@@ -130,6 +132,11 @@ export class RegisterEspecialistaComponent {
 
     console.log(this.especialidades);
     
+  }
+
+  traerEspecialidades()
+  {
+    this.especialidades=this.especialista.GetEspecialidades();
   }
 
 
@@ -243,13 +250,6 @@ export class RegisterEspecialistaComponent {
   }
 
 
-
-
-
-
-
-
-  
 
   get emailRegistro()
   {

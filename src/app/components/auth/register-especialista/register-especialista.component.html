@@ -122,11 +122,11 @@
                       formControlName="especialidadesRegistro"
                       multiple
                       (selectionChange)="onSelectionChange($event)">
-                      <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
-                        {{ especialidad }}
+                      <mat-option *ngFor="let especialidad of especialidades | async" [value]="especialidad.key">
+                        {{ especialidad.name }}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                </mat-form-field>
                 
                   <!-- Campo para agregar nuevas especialidades -->
                   <div style="margin-top: 10px; width: 45%;">
