@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,10 +25,25 @@ export class HomeComponent {
 
     constructor(private auth:AuthService)
     {
+        console.log(this.rol);
+        
+    }
+    
+    ngOnChanges(changes: SimpleChanges): void {
+        
         this.rol=this.auth.GetRole();
         console.log(this.rol);
         
     }
+
+    ngAfterContentChecked(): void {
+        //Called after every check of the component's or directive's content.
+        //Add 'implements AfterContentChecked' to the class.
+         this.rol=this.auth.GetRole();
+        console.log(this.rol);
+    }
+
+    
 
 
 }

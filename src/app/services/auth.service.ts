@@ -8,6 +8,7 @@ import { UsuarioPaciente } from '../models/usuario-paciente';
 import { UsuarioEspecialista } from '../models/usuario-especialista';
 import { from, Observable } from 'rxjs';
 import { deleteApp, initializeApp } from 'firebase/app';
+import { UsuarioAdmnistrador } from '../models/usuario-admnistrador';
 
 @Injectable({
   providedIn: 'root'
@@ -268,12 +269,187 @@ export class AuthService {
   }
 
 
+
+  async RegisterEspecialistaAdministrador(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioEspecialista, archivo:File):Promise<any>
+  {
+    let secondaryAuth: Auth | null = null;
+    try
+    {
+      let urlFoto!:string;
+
+       const secondaryApp = initializeApp({
+        apiKey: "AIzaSyDWkq7gVfOEcz-gXSiDI72HUMg7KhrDwp4",
+        authDomain: "clinicaonline-27fd8.firebaseapp.com",
+        projectId: "clinicaonline-27fd8",
+        storageBucket: "clinicaonline-27fd8.firebasestorage.app",
+        appId: "1:919321728060:web:fb7c80ed319f4dc8775f39",
+        messagingSenderId: "919321728060"
+      }, 'SecondaryApp');
+
+      secondaryAuth = getAuth(secondaryApp);
+
+
+
+
+      const userCredencial = await createUserWithEmailAndPassword(secondaryAuth, nuevoUsuarioMail,nuevoUsuarioContra)
+      const user = userCredencial.user;
+      //let col = collection(this.firestore, 'userInfo');
+
+      await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
+      if (archivo) 
+      {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log('URL FOTO:');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
+
+      const userDocRef= doc(this.firestore, "userInfo", user.uid);//creo el doc con el id igual al user uid
+
+
+      await setDoc(userDocRef,
+        {
+          "id": user.uid,
+          "nombre": usuario.nombre,
+          "apellido": usuario.apellido,
+          "edad": usuario.edad,
+          "dni": usuario.dni,
+          "especialidades": usuario.especialidades,
+          "estado":usuario.estado,
+          "rol":'especialista',
+          "imagen":urlFoto
+        });
+
+      console.log("Usuario registrado");
+
+      await sendEmailVerification(user);//envio un mail de verificacion
+
+      await signOut(secondaryAuth);
+      
+      await deleteApp(secondaryApp);
+
+    }
+    catch(e:any)
+    {
+      console.log(e.code);
+
+      switch (e.code) 
+      {
+        case "auth/invalid-email":
+          this.toast.danger("Email Invalido", "Error");
+        break;
+        case "auth/email-already-in-use":
+          this.toast.danger("Email en uso", "Error");
+        break;
+        case "auth/weak-password":
+          this.toast.danger("Contraseña menor a 6 digitos", "Error");
+        break;
+        case "auth/invalid-credential":
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+        default:
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+      }
+
+      throw e;
+
+    }
+  }
+
+
+  async RegisterAdministrador(nuevoUsuarioMail:string,nuevoUsuarioContra:string, usuario:UsuarioAdmnistrador, archivo:File):Promise<any>
+  {
+    let secondaryAuth: Auth | null = null;
+    try
+    {
+      let urlFoto!:string;
+
+       const secondaryApp = initializeApp({
+        apiKey: "AIzaSyDWkq7gVfOEcz-gXSiDI72HUMg7KhrDwp4",
+        authDomain: "clinicaonline-27fd8.firebaseapp.com",
+        projectId: "clinicaonline-27fd8",
+        storageBucket: "clinicaonline-27fd8.firebasestorage.app",
+        appId: "1:919321728060:web:fb7c80ed319f4dc8775f39",
+        messagingSenderId: "919321728060"
+      }, 'SecondaryApp');
+
+      secondaryAuth = getAuth(secondaryApp);
+
+      const userCredencial = await createUserWithEmailAndPassword(secondaryAuth, nuevoUsuarioMail,nuevoUsuarioContra)
+      const user = userCredencial.user;
+
+      await updateProfile(user, {displayName:usuario.rol});//agrego el rol en user.displayName
+      
+      if (archivo) 
+      {
+        urlFoto = await this.storageService.subirImagen(user.uid, archivo, 'fotosPerfil');
+        console.log('URL FOTO:');
+        console.log(urlFoto);
+        
+        await updateProfile(user, {photoURL:urlFoto});
+      }
+
+      const userDocRef= doc(this.firestore, "userInfo", user.uid);//creo el doc con el id igual al user uid
+
+
+      await setDoc(userDocRef,
+        {
+          "id": user.uid,
+          "nombre": usuario.nombre,
+          "apellido": usuario.apellido,
+          "edad": usuario.edad,
+          "dni": usuario.dni,
+          "rol":'admin',
+          "imagen":urlFoto
+        });
+
+      console.log("Usuario registrado");
+
+      await sendEmailVerification(user);//envio un mail de verificacion
+
+      await signOut(secondaryAuth);
+      
+      await deleteApp(secondaryApp);
+
+    }
+    catch(e:any)
+    {
+      console.log(e.code);
+
+      switch (e.code) 
+      {
+        case "auth/invalid-email":
+          this.toast.danger("Email Invalido", "Error");
+        break;
+        case "auth/email-already-in-use":
+          this.toast.danger("Email en uso", "Error");
+        break;
+        case "auth/weak-password":
+          this.toast.danger("Contraseña menor a 6 digitos", "Error");
+        break;
+        case "auth/invalid-credential":
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+        default:
+          this.toast.danger("Credenciales invalidas", "Error");
+        break;
+      }
+
+      throw e;
+
+    }
+  }
+
   Log()
   {
     let col = collection(this.firestore, 'logs');
     
     addDoc(col,{fecha:new Date(), "userMail":this.auth.currentUser?.email});
   }
+
+  
 
 
 

@@ -7,6 +7,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VerificarMailDialogComponent } from '../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
 import { RegisterPacienteComponent } from '../auth/register-paciente/register-paciente.component';
 import { MatIcon } from '@angular/material/icon';
+import { RegisterEspecialistaComponent } from '../auth/register-especialista/register-especialista.component';
+import { RegisterAdministradorComponent } from '../auth/register-administrador/register-administrador.component';
 
 @Component({
     selector: 'app-usuarios',
@@ -56,8 +58,21 @@ export class UsuariosComponent {
         this.usuarios.SetEstadoUno(id);
     }
 
-    OpenDialog()
+    OpenDialog(rol:string)
     {
-        this.dialog.open(RegisterPacienteComponent);
+        switch(rol)
+        {
+            case 'paciente':
+                this.dialog.open(RegisterPacienteComponent);
+            break;
+
+            case 'especialista':
+                this.dialog.open(RegisterEspecialistaComponent);
+            break;
+            case 'admin':
+                this.dialog.open(RegisterAdministradorComponent);
+            break;
+
+        }
     }
 }

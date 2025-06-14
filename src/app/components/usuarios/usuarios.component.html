@@ -5,14 +5,13 @@
             <section class="w-full mb-6">
                 <div class="w-full text-center mt-4 flex justify-center gap-7">
                     <h1 class="text-4xl font-medium mb-6 mt-2">Pacientes</h1>
-                    <button mat-fab (click)="OpenDialog()">
+                    <button mat-fab (click)="OpenDialog('paciente')">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
                 <div class="flex gap-x-6">
                     @for (paciente of pacientes; track $index) 
                     {
-            
                         <mat-card class="w-72 h-96 !bg-blue-100">
                             <img mat-card-image class="h-52 " src="{{paciente.imagen}}" alt="">
                             <mat-card-header>
@@ -37,7 +36,7 @@
             <section class="w-full mb-6">
                 <div class="w-full text-center mt-4 flex justify-center gap-7">
                     <h1 class="text-4xl font-medium mb-6 mt-2">Especialistas</h1>
-                    <button mat-fab (click)="OpenDialog()">
+                    <button mat-fab (click)="OpenDialog('especialista')">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
@@ -76,7 +75,7 @@
             <section class="w-full mb-6">
                 <div class="w-full text-center mt-4 flex justify-center gap-7">
                     <h1 class="text-4xl font-medium mb-6 mt-2">Administradores</h1>
-                    <button mat-fab (click)="OpenDialog()">
+                    <button mat-fab (click)="OpenDialog('admin')">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
@@ -93,7 +92,7 @@
             
                             <mat-card-actions class="justify-evenly">
             
-                                <button mat-button class="!text-red-400">Dar Baja</button>
+                                <!-- <button mat-button class="!text-red-400">Dar Baja</button> -->
                                 <button mat-button>Perfil</button>
                             </mat-card-actions>
                         </mat-card>

@@ -4,7 +4,7 @@
 
         <form class="form" [formGroup]="formRegistro" (submit)="Register()">
     
-            <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro especialistas</h1>
+            <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro administradores</h1>
     
             <div style="display: flex; justify-content: space-evenly;">
                 <mat-form-field style="width: 45%;" class="text-sm h-17">
@@ -115,36 +115,6 @@
 
             </div>
 
-            <div style="display: flex; justify-content: space-evenly; align-items: center;">
-                <mat-form-field style="margin-top: 10px; width: 45%;" appearance="fill" class="text-sm h-17">
-                    <mat-label>Seleccionar Especialidad</mat-label>
-                    <mat-select
-                      formControlName="especialidadesRegistro"
-                      multiple
-                      (selectionChange)="onSelectionChange($event)">
-                      <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
-                        {{ especialidad }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                
-                  <!-- Campo para agregar nuevas especialidades -->
-                  <div style="margin-top: 10px; width: 45%;">
-                    <mat-form-field style="width: 100%;" class="text-sm h-17">
-                      <mat-label>Agregar Especialidad</mat-label>
-                      <input
-                        [(ngModel)]="nuevaEspecialidad"
-                        (keydown.enter)="agregarEspecialidad()"
-                        matInput
-                        formControlName="nuevaEspecialidadRegistro"
-                        placeholder="Ingresa especialidad">
-                        <button style="margin-right: 20px;" type="button" mat-icon-button matSuffix (click)="agregarEspecialidad()">
-                            <mat-icon >add_circle</mat-icon>
-                        </button>
-                    </mat-form-field>
-                  </div>
-            </div>
-
             <div style="display: flex; justify-content: space-evenly;">
                  <div class="w-1/2 mb-2 text-center justify-center">
                     <div class="flex justify-center">
@@ -176,12 +146,12 @@
                 </div>
                 
 
-                <div class="capcha">
-                    <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcnzlMrAAAAAAHepo-g-hini-Ah0SQZd-wQUMfH"></re-captcha>
-                </div>
-
+                
             </div>
-
+            
+            <div class="capcha">
+                <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcnzlMrAAAAAAHepo-g-hini-Ah0SQZd-wQUMfH"></re-captcha>
+            </div>
 
 
             

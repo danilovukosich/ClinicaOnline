@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
 import { CommonModule } from '@angular/common';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { VerificarMailDialogComponent } from '../../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
@@ -59,7 +59,13 @@ export class RegisterPacienteComponent {
   nombreArchivoSeleccionado2: string = '';
 
 
-  constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
+  constructor(  private router: Router,
+                private dialog:MatDialog,
+                private auth:AuthService, 
+                private toast: NgToastService, 
+                private firestore:Firestore,
+                @Optional() private dialogRef?:MatDialogRef<RegisterPacienteComponent>
+                )
   {
 
   }
@@ -149,9 +155,14 @@ export class RegisterPacienteComponent {
           else
           {
             await this.auth.RegisterPacienteAdministrador(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+            
+            if(this.dialogRef)
+            {
+              this.dialogRef.close();
+            }
           }
           
-
+          this.toast.success("Registro exitoso!");
           console.log("registro exitoso");
           
         }

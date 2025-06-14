@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
 import { CommonModule } from '@angular/common';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { VerificarMailDialogComponent } from '../../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
@@ -17,6 +17,7 @@ import { UsuarioPaciente } from '../../../models/usuario-paciente';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UsuarioEspecialista } from '../../../models/usuario-especialista';
 import { StorageService } from '../../../services/storage.service';
+import { RegisterPacienteComponent } from '../register-paciente/register-paciente.component';
 
 @Component({
     selector: 'app-register-especialista',
@@ -66,7 +67,8 @@ export class RegisterEspecialistaComponent {
               private toast: NgToastService, 
               private firestore:Firestore,
               private fb:FormBuilder,
-              private storageService:StorageService
+              private storageService:StorageService,
+              @Optional() private dialogRef?:MatDialogRef<RegisterPacienteComponent>
             )
   {
     this.formRegistro = this.fb.group({
@@ -173,13 +175,29 @@ export class RegisterEspecialistaComponent {
         {
           let usuario= new UsuarioEspecialista(this.nombre, this.apellido, this.edad, this.dni, this.formRegistro.value.especialidadesRegistro,this.estado, this.rol);
         
-          console.log(usuario);
-          
-          await this.auth.RegisterEspecialista(this.email, this.password, usuario, this.archivoSeleccionado);
+          const rolActual=this.auth.GetRole();
 
-          console.log("registro exitoso");
+          if(rolActual!='admin')
+          {
+            await this.auth.RegisterEspecialista(this.email, this.password, usuario, this.archivoSeleccionado);
+  
+            console.log("registro exitoso");
+            this.OpenDialog();//dialog de verificacion de email
+            this.router.navigate(['/login']);
+
+          }
+          else
+          {
+            await this.auth.RegisterEspecialistaAdministrador(this.email, this.password, usuario, this.archivoSeleccionado);
+            
+            if(this.dialogRef)
+            {
+              this.dialogRef.close();
+            }
+          }
+
+          this.toast.success("Registro exitoso!");
           
-          this.OpenDialog();//dialog de verificacion de email
         }
         catch(e:any)
         {
