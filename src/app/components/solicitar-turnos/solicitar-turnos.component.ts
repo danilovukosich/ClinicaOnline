@@ -7,6 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { EspecialistaService } from '../../services/especialista.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { UsuariosService } from '../../services/usuarios.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
@@ -17,16 +20,23 @@ import { CommonModule } from '@angular/common';
             ReactiveFormsModule,
             MatFormFieldModule,
             MatInputModule,
-            CommonModule],
+            CommonModule,
+            MatCardModule,
+            MatIcon],
   templateUrl: './solicitar-turnos.component.html',
   styleUrl: './solicitar-turnos.component.css'
 })
 export class SolicitarTurnosComponent {
 
-  constructor(private especialista:EspecialistaService){}
+  constructor(private especialista:EspecialistaService,
+              private usuarios:UsuariosService
+  ){}
 
   especialidades:any[]=[];
   selectedEspecialidad: any = null;
+
+  especialistas:any[]=[];
+  selectedEspecialista: any =null;
  
   private _formBuilder = inject(FormBuilder);
 
@@ -35,7 +45,7 @@ export class SolicitarTurnosComponent {
     especialidad: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    especialista: ['', Validators.required],
   });
   isLinear = false;
 
@@ -46,7 +56,6 @@ export class SolicitarTurnosComponent {
     this.especialista.GetEspecialidades().subscribe(epecialidades=>{
       this.especialidades=epecialidades;
       console.log(this.especialidades);
-      
     });
     
     
@@ -56,6 +65,13 @@ export class SolicitarTurnosComponent {
     this.selectedEspecialidad = especialidad;
     this.firstFormGroup.get('especialidad')?.setValue(especialidad.key);
     console.log(this.selectedEspecialidad);
+
+    this.usuarios.GetEspecialistas(this.selectedEspecialidad).subscribe((usuarios:any[])=>{
+            this.especialistas = usuarios;
+            console.log('ESPECIALISTAS:', this.especialistas);
+        });
+
+
     
   }
 
@@ -64,14 +80,40 @@ export class SolicitarTurnosComponent {
     return this.selectedEspecialidad?.key === especialidad.key;
   }
 
-  onNextStep(stepper: MatStepper) {
-  if (this.firstFormGroup.invalid) {
-    this.firstFormGroup.markAllAsTouched();
-    return;
+  onNextStep(stepper: MatStepper) 
+  {
+    if (this.firstFormGroup.invalid) 
+    {
+      this.firstFormGroup.markAllAsTouched();
+      return;
+    }
+
+    stepper.next();
   }
 
-  stepper.next();
-}
+  seleccionarEspecialista(especialista: any) 
+  {
+    console.log('HOLAA');
+    
+    this.selectedEspecialista = especialista.id;
+    this.secondFormGroup.get('especialista')?.setValue(especialista.id);
+    console.log('ESPECIALISTA:',especialista);
+    
+  }
 
- 
+  isSeleccionadoEspecialista(especialista: any): boolean 
+  {
+    return this.selectedEspecialista === especialista.id;
+  }
+
+  onNextStep2(stepper: MatStepper) 
+  {
+    if (this.secondFormGroup.invalid) 
+    {
+      this.secondFormGroup.markAllAsTouched();
+      return;
+    }
+
+    stepper.next();
+  }
 }

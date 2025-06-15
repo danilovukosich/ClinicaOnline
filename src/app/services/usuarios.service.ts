@@ -30,6 +30,20 @@ export class UsuariosService {
     return collectionData(q);
   }
 
+  GetEspecialistas(especialidad:any)
+  {
+    
+    
+    let col = collection(this.firestore, "userInfo");
+    let q!:any;
+
+    q = query(col, where('rol', '==', 'especialista'),
+                  where('especialidades', 'array-contains', especialidad.key));
+    
+    return collectionData(q);
+    
+  }
+
   SetEstadoCero(userId:any)
   {
     let docRef = doc(this.firestore, "userInfo", userId);

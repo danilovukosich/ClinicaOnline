@@ -32,7 +32,7 @@ export class HomeComponent {
     ngOnChanges(changes: SimpleChanges): void {
         
         this.rol=this.auth.GetRole();
-        console.log(this.rol);
+       
         
     }
 
@@ -40,7 +40,7 @@ export class HomeComponent {
         //Called after every check of the component's or directive's content.
         //Add 'implements AfterContentChecked' to the class.
          this.rol=this.auth.GetRole();
-        console.log(this.rol);
+        
     }
 
     
