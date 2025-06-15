@@ -41,7 +41,12 @@
                 <!-- Estado -->
                 <ng-container matColumnDef="estado">
                 <th  mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let turno"><div class="px-2 py-1 text-xs font-semibold rounded-full inline-block" [ngClass]="turno.estado | badgesEstados" >{{ turno.estado }}</div>  </td>
+                <td mat-cell *matCellDef="let turno"><div class="cursor-pointer px-2 py-1 text-xs font-semibold rounded-full inline-block" [ngClass]="turno.estado | badgesEstados" >{{ turno.estado | titlecase }}</div>  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="accion">
+                <th  mat-header-cell *matHeaderCellDef> Acciónes </th>
+                <td mat-cell *matCellDef="let turno"><button mat-mini-fab class="!bg-blue-400 !text-white !shadow-md"> <mat-icon class="">edit</mat-icon></button>  </td>
                 </ng-container>
 
                 <!-- Header y Body -->

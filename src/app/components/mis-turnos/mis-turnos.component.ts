@@ -4,9 +4,11 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { BadgesEstadosPipe } from '../../pipes/styles/badges-estados.pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 @Component({
     selector: 'app-mis-turnos',
-    imports: [MatListModule, MatTableModule, MatPaginatorModule, CommonModule, BadgesEstadosPipe],
+    imports: [MatListModule, MatTableModule, MatPaginatorModule, CommonModule, BadgesEstadosPipe, MatButtonModule, MatIcon],
     templateUrl: './mis-turnos.component.html',
     styleUrl: './mis-turnos.component.css'
 })
@@ -15,7 +17,8 @@ import { BadgesEstadosPipe } from '../../pipes/styles/badges-estados.pipe';
 
 export class MisTurnosComponent {
 
-    displayedColumns: string[] = ['especialista', 'especialidad', 'fecha', 'horario', 'estado'];
+
+   displayedColumns: string[] = ['especialista', 'especialidad', 'fecha', 'horario', 'estado', 'accion'];
 
     dataSource = new MatTableDataSource<Turno>(ELEMENT_DATA);
 
