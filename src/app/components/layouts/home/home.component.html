@@ -2,7 +2,7 @@
     
     <mat-drawer #drawer  mode="side" opened>
         <button mat-flat-button routerLink="welcomeText"><mat-icon>home</mat-icon>Home</button>
-        <button mat-flat-button routerLink="misTurnos" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Solicitar turno</button>
+        <button mat-flat-button routerLink="solicitarTurno" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Solicitar turno</button>
         <button mat-flat-button routerLink="misTurnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Mis turnos</button>
         @if (rol=="admin")
         {
@@ -12,13 +12,13 @@
     </mat-drawer>
     
     
-    <mat-drawer-content class="px-10 pb-6 pt-6">
-        <div class="row w-full h-full">
-            <div class="w-full h-full">
-                <router-outlet></router-outlet>            
-            </div>
-            
+    <mat-drawer-content class="px-10 pb-10 !pt-22  bg-gray-200">
+       
+        <div class="w-full h-full">
+            <router-outlet></router-outlet>            
         </div>
+            
+        
         
         <!-- SPINNER -->
         <div *ngIf="cargando" class="spinner-overlay">
