@@ -78,7 +78,7 @@ export class RegisterEspecialistaComponent {
       especialidades: [[]] // Inicializa con un array vacío
     });
 
-     this.especialidades = this.especialista.GetEspecialidades();
+    this.especialidades = this.especialista.GetEspecialidades();
 
   }
 

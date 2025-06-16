@@ -1,6 +1,6 @@
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
 import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -549,18 +549,33 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
+  GetUserAsync(): Promise<User | null> {
+  return new Promise((resolve) => {
+    this.auth.onAuthStateChanged((user) => {
+      resolve(user);
+    });
+  });
+}
+
   GetUserInfo(): Observable<any> 
   {
-    return from(
-      (async () => {
-        const user = this.auth.currentUser;
-        if (!user) throw new Error('Usuario no autenticado');
+    return new Observable((observer) => {
+    this.auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        observer.error('Usuario no autenticado');
+        return;
+      }
 
+      try {
         const docRef = doc(this.firestore, `userInfo/${user.uid}`);
-        const userInfo = await getDoc(docRef);
-        return userInfo.data(); 
-      })()
-    );
+        const userInfoSnap = await getDoc(docRef);
+        observer.next(userInfoSnap.data());
+        observer.complete();
+      } catch (error) {
+        observer.error(error);
+      }
+    });
+  });
   }
 
   GetRole()

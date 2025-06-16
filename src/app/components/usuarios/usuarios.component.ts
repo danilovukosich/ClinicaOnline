@@ -69,6 +69,7 @@ export class UsuariosComponent {
             case 'especialista':
                 this.dialog.open(RegisterEspecialistaComponent);
             break;
+            
             case 'admin':
                 this.dialog.open(RegisterAdministradorComponent);
             break;

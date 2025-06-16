@@ -51,7 +51,6 @@ export class EspecialistaService {
       });
   }
 
-
   private generarKey(texto: string): string 
   {
     return texto
@@ -60,4 +59,10 @@ export class EspecialistaService {
       .toLowerCase()                  
       .replace(/\s+/g, '_');
   }
+
+
+
+
+
+  
 }
