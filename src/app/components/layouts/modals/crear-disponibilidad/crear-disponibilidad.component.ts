@@ -60,7 +60,7 @@ export class CrearDisponibilidadComponent {
 
 
     this.especialidades = this.data.especialidades;
-    console.log('data:',this.especialidades);
+    console.log('data:',this.especialidades, this.data.dia);
     
     // 1. Habilitar 'Desde' al seleccionar frecuencia
     this.formCrearDisponibilidad.get('frecuenciaSeleccionadaForm')?.valueChanges.subscribe(val => {
