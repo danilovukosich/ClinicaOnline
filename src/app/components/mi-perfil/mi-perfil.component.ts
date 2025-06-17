@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CrearDisponibilidadComponent } from '../layouts/modals/crear-disponibilidad/crear-disponibilidad.component';
+import { EditarDisponibilidadComponent } from '../layouts/modals/editar-disponibilidad/editar-disponibilidad.component';
 
 
 export interface DisponibilidadPorDia {
@@ -121,32 +122,31 @@ export class MiPerfilComponent {
     }
   }
 
-  editar(disponibilidad: Disponibilidad) {
+  editar(disponibilidad: Disponibilidad, dia: string, especialistaId:string) {
     // abrir modal o similar
-    console.log('Editar', disponibilidad);
-    this.cargarDisponibilidades()
+    console.log(this.especialidades);
+    
+    this.dialog.open(EditarDisponibilidadComponent, {
+      data: {
+        disponibilidad: disponibilidad,
+        dia: dia,
+        especialistaId: especialistaId,
+        especialidades: this.especialidades
+      }
+    });
   }
 
   crear(dia: string, especialistaId:string) 
-  {
-   
-     console.log(this.especialidades);
-     
-      this.dialog.open(CrearDisponibilidadComponent, {
-        data: {
-          dia: dia,
-          especialistaId: especialistaId,
-          especialidades: this.especialidades
-        }
-      });
-      // this.disponibilidadService.crearDisponibilidad(disponibilidad)
-      // .then(() => {
-      //     this.cargarDisponibilidades();
-      // })
-      // .catch(err => {
-      //     console.error('Error al crear disponibilidad:', err);
-      // });
+  { 
+    this.dialog.open(CrearDisponibilidadComponent, {
+      data: {
+        dia: dia,
+        especialistaId: especialistaId,
+        especialidades: this.especialidades
+      }
+    });
   }
+
     
     
 

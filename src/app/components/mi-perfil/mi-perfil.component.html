@@ -73,7 +73,7 @@
                         <td mat-cell *matCellDef="let dispo">
                         <button class="!bg-blue-400 !text-white !shadow-md" mat-mini-fab 
                         matTooltip="{{dispo.especialidad === '---' ? 'Agregar' : 'Editar'}}" [matTooltipPosition]="'above'" 
-                        (click)="dispo.especialidad === '---' ? crear(dispo.dia, dispo.especialistaId) : editar(dispo) ">
+                        (click)="dispo.especialidad === '---' ? crear(dispo.dia, dispo.especialistaId) : editar(dispo, dispo.dia, dispo.especialistaId) ">
 
                             <mat-icon class="">{{ dispo.especialidad === '---' ? 'add' : 'edit' }}</mat-icon>
 
