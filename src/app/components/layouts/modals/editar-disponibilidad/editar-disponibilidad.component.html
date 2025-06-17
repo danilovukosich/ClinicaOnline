@@ -31,14 +31,14 @@
                 
                 <mat-form-field class="text-sm h-17 w-80">
                     <mat-label>Desde</mat-label>
-                    <input matInput [matTimepicker]="pickerDesde" matTimepickerMin = "8:00" matTimepickerMax = "19:00"  formControlName="horarioDesde">
+                    <input matInput [matTimepicker]="pickerDesde" matTimepickerMin = "8:00" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}"  formControlName="horarioDesde">
                     <mat-timepicker-toggle matIconSuffix [for]="pickerDesde"/>
                     <mat-timepicker #pickerDesde interval="{{frecuenciaSeleccionada}}"/>
                 </mat-form-field>
 
                 <mat-form-field class="text-sm h-17 w-80">
                     <mat-label>Hasta</mat-label>
-                    <input matInput [matTimepicker]="pickerHasta" [matTimepickerMin]="formEditarDisponibilidad.value.horarioDesde" matTimepickerMax = "19:00" formControlName="horarioHasta">
+                    <input matInput [matTimepicker]="pickerHasta" [matTimepickerMin]="formEditarDisponibilidad.value.horarioDesde" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}" formControlName="horarioHasta">
                     <mat-timepicker-toggle matIconSuffix [for]="pickerHasta"/>
                     <mat-timepicker #pickerHasta interval="{{frecuenciaSeleccionada}}"/>
                 </mat-form-field>
