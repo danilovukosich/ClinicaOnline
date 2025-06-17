@@ -18,8 +18,7 @@ import { RouterLink } from '@angular/router';
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatButtonModule,
-        RouterLink],
+        MatButtonModule,],
     templateUrl: './verificar-mail-dialog.component.html',
     styleUrl: './verificar-mail-dialog.component.css'
 })

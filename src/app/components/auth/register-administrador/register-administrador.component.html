@@ -2,9 +2,9 @@
 
     <div class="appear-animation w-full h-full bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center p-12">
 
-        <form class="" [formGroup]="formRegistro" (submit)="Register()">
+        <form class="form" [formGroup]="formRegistro" (submit)="Register()">
     
-            <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro pacientes</h1>
+            <h1 class=" text-4xl text-center text-blue-500 font-bold mb-6">Registro administradores</h1>
     
             <div style="display: flex; justify-content: space-evenly;">
                 <mat-form-field style="width: 45%;" class="text-sm h-17">
@@ -21,7 +21,7 @@
 
                 </mat-form-field>
                 
-                <mat-form-field style="width: 45%;"  class="text-sm h-17">
+                <mat-form-field style="width: 45%;" class="text-sm h-17">
                     <mat-label>Apellido</mat-label>
                     <input [(ngModel)]="apellido" matInput placeholder="Ingrese Apellido" formControlName="apellidoRegistro">
                     
@@ -47,7 +47,7 @@
                     }
                     @if (edadRegistro?.hasError('min')) 
                     {
-                        <mat-error>Edad debe ser <strong>mayor a 0</strong></mat-error>
+                        <mat-error>Edad debe ser <strong>mayor a 23</strong></mat-error>
                     }
                     @if (edadRegistro?.hasError('max')) 
                     {
@@ -99,8 +99,8 @@
                 <mat-form-field style="width: 94%;" class="text-sm h-17">
                     <mat-label>Contraseña</mat-label>
                     <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese contraseña" formControlName="passwordRegistro">
-                    <button type="button" mat-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <button style="margin-right: 20px;" type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon  >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                     @if (passwordRegistro?.hasError('required')) 
                     {
@@ -115,24 +115,8 @@
 
             </div>
 
-            <mat-form-field style="width: 45%;" class="text-sm h-17">
-
-                <mat-label>Obra social</mat-label>
-                <mat-select [(ngModel)]="obraSocial" formControlName="obraSocialRegistro">
-                  <mat-option value="osde">OSDE</mat-option>
-                  <mat-option value="swiss">Swiss medical</mat-option>
-                  <mat-option value="osecac">OSECAC</mat-option>
-                  <mat-option value="ioma">IOMA</mat-option>
-                </mat-select>
-                @if (edadRegistro?.hasError('required')) 
-                {
-                    <mat-error>Edad es <strong>requerida</strong></mat-error>
-                }
-                
-            </mat-form-field>
-            <div class="flex justify-center">
-                
-                <div class="w-2/5 mb-2 text-center justify-center">
+            <div style="display: flex; justify-content: space-evenly;">
+                 <div class="w-1/2 mb-2 text-center justify-center">
                     <div class="flex justify-center">
                         <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de Perfil</mat-label>
                         @if (archivoSeleccionadoRegistro?.hasError('required') && submitted) 
@@ -149,59 +133,30 @@
                             +
                         </label>
                         <!-- Mostrar nombre del archivo -->
-                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="nombreArchivoSeleccionado">{{ nombreArchivoSeleccionado }}</span>
-                        <span class="text-gray-400 text-sm mt-2" *ngIf="!nombreArchivoSeleccionado">No se ha seleccionado archivo</span>
+                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="archivoSeleccionado">{{ nombreArchivoSeleccionado }}</span>
+                        <span class="text-gray-400 text-sm mt-2" *ngIf="!archivoSeleccionado">No se ha seleccionado archivo</span>
                     </div>
 
                     <!-- Input oculto -->
                     <input id="fileInput" type="file" accept="image/*" 
-                        (change)="onFileSelected($event, 'perfil')" 
+                        (change)="onFileSelected($event)" 
                         formControlName="archivoSeleccionadoRegistro"
                         class="hidden">
                     
                 </div>
-                <div class="w-2/5 mb-2 text-center justify-center">
-                    <div class="flex justify-center">
-                        <mat-label class="block mb-1 text-md font-medium text-gray-700">Foto de portada</mat-label>
-                        @if (archivoSeleccionado2Registro?.hasError('required') && submitted) 
-                        {
-                            <mat-error class="ml-2 block text-sm text-red-600">Elija una foto de portada</mat-error>
-                        }   
-                    </div>
+                
 
-                    <div class="flex justify-center gap-2">
-                        <!-- Botón "+" con tooltip -->
-                        <label for="fileInput2" 
-                            class="cursor-pointer flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-xl font-bold rounded-full shadow hover:bg-blue-700 transition relative"
-                            matTooltip="Seleccione imagen">
-                            +
-                        </label>
-                        <!-- Mostrar nombre del archivo -->
-                        <span class="text-gray-700 text-sm truncate mt-2" *ngIf="archivoSeleccionado2">{{ nombreArchivoSeleccionado2 }}</span>
-                        <span class="text-gray-400 text-sm mt-2" *ngIf="!archivoSeleccionado2">No se ha seleccionado archivo</span>
-                    </div>
-
-                    <!-- Input oculto -->
-                    <input id="fileInput2" type="file" accept="image/*" 
-                        (change)="onFileSelected($event, 'portada')" 
-                        formControlName="archivoSeleccionado2Registro"
-                        class="hidden">
-                    
-                </div>
-
-
+                
             </div>
-
-
-
-            <div class="capcha mt-2">
+            
+            <div class="capcha">
                 <re-captcha (resolved)="executeRecaptchaVisible($event)" siteKey="6LcnzlMrAAAAAAHepo-g-hini-Ah0SQZd-wQUMfH"></re-captcha>
             </div>
 
 
             
-            <div class="buttonsContainer mt-10" >
-                <button style="width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
+            <div class="buttonsContainer" >
+                <button style="margin-top: 15px; width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
                 <!-- <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button> -->
             </div>
         
@@ -220,3 +175,4 @@
     <div [class.loading]="cargando"></div>
     <!-- SPINNER -->
 </div>
+

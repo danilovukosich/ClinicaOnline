@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha-18";
 import { CommonModule } from '@angular/common';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { VerificarMailDialogComponent } from '../../layouts/modals/verificar-mail-dialog/verificar-mail-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
@@ -55,16 +55,26 @@ export class RegisterPacienteComponent {
   archivoSeleccionado!:File;
   archivoSeleccionado2!:File;
 
+  nombreArchivoSeleccionado: string = '';
+  nombreArchivoSeleccionado2: string = '';
 
-  constructor(  private router: Router, private dialog:MatDialog, private auth:AuthService, private toast: NgToastService, private firestore:Firestore)
+
+  constructor(  private router: Router,
+                private dialog:MatDialog,
+                private auth:AuthService, 
+                private toast: NgToastService, 
+                private firestore:Firestore,
+                @Optional() private dialogRef?:MatDialogRef<RegisterPacienteComponent>
+                )
   {
 
   }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-
+    //Add 'implements 2OnInit' to the class.
+    
+     
     this.formRegistro = new FormGroup({
 
       emailRegistro : new FormControl('', [Validators.required, Validators.email]),
@@ -113,9 +123,12 @@ export class RegisterPacienteComponent {
 
 
 
-  async Register()//registro de paciente
+  async Register()
   {
+    console.log(this.auth);
+    
     this.submitted = true;
+
     if(this.formRegistro.valid)
     {
       if(this.token==true)
@@ -126,17 +139,32 @@ export class RegisterPacienteComponent {
         {
           let usuario= new UsuarioPaciente(this.nombre, this.apellido, this.edad, this.dni, this. obraSocial, this.rol);
         
-          console.log(usuario);
-          console.log('Acrchivo 1',this.archivoSeleccionado);
-          console.log('Acrchivo 2',this.archivoSeleccionado2);
+          // console.log(usuario);
+          // console.log('Acrchivo 1',this.archivoSeleccionado);
+          // console.log('Acrchivo 2',this.archivoSeleccionado2);
           
+          const rolActual=this.auth.GetRole();
 
-          await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
-
-
+          
+          if(rolActual!='admin')
+          { 
+            await this.auth.RegisterPaciente(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+            this.OpenDialog();
+            this.router.navigate(['/login']);
+          }
+          else
+          {
+            await this.auth.RegisterPacienteAdministrador(this.email, this.password, usuario, this.archivoSeleccionado, this.archivoSeleccionado2);
+            
+            if(this.dialogRef)
+            {
+              this.dialogRef.close();
+            }
+          }
+          
+          this.toast.success("Registro exitoso!");
           console.log("registro exitoso");
           
-          this.OpenDialog();//dialog de verificacion de email
         }
         catch(e:any)
         {
@@ -156,14 +184,12 @@ export class RegisterPacienteComponent {
     }
     else
     {
-      console.log("no valido");
       this.toast.danger("Verificar formulario!", "ERROR");
     }
 
   }
 
-  nombreArchivoSeleccionado: string = '';
-  nombreArchivoSeleccionado2: string = '';
+  
   onFileSelected(event: any, tipo: 'perfil'|'portada') 
   {
     const file = event.target.files[0];
@@ -180,7 +206,7 @@ export class RegisterPacienteComponent {
             this.nombreArchivoSeleccionado2 = file.name;
         }
     } 
-    else 
+    else
     {
         if (tipo === 'perfil') {
             this.nombreArchivoSeleccionado = '';

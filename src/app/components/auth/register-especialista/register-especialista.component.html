@@ -1,6 +1,6 @@
 <div class="flex h-full w-full items-center align-middle justify-center">
 
-    <div class="appear-animation w-4xl h-10/12 bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center">
+    <div class="appear-animation w-full h-full bg-white shadow-lg rounded-lg flex justify-center text-center align-middle items-center p-12">
 
         <form class="form" [formGroup]="formRegistro" (submit)="Register()">
     
@@ -122,11 +122,11 @@
                       formControlName="especialidadesRegistro"
                       multiple
                       (selectionChange)="onSelectionChange($event)">
-                      <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
-                        {{ especialidad }}
+                      <mat-option *ngFor="let especialidad of especialidades | async" [value]="especialidad.key">
+                        {{ especialidad.name }}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                </mat-form-field>
                 
                   <!-- Campo para agregar nuevas especialidades -->
                   <div style="margin-top: 10px; width: 45%;">
@@ -187,7 +187,7 @@
             
             <div class="buttonsContainer" >
                 <button style="margin-top: 15px; width: 50%; font-size: 18px;" type="submit" mat-raised-button >Registrarse</button>
-                <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button>
+                <!-- <button (click)="GoToLogin()" style="margin-top: 15px; width: 40%;" type="button" mat-flat-button >¿Ya tenes cuenta? Click qui.</button> -->
             </div>
         
         </form>

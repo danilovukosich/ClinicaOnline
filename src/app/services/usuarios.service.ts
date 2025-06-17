@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, query, updateDoc, where } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class UsuariosService {
   GetUsuarios(rol:string)
   {
 
-    let col = collection(this.firestore, "userInfo")
+    let col = collection(this.firestore, "userInfo");
     let q!:any;
 
     switch(rol)
@@ -28,6 +28,51 @@ export class UsuariosService {
     }
 
     return collectionData(q);
+  }
+
+  GetEspecialistas(especialidad:any)
+  {
+    
+    
+    let col = collection(this.firestore, "userInfo");
+    let q!:any;
+
+    q = query(col, where('rol', '==', 'especialista'),
+                  where('especialidades', 'array-contains', especialidad.key));
+    
+    return collectionData(q);
+    
+  }
+
+  SetEstadoCero(userId:any)
+  {
+    let docRef = doc(this.firestore, "userInfo", userId);
+
+    updateDoc(docRef, {
+      estado: 0
+    })
+    .then(() => {
+      console.log("Usuario dado de baja correctamente.");
+    })
+    .catch(error => {
+      console.error("Error al dar de baja el usuario:", error);
+    });
+
+  }
+
+  SetEstadoUno(userId:any)
+  {
+    let docRef = doc(this.firestore, "userInfo", userId);
+
+    updateDoc(docRef, {
+      estado: 1
+    })
+    .then(() => {
+      console.log("Usuario dado de baja correctamente.");
+    })
+    .catch(error => {
+      console.error("Error al dar de baja el usuario:", error);
+    });
   }
 
 

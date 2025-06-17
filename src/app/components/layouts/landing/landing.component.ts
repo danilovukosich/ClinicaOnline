@@ -60,13 +60,19 @@ export class LandingComponent {
     //agrego fooset para los que estan desfasados 
     switch (sectionId) {
       case 'section2':
+        console.log('hola section2');
+        
+        
         element = this.section2;
         offset = -150;
         break;
       case 'sectionDoble':
+        
         element = this.sectionDoble;
+         offset = -150;
         break;
       case 'section3':
+
         element = this.section3;
         offset= -150;
         break;

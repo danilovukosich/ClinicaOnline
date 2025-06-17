@@ -161,15 +161,15 @@ h3{
 
 }
 
-.welcome-section-doble
+/* .welcome-section-doble
 {
   display: flex;
   justify-content: space-between;
   width: 75%;
   
-}
+} */
 
-.welcome-section-doble-hijo-1{
+/* .welcome-section-doble-hijo-1{
   
   height: 700px;
   width: 45%;
@@ -180,7 +180,7 @@ h3{
   justify-content: center;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-  border-radius: 20px;/* bordes redondos */
+  border-radius: 20px;
   margin-top: 150px;
   animation: appear linear;
   animation-timeline: view();
@@ -199,8 +199,45 @@ h3{
   justify-content: center;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-  border-radius: 20px;/* bordes redondos */
+  border-radius: 20px;
   margin-top: 150px;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+
+} */
+
+
+.welcome-section-doble-hijo-1{
+  
+  
+  background: url('../../../../assets/7.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  border-radius: 20px;/* bordes redondos */
+  
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+
+}
+
+.welcome-section-doble-hijo-2{
+  
+  
+  background: url('../../../../assets/8.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  border-radius: 20px;/* bordes redondos */
+  
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0;
@@ -215,9 +252,9 @@ h3{
   width: 500px;
   text-align: right;
   align-self: flex-end;
-  animation: appearTextRight linear;
+  /* animation: appearTextRight linear;
   animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+  animation-range: entry 0% cover 40%; */
 
 }
 
@@ -229,9 +266,9 @@ h3{
   width: 500px;
   text-align: right;
   align-self: flex-end;
-  animation: appearTextRight linear;
+  /* animation: appearTextRight linear;
   animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+  animation-range: entry 0% cover 40%; */
 
 }
 
