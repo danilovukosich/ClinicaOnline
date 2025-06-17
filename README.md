@@ -1,26 +1,44 @@
-# Clinicaonline
+# Clinica Online
 
-### Landing
-![Grabacindepantalla2025-06-17185312-ezgif com-optimize](https://github.com/user-attachments/assets/c85e6b43-cedb-4682-9828-461d9dbfe3bb)
-
+## #Landing
 En esta pantalla el usuario va a tener la posibilidad de acceder al registro tanto especialistas como pacientes y al login para ingresar al sistema.
 
-### Home
+
+![Grabacindepantalla2025-06-17185312-ezgif com-optimize](https://github.com/user-attachments/assets/c85e6b43-cedb-4682-9828-461d9dbfe3bb)
+
+
+## #Home
+Pantalla de bienvenida.
+
+
 ![image](https://github.com/user-attachments/assets/512b1dd2-5702-4a94-a33e-2c678a696c58)
 
-### Mi perfil
-![image](https://github.com/user-attachments/assets/68717ee7-1b64-4906-b2d4-52241380358a)
-Aca se vera el prefil de los usuarios con sus datos basico y donde los especilistas podran editar su disponibilidad horaria 
+## #Mi perfil
+Cada usuario vera sus datos basicos y los especilistas podran editar su disponibilidad horaria de cada dia de la semana para cada especialidad
 para la creacion de turnos.
 
-### Usuarios
+
+![image](https://github.com/user-attachments/assets/68717ee7-1b64-4906-b2d4-52241380358a)
+![image](https://github.com/user-attachments/assets/4018535c-caaa-4183-87f7-e7f62a7423a6)
+
+
+## #Usuarios
+En este apartado el administrador podra crear nuevos usuarios para el sistema y ver su informacion.
+
+
 ![image](https://github.com/user-attachments/assets/e172e84f-63af-4961-8bc0-905c17ef0a68)
-En este apartado el administrador podra crear nuevos usuarios para el sistema.
 
-### Solicitar turnos
+## #Solicitar turnos
+El usuario va a tener la posibilidad de solicitar turnos filtrando por especialidad y por especialista dentro de los proximos 15 días.
 
 
-### Mis turnos
+![Captura de pantalla 2025-06-17 190023](https://github.com/user-attachments/assets/b533b9d6-d4c0-4c28-856a-0e2ae21b91e6)
+![Captura de pantalla 2025-06-17 190031](https://github.com/user-attachments/assets/38104e68-be6f-466d-a956-95e57a582739)
+
+
+## #Mis turnos
+![image](https://github.com/user-attachments/assets/7c18ef44-c3dc-4759-b989-4b2c205d272d)
+
 
 
 
