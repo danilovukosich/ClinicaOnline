@@ -20,13 +20,13 @@
 
 
 ## #Home
-Pantalla de bienvenida.
+> Pantalla de bienvenida.
 
 
 ![image](https://github.com/user-attachments/assets/512b1dd2-5702-4a94-a33e-2c678a696c58)
 
 ## #Mi perfil
-Cada usuario vera sus datos basicos y los especilistas podran editar su disponibilidad horaria de cada dia de la semana para cada especialidad
+> Cada usuario vera sus datos basicos y los especilistas podran editar su disponibilidad horaria de cada dia de la semana para cada especialidad
 para la creacion de turnos.
 
 
@@ -35,13 +35,13 @@ para la creacion de turnos.
 
 
 ## #Usuarios
-En este apartado el administrador podra crear nuevos usuarios para el sistema y ver su informacion.
+> En este apartado el administrador podra crear nuevos usuarios para el sistema y ver su informacion.
 
 
 ![image](https://github.com/user-attachments/assets/e172e84f-63af-4961-8bc0-905c17ef0a68)
 
 ## #Solicitar turnos
-El usuario va a tener la posibilidad de solicitar turnos filtrando por especialidad y por especialista dentro de los proximos 15 días.
+> El usuario va a tener la posibilidad de solicitar turnos filtrando por especialidad y por especialista dentro de los proximos 15 días.
 
 
 ![Captura de pantalla 2025-06-17 190023](https://github.com/user-attachments/assets/b533b9d6-d4c0-4c28-856a-0e2ae21b91e6)
@@ -49,6 +49,7 @@ El usuario va a tener la posibilidad de solicitar turnos filtrando por especiali
 
 
 ## #Mis turnos
+> El usuario va a tener la posibilidad de ver sus turnos, con su estado y sus detalles.
 ![image](https://github.com/user-attachments/assets/7c18ef44-c3dc-4759-b989-4b2c205d272d)
 
 
