@@ -4,8 +4,16 @@
 # &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; Clinica  &nbsp; &nbsp;  ![local_hospital_200dp_E3E3E3](https://github.com/user-attachments/assets/b3a4022d-2289-4a3c-8a38-ef7f2a91abee)  &nbsp; &nbsp; Online
 
 
-## #Landing
-En esta pantalla el usuario va a tener la posibilidad de acceder al registro tanto especialistas como pacientes y al login para ingresar al sistema.
+
+- En esta aplicacion web el usuario van a tener la posibilidad de acceder tanto especialistas ,para presatar servicios
+ de sus diferentes especialidades (Ej: Cardiología, Pedraitría, Traumatología, etc.), como pacientes para solicitar dichos servicios. <br/> 
+
+- La aplicación cuenta con los roles de Especialista, Paciente y Administrador para la gestion mas avanzada del sistema.  <br/>
+
+- Dentro de la misma contaremos con las pantallas Home, Mi Perfil, Usuarios, Solicitar turnos y Mis Turnos. <br/>
+
+ &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp; 
+ [Link de la web](https://clinicaonline-27fd8.web.app/)
 
 
 ![Grabacindepantalla2025-06-17185312-ezgif com-optimize](https://github.com/user-attachments/assets/c85e6b43-cedb-4682-9828-461d9dbfe3bb)
