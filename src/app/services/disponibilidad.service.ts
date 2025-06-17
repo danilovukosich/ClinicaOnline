@@ -22,17 +22,23 @@ export class DisponibilidadService {
 
   async crearDisponibilidad(dispo: Disponibilidad) 
   {
-    const id = `${dispo.especialistaId}_${dispo.dia}`;
+    const diaNormalizado = this.removerTildes(dispo.dia);
+    const id = `${dispo.especialistaId}_${diaNormalizado}`;
     const ref = doc(this.firestore, 'disponibilidades', id);
 
     await setDoc(ref, dispo);
   }
 
-  async actualizarDisponibilidad(id: string, dispo: Partial<Disponibilidad>) 
+  async actualizarDisponibilidad(id: any, dispo: Partial<Disponibilidad>) 
   {
     const ref = doc(this.firestore, 'disponibilidades', id);
     
     await updateDoc(ref, dispo);
+  }
+
+  removerTildes(texto: string): string 
+  {
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
 
