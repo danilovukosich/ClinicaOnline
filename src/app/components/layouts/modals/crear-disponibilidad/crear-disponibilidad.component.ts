@@ -1,3 +1,4 @@
+import { Disponibilidad } from './../../../../models/disponibilidad';
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -32,6 +33,9 @@ export class CrearDisponibilidadComponent {
   formCrearDisponibilidad!:FormGroup;
 
   especialidades!: [];
+  frecuencias:string[]=['60m', '40m', '30m'];
+  frecuenciaSeleccionada!:string;
+  horarioDesdeSeleccionado:string = '8:00';
 
 
   constructor(private especialista:EspecialistaService,
@@ -48,44 +52,124 @@ export class CrearDisponibilidadComponent {
     
     this.formCrearDisponibilidad = new FormGroup({
 
-      especialidadesForm : new FormControl('', [Validators.required]),
-      
-
+      especialidadForm : new FormControl('', [Validators.required]),
+      frecuenciaSeleccionadaForm : new FormControl('', [Validators.required]),
+      horarioDesde : new FormControl({value:'', disabled:true }, [Validators.required]),
+      horarioHasta : new FormControl({value:'', disabled:true }, [Validators.required])
     });
 
 
     this.especialidades = this.data.especialidades;
     console.log('data:',this.especialidades);
     
+    // 1. Habilitar 'Desde' al seleccionar frecuencia
+    this.formCrearDisponibilidad.get('frecuenciaSeleccionadaForm')?.valueChanges.subscribe(val => {
+      if (val)
+      {
+        this.formCrearDisponibilidad.get('horarioDesde')?.enable();
+      } 
+      else 
+      {
+        this.formCrearDisponibilidad.get('horarioDesde')?.disable();
+        this.formCrearDisponibilidad.get('horarioHasta')?.disable();
+      }
+    });
+
+    // 2. Habilitar 'Hasta' al seleccionar 'Desde'
+    this.formCrearDisponibilidad.get('horarioDesde')?.valueChanges.subscribe(desde => {
+      if (desde) 
+      {
+        this.formCrearDisponibilidad.get('horarioHasta')?.enable();
+        this.horarioDesdeSeleccionado=desde;
+      } 
+      else 
+      {
+        this.formCrearDisponibilidad.get('horarioHasta')?.disable();
+      }
+    });
 
 
   }
 
 
-
-
-
-  onSelectionChange(event: any) 
+  async CrearDisponibilidad()
   {
-    console.log('Especialidades seleccionadas:', this.formCrearDisponibilidad.value.especialidades);
-    console.log('Especialidades form: ', this.formCrearDisponibilidad.value.especialidadesForm);
-    
+
+    const form= this.formCrearDisponibilidad.value;
+    console.log(form);
+
+    if(this.formCrearDisponibilidad.valid)
+    {
+
+      let disp: Disponibilidad = {
+        especialistaId: this.data.especialistaId,
+        especialidad: form.especialidadForm,
+        dia: this.data.dia,
+        frecuencia: parseInt(form.frecuenciaSeleccionadaForm.replace('m', '')),
+        horarioDesde: this.ExtraerHora(form.horarioDesde),
+        horarioHasta: this.ExtraerHora(form.horarioHasta),
+      };
+
+      console.log('DISP',disp);
+      
+
+      try 
+      {
+        
+        await this.disponibilidadService.crearDisponibilidad(disp);
+
+
+        this.toast.success('Horarios para el ' + this.data.dia + " creados", "", 3000)
+        this.dialogRef.close(false);
+
+      } 
+      catch (error) 
+      {
+        this.toast.danger("Error al guardar disponibilidad");
+        console.error("Error creando disponibilidad:", error);
+      }
+
+
+    }
+    else
+    {
+      this.toast.danger("Verificar Formulario")
+    }
   }
 
-  CrearDisponibilidad()
+  Cancelar() 
   {
-    this.toast.success('creado')
-  }
-
-  Cancelar() {
     this.dialogRef.close(false);
   }
 
 
+  ExtraerHora(fecha: Date): string {
+  return fecha.toLocaleTimeString('es-AR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
 
-  get especialidadesRegistro()
+
+  get especialidadForm()
   {
-    return this.formCrearDisponibilidad.get('especialidadesForm');
+    return this.formCrearDisponibilidad.get('especialidadForm');
+  }
+
+  get frecuenciaSeleccionadaForm()
+  {
+    return this.formCrearDisponibilidad.get('frecuenciaSeleccionadaForm');
+  }
+
+  get horarioDesde()
+  {
+    return this.formCrearDisponibilidad.get('horarioDesde');
+  }
+
+  get horarioHasta()
+  {
+    return this.formCrearDisponibilidad.get('horarioHasta');
   }
 
 

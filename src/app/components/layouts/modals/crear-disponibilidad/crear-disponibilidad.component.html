@@ -9,8 +9,7 @@
                 <mat-form-field  class="text-sm h-17 w-80">
                     <mat-label>Selecciona Especialidad</mat-label>
                     <mat-select
-                    formControlName="especialidadesForm"
-                    (selectionChange)="onSelectionChange($event)">
+                    formControlName="especialidadForm">
                         <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
                             {{ especialidad }}
                         </mat-option>
@@ -20,27 +19,28 @@
                 <mat-form-field  class="text-sm h-17 w-80">
                     <mat-label>Selecciona Frecuencia</mat-label>
                     <mat-select
-                    formControlName=""
-                    (selectionChange)="onSelectionChange($event)">
-                        <mat-option>
-                            
-                        </mat-option>
+                    [(ngModel)]="frecuenciaSeleccionada"
+                    formControlName="frecuenciaSeleccionadaForm">
+                        <mat-option value="120m">120 Min.</mat-option>
+                        <mat-option value="60m">60 Min.</mat-option>
+                        <mat-option value="40m">40 Min.</mat-option>
+                        <mat-option value="30m">30 Min.</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 
                 <mat-form-field class="text-sm h-17 w-80">
                     <mat-label>Desde</mat-label>
-                    <input matInput [matTimepicker]="picker" matTimepickerMin = "8:00" matTimepickerMax = "19:00">
-                    <mat-timepicker-toggle matIconSuffix [for]="picker"/>
-                    <mat-timepicker #picker interval="30m"/>
+                    <input matInput [matTimepicker]="pickerDesde" matTimepickerMin = "8:00" matTimepickerMax = "19:00"  formControlName="horarioDesde">
+                    <mat-timepicker-toggle matIconSuffix [for]="pickerDesde"/>
+                    <mat-timepicker #pickerDesde interval="{{frecuenciaSeleccionada}}"/>
                 </mat-form-field>
 
                 <mat-form-field class="text-sm h-17 w-80">
                     <mat-label>Hasta</mat-label>
-                    <input matInput [matTimepicker]="picker" matTimepickerMin = "8:00" matTimepickerMax = "19:00">
-                    <mat-timepicker-toggle matIconSuffix [for]="picker"/>
-                    <mat-timepicker #picker interval="30m"/>
+                    <input matInput [matTimepicker]="pickerHasta" [matTimepickerMin]="formCrearDisponibilidad.value.horarioDesde" matTimepickerMax = "19:00" formControlName="horarioHasta">
+                    <mat-timepicker-toggle matIconSuffix [for]="pickerHasta"/>
+                    <mat-timepicker #pickerHasta interval="{{frecuenciaSeleccionada}}"/>
                 </mat-form-field>
 
 

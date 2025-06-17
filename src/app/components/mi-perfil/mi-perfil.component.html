@@ -65,7 +65,7 @@
 
                     <ng-container matColumnDef="frecuencia">
                         <th mat-header-cell *matHeaderCellDef> Frecuencia (min) </th>
-                        <td mat-cell *matCellDef="let dispo"> {{ dispo.frecuencia > 0 ? dispo.frecuencia : '---' }} </td>
+                        <td mat-cell *matCellDef="let dispo"> {{ dispo.frecuencia > 0 ? dispo.frecuencia + 'min' : '---' }}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="acciones">

@@ -3,7 +3,7 @@ export interface Disponibilidad {
     especialistaId: string;
     especialidad: string;
     dia: string;
+    frecuencia: number;
     horarioDesde: string;
     horarioHasta: string;
-    frecuencia: number;
 }
