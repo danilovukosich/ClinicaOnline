@@ -28,20 +28,18 @@ export class HomeComponent {
         console.log(this.rol);
         
     }
-    
-    ngOnChanges(changes: SimpleChanges): void {
-        
-        this.rol=this.auth.GetRole();
-       
-        
+
+    async ngOnInit() 
+    {
+        this.rol= await this.auth.GetRoleHome();   
     }
 
-    ngAfterContentChecked(): void {
-        //Called after every check of the component's or directive's content.
-        //Add 'implements AfterContentChecked' to the class.
-         this.rol=this.auth.GetRole();
+    // ngAfterContentChecked(): void 
+    // {
         
-    }
+    //     this.rol=this.auth.GetRole();
+        
+    // }
 
     
 

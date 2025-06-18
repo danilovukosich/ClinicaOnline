@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class BadgesEstadosPipe implements PipeTransform {
 
-   transform(estado: string): string {
+  transform(estado: string): string 
+  {
     switch (estado) 
     {
       case 'confirmado': return 'bg-green-200 text-green-700';

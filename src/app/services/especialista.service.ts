@@ -59,10 +59,5 @@ export class EspecialistaService {
       .toLowerCase()                  
       .replace(/\s+/g, '_');
   }
-
-
-
-
-
-  
+    
 }

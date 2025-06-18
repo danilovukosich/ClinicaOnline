@@ -59,11 +59,17 @@ para la creacion de turnos.
 
 #### Agregados sprint 1
 
-* Botones de Acceso rápido
+* Botones de Acceso rápido ✅
  - Debe ser botones cuadrados
  - Debe tener la imagen de perfil del usuario
  - Debe estar a la izquierda del login uno abajo del otro 6 usuarios. (3 pacientes, 2 especialistas, 1 admin)
 
-* Registro de usuarios
+* Registro de usuarios ✅
  - Al ingresar a la página solo se deben ver 2 botones con la imagen que represente un paciente o especialista, según esa elección mostrará el formulario correspondiente.
  - Estas imagenes tienen que estar en botones rectangulares uno abajo del otro.
+
+
+#### Agregados sprint 2
+* Sacar un turno 
+ - Comienza mostrando las ESPECIALIDADES en botones con la imagen de la especialidad, en caso de no tener muesra imagen por default. Deben ser botones rectangulares con el nombre de la especialidad debajo. ❌
+ - Una vez seleccionada mostrará los PROFESIONALES, en botones con la imagen de perfil de cada profesional y su nombre arriba de la foto. Estos botones deben ser rectangulares.✅

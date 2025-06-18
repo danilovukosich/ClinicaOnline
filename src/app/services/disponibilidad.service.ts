@@ -14,8 +14,8 @@ export class DisponibilidadService {
   
   getDisponibilidadesPorEspecialista(especialistaId: string) 
   {
-    const ref = collection(this.firestore, 'disponibilidades');
-    const q = query(ref, where('especialistaId', '==', especialistaId));
+    const col = collection(this.firestore, 'disponibilidades');
+    const q = query(col, where('especialistaId', '==', especialistaId));
 
     return collectionData(q, { idField: 'id' }) as any;
   }

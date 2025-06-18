@@ -9,6 +9,7 @@ import { UsuarioEspecialista } from '../models/usuario-especialista';
 import { from, Observable } from 'rxjs';
 import { deleteApp, initializeApp } from 'firebase/app';
 import { UsuarioAdmnistrador } from '../models/usuario-admnistrador';
+import { onAuthStateChanged } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -581,6 +582,16 @@ export class AuthService {
   GetRole()
   {
     return this.auth.currentUser?.displayName;
+  }
+
+  async GetRoleHome(): Promise<string | null> 
+  {
+    return new Promise((resolve) => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        resolve(user?.displayName ?? null);
+      });
+    });
   }
 
 }

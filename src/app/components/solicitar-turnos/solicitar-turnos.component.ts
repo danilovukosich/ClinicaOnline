@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { UsuariosService } from '../../services/usuarios.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { DisponibilidadService } from '../../services/disponibilidad.service';
+import { DiasDeSemanaPipe } from '../../pipes/cast/dias-de-semana.pipe';
 
 
 @Component({
@@ -22,14 +24,16 @@ import { MatIcon } from '@angular/material/icon';
             MatInputModule,
             CommonModule,
             MatCardModule,
-            MatIcon],
+            MatIcon,
+            DiasDeSemanaPipe],
   templateUrl: './solicitar-turnos.component.html',
   styleUrl: './solicitar-turnos.component.css'
 })
 export class SolicitarTurnosComponent {
 
   constructor(private especialista:EspecialistaService,
-              private usuarios:UsuariosService
+              private usuarios:UsuariosService,
+              private disponibilidadService:DisponibilidadService
   ){}
 
   especialidades:any[]=[];
@@ -37,6 +41,11 @@ export class SolicitarTurnosComponent {
 
   especialistas:any[]=[];
   selectedEspecialista: any =null;
+
+  disponibilidad: any[] = [];
+  turnosGenerados: any[] = [];
+  turnosOcupados: string[] = [];
+  turnoSeleccionado: any = null;
  
   private _formBuilder = inject(FormBuilder);
 
@@ -106,7 +115,7 @@ export class SolicitarTurnosComponent {
     return this.selectedEspecialista === especialista.id;
   }
 
-  onNextStep2(stepper: MatStepper) 
+  async onNextStep2(stepper: MatStepper) 
   {
     if (this.secondFormGroup.invalid) 
     {
@@ -114,6 +123,83 @@ export class SolicitarTurnosComponent {
       return;
     }
 
+    await this.cargarDisponibilidades();
+
+    console.log('Disponibilidad especialista:' + this.selectedEspecialista);
+    console.log('Disponibilidad:' + this.disponibilidad);
+    
     stepper.next();
   }
+
+  cargarDisponibilidades() 
+  {
+    let snapshot;
+
+    this.disponibilidadService.getDisponibilidadesPorEspecialista(this.selectedEspecialista).subscribe((dispo:any[])=>{
+      
+      snapshot = dispo;
+      console.log('hola1155', snapshot);
+      this.disponibilidad = snapshot.filter((d: any) => d.especialidad === this.selectedEspecialidad.key);
+      this.generarTurnosDesdeDisponibilidad();
+      
+      
+      console.log('disponibilidad dps de snapshot',this.disponibilidad);
+    });
+    
+  }
+
+  generarTurnosDesdeDisponibilidad() 
+  {
+    const hoy = new Date();
+    const diasAdelante = 15;
+
+    this.turnosGenerados = [];
+
+    for (let i = 0; i <= diasAdelante; i++) {
+      const fechaActual = new Date(hoy);
+      fechaActual.setDate(hoy.getDate() + i);
+
+      const diaSemana = fechaActual.toLocaleDateString('es-AR', { weekday: 'long' });
+      const dia = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+
+      const dispo = this.disponibilidad.find(d => d.dia === dia);
+      if (!dispo) continue;
+
+      const desde = this.parseHora(dispo.horarioDesde, fechaActual);
+      const hasta = this.parseHora(dispo.horarioHasta, fechaActual);
+      const frecuencia = Number(dispo.frecuencia); // minutos
+
+      let actual = new Date(desde);
+      while (actual < hasta) {
+        this.turnosGenerados.push({
+          fecha: new Date(actual),
+          hora: actual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          diaCompleto: actual.toLocaleDateString('es-AR'),
+          diaDeSemana: actual.getDay(),
+          timestamp: actual.getTime(), // clave única útil
+        });
+
+        actual = new Date(actual.getTime() + frecuencia * 60 * 1000);
+      }
+    }
+
+    console.log('Turnos generados:', this.turnosGenerados);
+  }
+
+  parseHora(hora: string, fechaBase: Date): Date 
+  {
+    const [h, m] = hora.split(':').map(Number);
+    const nuevaFecha = new Date(fechaBase);
+    nuevaFecha.setHours(h, m, 0, 0);
+    return nuevaFecha;
+  }
+
+  
+
+  seleccionarTurno(turno: any) 
+  {
+    this.turnoSeleccionado = turno;
+    console.log('Turno seleccionado:', turno);
+  }
+  
 }
