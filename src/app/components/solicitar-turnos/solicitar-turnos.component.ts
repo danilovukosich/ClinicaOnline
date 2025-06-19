@@ -5,13 +5,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import { EspecialistaService } from '../../services/especialista.service';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { UsuariosService } from '../../services/usuarios.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { DisponibilidadService } from '../../services/disponibilidad.service';
 import { DiasDeSemanaPipe } from '../../pipes/cast/dias-de-semana.pipe';
+import { ConfirmarTurnoComponent } from '../layouts/modals/confirmar-turno/confirmar-turno.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Auth } from '@angular/fire/auth';
+import { TurnosService } from '../../services/turnos.service';
 
 
 @Component({
@@ -25,7 +29,8 @@ import { DiasDeSemanaPipe } from '../../pipes/cast/dias-de-semana.pipe';
             CommonModule,
             MatCardModule,
             MatIcon,
-            DiasDeSemanaPipe],
+            DiasDeSemanaPipe,
+            MatDialogModule],
   templateUrl: './solicitar-turnos.component.html',
   styleUrl: './solicitar-turnos.component.css'
 })
@@ -33,7 +38,10 @@ export class SolicitarTurnosComponent {
 
   constructor(private especialista:EspecialistaService,
               private usuarios:UsuariosService,
-              private disponibilidadService:DisponibilidadService
+              private disponibilidadService:DisponibilidadService,
+              private dialog:MatDialog,
+              private auth:Auth,
+              private turnosService:TurnosService
   ){}
 
   especialidades:any[]=[];
@@ -46,6 +54,10 @@ export class SolicitarTurnosComponent {
   turnosGenerados: any[] = [];
   turnosOcupados: string[] = [];
   turnoSeleccionado: any = null;
+
+  // turnosPorDia: { [numero: number]: any[] } = {};
+  // nombresDias: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
  
   private _formBuilder = inject(FormBuilder);
 
@@ -59,7 +71,10 @@ export class SolicitarTurnosComponent {
   isLinear = false;
 
 
-  ngOnInit(): void {
+
+
+  ngOnInit(): void 
+  {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.especialista.GetEspecialidades().subscribe(epecialidades=>{
@@ -69,6 +84,7 @@ export class SolicitarTurnosComponent {
     
     
   }
+
   seleccionarEspecialidad(especialidad: any) 
   {
     this.selectedEspecialidad = especialidad;
@@ -123,6 +139,8 @@ export class SolicitarTurnosComponent {
       return;
     }
 
+    //cargar turnos seleccionados  
+
     await this.cargarDisponibilidades();
 
     console.log('Disponibilidad especialista:' + this.selectedEspecialista);
@@ -134,12 +152,13 @@ export class SolicitarTurnosComponent {
   cargarDisponibilidades() 
   {
     let snapshot;
-
+    this.traerTurnosOcupados();
     this.disponibilidadService.getDisponibilidadesPorEspecialista(this.selectedEspecialista).subscribe((dispo:any[])=>{
       
       snapshot = dispo;
       console.log('hola1155', snapshot);
       this.disponibilidad = snapshot.filter((d: any) => d.especialidad === this.selectedEspecialidad.key);
+
       this.generarTurnosDesdeDisponibilidad();
       
       
@@ -155,7 +174,8 @@ export class SolicitarTurnosComponent {
 
     this.turnosGenerados = [];
 
-    for (let i = 0; i <= diasAdelante; i++) {
+    for (let i = 0; i <= diasAdelante; i++) 
+    {
       const fechaActual = new Date(hoy);
       fechaActual.setDate(hoy.getDate() + i);
 
@@ -170,12 +190,17 @@ export class SolicitarTurnosComponent {
       const frecuencia = Number(dispo.frecuencia); // minutos
 
       let actual = new Date(desde);
-      while (actual < hasta) {
+      while (actual < hasta) 
+      {
         this.turnosGenerados.push({
-          fecha: new Date(actual),
+          //fecha: new Date(actual),
           hora: actual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          diaCompleto: actual.toLocaleDateString('es-AR'),
+          fecha: actual.toLocaleDateString('es-AR'),
           diaDeSemana: actual.getDay(),
+          especialidadId: this.selectedEspecialidad,
+          especialistaId:this.selectedEspecialista,
+          solicitanteId: this.auth.currentUser?.uid,
+          estado:'pendiente',
           timestamp: actual.getTime(), // clave única útil
         });
 
@@ -199,7 +224,25 @@ export class SolicitarTurnosComponent {
   seleccionarTurno(turno: any) 
   {
     this.turnoSeleccionado = turno;
-    console.log('Turno seleccionado:', turno);
+
+    console.log(this.turnoSeleccionado);
+    this.dialog.open(ConfirmarTurnoComponent, {
+      data: {
+        turno: turno
+      }
+    });
+    
   }
+
+  async traerTurnosOcupados()
+  {
+    this.turnosService
+    .getTurnosSeleccionados(this.selectedEspecialista, this.selectedEspecialidad)
+    .subscribe((turnos: any[]) => {
+      this.turnosOcupados = turnos.map(t => t.timestamp);
+      console.log('Turnos ocupados:', this.turnosOcupados);
+    });
+  }
+
   
 }

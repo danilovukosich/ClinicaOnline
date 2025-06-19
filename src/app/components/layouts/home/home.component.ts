@@ -34,12 +34,7 @@ export class HomeComponent {
         this.rol= await this.auth.GetRoleHome();   
     }
 
-    // ngAfterContentChecked(): void 
-    // {
-        
-    //     this.rol=this.auth.GetRole();
-        
-    // }
+ 
 
     
 

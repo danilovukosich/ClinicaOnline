@@ -17,7 +17,7 @@
                     <div class="w-full flex justify-center pt-10">
                         @if (firstFormGroup.get('especialidad')?.invalid && firstFormGroup.get('especialidad')?.touched) 
                         {
-                            <mat-error class="text-red-400">Debe <strong>selccionar</strong> una especialidad</mat-error>
+                            <div class="text-red-400">Debe <strong>selccionar</strong> una especialidad</div>
                         }
                     </div>
                 
@@ -34,13 +34,13 @@
 
                         @for (especialista of especialistas; track $index)
                         {
-                            <mat-card class="w-52 h-52 !bg-blue-100 !pb-4 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
+                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
                                     [ngClass]="{'transition ease-in !border-3 !border-blue-400': isSeleccionadoEspecialista(especialista)}"
                                     (click)="seleccionarEspecialista(especialista)">
                                 <mat-card-header>
                                     <mat-card-title class="!font-medium">{{especialista.nombre}} {{especialista.apellido}}</mat-card-title>
                                 </mat-card-header>
-                                <img mat-card-image class="h-40" src="{{especialista.imagen}}" alt="">
+                                <img mat-card-image  [src]="especialista.imagen" class="h-40 w-full object-cover rounded-b-md">
                             </mat-card>
                         }
                     }
@@ -72,15 +72,15 @@
                             <h1 class="text-2xl mt-6">Seleccionar horario</h1>
             </div> -->
             <div class="w-full h-full flex flex-col items-center pt-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5  gap-4">
                     <button
                         *ngFor="let turno of turnosGenerados"
                         mat-stroked-button
                         color="primary"
                         [disabled]="turnosOcupados.includes(turno.timestamp)"
                         (click)="seleccionarTurno(turno)">
-                        <div class="flex flex-col justify-center p-1">
-                            <div class="text-sm">{{ turno.diaCompleto }}</div>
+                        <div class="flex flex-col justify-center p-2">
+                            <div class="text-sm">{{ turno.fecha }}</div>
                             <div class="flex items-center">
                                 <div class="text-sm font-semibold">{{ turno.hora }}</div>
                                 <div class="text-sm font-semibold ml-4">{{ turno.diaDeSemana | diasDeSemana }}</div>
@@ -89,11 +89,11 @@
                     </button>
                 </div>
 
-                <div *ngIf="turnosGenerados.length === 0" class="pt-6 text-gray-500">
-                No hay turnos disponibles para los próximos 15 días.
+                <div *ngIf="turnosGenerados.length === 0" class="py-40 text-gray-500">
+                    No hay turnos disponibles para los próximos 15 días.
                 </div>
             </div>
-            <div class="w-full flex justify-between px-10 mt-6">
+            <div class="w-full flex justify-between px-10 mt-6 self-baseline">
                 <button mat-button matStepperPrevious>Atras</button>
                 <button mat-button (click)="stepper.reset()">Confirmar turno</button>
             </div>
