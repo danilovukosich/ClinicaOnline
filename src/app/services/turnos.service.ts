@@ -13,7 +13,25 @@ export class TurnosService {
   getTurnosSeleccionados(especialistaId: string, especialidadId:string) 
   {
     const col = collection(this.firestore, 'turnos');
-    const q = query(col, where('especialistaId', '==', especialistaId), where('especialidadId', '==', especialidadId));
+    const q = query(col, where('especialistaId', '==', especialistaId), 
+                         where('especialidadId', '==', especialidadId),
+                         where('estado', 'in', ['pendiente', 'aceptado', 'finalizado']));
+
+    return collectionData(q);
+  }
+
+  getTodosTurnos()
+  {
+    const col = collection(this.firestore, 'turnos');
+    const q = query(col);
+
+    return collectionData(q);
+  }
+
+  getTurnosPaciente(solicitanteId: string)
+  {
+    const col = collection(this.firestore, 'turnos');
+    const q = query(col, where('solicitanteId', '==', solicitanteId));
 
     return collectionData(q);
   }

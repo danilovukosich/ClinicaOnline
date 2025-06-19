@@ -1,6 +1,6 @@
 export interface Turno {
     id?: string;
-    fecha: Date;
+    fecha: string;
     hora: string;
     diaDeSemana: number;
     especialidadId: any;
