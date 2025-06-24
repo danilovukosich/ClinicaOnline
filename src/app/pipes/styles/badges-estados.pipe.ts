@@ -14,6 +14,7 @@ export class BadgesEstadosPipe implements PipeTransform {
       case 'aceptado': return 'bg-green-200 text-green-700';
       case 'pendiente': return 'bg-yellow-200 text-yellow-700';
       case 'cancelado': return 'bg-red-200 text-red-700';
+      case 'finalizado': return 'bg-blue-200 text-blue-700';
       default: return 'bg-gray-200 text-gray-700';
     }
   }

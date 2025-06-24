@@ -1,4 +1,4 @@
-import { addDoc, collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, Firestore, query, updateDoc, where } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Turno } from '../models/turno';
 
@@ -33,7 +33,15 @@ export class TurnosService {
     const col = collection(this.firestore, 'turnos');
     const q = query(col, where('solicitanteId', '==', solicitanteId));
 
-    return collectionData(q);
+    return collectionData(q, { idField: 'id' });
+  }
+
+  getTurnosEspecialista(especialistaId: string)
+  {
+    const col = collection(this.firestore, 'turnos');
+    const q = query(col, where('especialistaId', '==', especialistaId));
+
+    return collectionData(q, { idField: 'id' });
   }
 
   async generarTurno(turno:Turno)
@@ -42,9 +50,19 @@ export class TurnosService {
     await addDoc(col, turno);
   }
 
-  async cambiarEstadoDeTurno(estado:any)
+  async cambiarEstadoDeTurno(turnoId:string,estado:string)
   {
-
+    let docRef = doc(this.firestore, "turnos", turnoId);
+    
+    updateDoc(docRef, {
+      estado: estado
+    })
+    .then(() => {
+      console.log("Estado turno cambiado a: "+ estado);
+    })
+    .catch(error => {
+      console.error("Error al cambiar el estado del tunro:", error);
+    });
   }
 
 }
