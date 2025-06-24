@@ -12,6 +12,8 @@ import { NombreEspecialistaCompletoPipe } from '../../pipes/cast/nombre-especial
 import { TurnosService } from '../../services/turnos.service';
 import { AuthService } from '../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dejar-comentario.component';
 @Component({
     selector: 'app-mis-turnos',
     imports: [MatListModule,
@@ -21,7 +23,8 @@ import { NgToastService } from 'ng-angular-popup';
                     MatButtonModule,
                     MatIcon,
                     MatTooltipModule,
-                    NombreEspecialistaCompletoPipe],
+                    NombreEspecialistaCompletoPipe,
+                    MatDialogModule],
     templateUrl: './mis-turnos.component.html',
     styleUrl: './mis-turnos.component.css'
 })
@@ -41,7 +44,8 @@ export class MisTurnosComponent {
 
     constructor(private turnosService:TurnosService, 
                 private auth:AuthService,
-                private toast:NgToastService){}
+                private toast:NgToastService,
+                private dialog:MatDialog){}
 
     
 
@@ -82,6 +86,16 @@ export class MisTurnosComponent {
 
     cambiarEstadoTurno(idTurno:string, estado:string)
     {
+        if(estado=='cancelado' || estado=='rechazado')
+        {
+            this.dialog.open(DejarComentarioComponent, {
+                data:{
+                    idTurno: idTurno,
+                    estado: estado
+                }
+            });
+        }
+        else
         this.turnosService.cambiarEstadoDeTurno(idTurno, estado);
     }
 
@@ -90,10 +104,31 @@ export class MisTurnosComponent {
 
     }
 
+    verComentario()
+    {
+
+    }
+
     dejarResenia()
     {
-        this.toast.success('reseña')
+        this.toast.success('dejar reseña');
     }
+
+    verResenia()
+    {
+        this.toast.success('ver reseña');
+    }
+
+    calificarAtencion()
+    {
+
+    }
+
+    completarEncuesta()
+    {
+
+    }
+
 
     
 }

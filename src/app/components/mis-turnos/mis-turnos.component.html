@@ -97,6 +97,14 @@
                         <mat-icon class="">question_answer</mat-icon>
                     </button> 
 
+                    <button *ngIf="turno.estado=='finalizado' && turno.resenia" 
+                            (click)="verResenia()"
+                            mat-mini-fab matTooltip="Ver reseña" 
+                            [matTooltipPosition]="'above'" 
+                            class="!bg-blue-400 !text-white !shadow-md">
+                        <mat-icon class="">visibility</mat-icon>
+                    </button> 
+
                 </td>
                 </ng-container>
 

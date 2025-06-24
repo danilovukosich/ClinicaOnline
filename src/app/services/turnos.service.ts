@@ -65,4 +65,19 @@ export class TurnosService {
     });
   }
 
+  async dejarComentarioEnTurno(turnoId:string,comentario:string)
+  {
+    let docRef = doc(this.firestore, "turnos", turnoId);
+    
+    updateDoc(docRef, {
+      comentario: comentario
+    })
+    .then(() => {
+      console.log("comentario turno cambiado a: "+ comentario);
+    })
+    .catch(error => {
+      console.error("Error al cambiar el comentario del tunro:", error);
+    });
+  }
+
 }

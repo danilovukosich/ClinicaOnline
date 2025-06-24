@@ -1,0 +1,25 @@
+<div class="w-96 h-auto rounded-2xl bg-white flex flex-col text-center items-center p-8 py-10 overflow-hidden" >
+    <h1 class="text-3xl font-semibold ">{{data.estado == 'cancelado' ? '¿Cancelar turno?' : 'Rechazar turno?'}}</h1>
+    <!-- <h1 class="text-2xl font-semibold text-blue-500">{{data.dia}}</h1> -->
+    <section class="w-full h-full pt-10 justify-center items-center">
+
+            <div class="flex w-full text-center justify-center gap-4 pt-4">
+                <form class="w-full" [formGroup]="form" (submit)="dejarComentario()">
+                    <mat-form-field class="w-full">
+                        <mat-label>Dejar un comentario...</mat-label>
+                        <textarea formControlName="comentario" matInput placeholder="Ejemplo..."></textarea>
+                    </mat-form-field>
+
+
+                    <section class="w-full h-full flex flex-col items-center">
+                        <div class="flex gap-2 pt-12" >
+                            <button (click)="Cancelar()" type="button" mat-raised-button class="!text-white !bg-red-400">
+                                Cancelar
+                            </button>
+                            <button type="submit"  mat-flat-button >Aceptar</button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+    </section>
+</div>
