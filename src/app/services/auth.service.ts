@@ -9,6 +9,7 @@ import { UsuarioEspecialista } from '../models/usuario-especialista';
 import { from, Observable } from 'rxjs';
 import { deleteApp, initializeApp } from 'firebase/app';
 import { UsuarioAdmnistrador } from '../models/usuario-admnistrador';
+import { onAuthStateChanged } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -549,24 +550,27 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  GetUserAsync(): Promise<User | null> {
-  return new Promise((resolve) => {
-    this.auth.onAuthStateChanged((user) => {
-      resolve(user);
+  GetUserAsync(): Promise<User | null> 
+  {
+    return new Promise((resolve) => {
+      this.auth.onAuthStateChanged((user) => {
+        resolve(user);
+      });
     });
-  });
-}
+  }
 
   GetUserInfo(): Observable<any> 
   {
     return new Observable((observer) => {
     this.auth.onAuthStateChanged(async (user) => {
-      if (!user) {
+      if (!user) 
+      {
         observer.error('Usuario no autenticado');
         return;
       }
 
-      try {
+      try 
+      {
         const docRef = doc(this.firestore, `userInfo/${user.uid}`);
         const userInfoSnap = await getDoc(docRef);
         observer.next(userInfoSnap.data());
@@ -574,13 +578,51 @@ export class AuthService {
       } catch (error) {
         observer.error(error);
       }
+      });
     });
-  });
+  }
+
+  getUserInfoById(uid: string): Observable<any> {
+    return new Observable((observer) => {
+      const docRef = doc(this.firestore, `userInfo/${uid}`);
+      console.log(docRef);
+      
+      getDoc(docRef)
+        .then((snap) => {
+          if (snap.exists()) {
+            observer.next(snap.data());
+          } else {
+            observer.error('No existe el usuario');
+          }
+          observer.complete();
+        })
+        .catch((err) => observer.error(err));
+    });
   }
 
   GetRole()
   {
     return this.auth.currentUser?.displayName;
+  }
+
+  async GetRoleHome(): Promise<string | null> 
+  {
+    return new Promise((resolve) => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        resolve(user?.displayName ?? null);
+      });
+    });
+  }
+
+  async GetUserId(): Promise<string | null> 
+  {
+    return new Promise((resolve) => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        resolve(user?.uid ?? null);
+      });
+    });
   }
 
 }

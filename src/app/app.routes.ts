@@ -10,6 +10,7 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { authGuard } from './guards/auth.guard';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicitar-turnos.component';
+import { TurnosComponent } from './components/turnos/turnos.component';
 
 
 export const routes: Routes = [
@@ -25,7 +26,8 @@ export const routes: Routes = [
             {path:'misTurnos', component:MisTurnosComponent},
             {path:'solicitarTurno', component:SolicitarTurnosComponent},
             {path:'miPerfil', component:MiPerfilComponent},
-            {path:'usuarios', component:UsuariosComponent}
+            {path:'usuarios', component:UsuariosComponent},
+            {path:'turnos', component:TurnosComponent},
         ]
     },
 
