@@ -10,9 +10,14 @@
         }
         @if (rol=="admin")
         {
-            <button mat-flat-button routerLink="usuarios" style="margin-top: 10px;"><mat-icon>group</mat-icon>Usuarios</button>
             <button mat-flat-button routerLink="turnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Turnos</button>
+            <button mat-flat-button routerLink="usuarios" style="margin-top: 10px;"><mat-icon>group</mat-icon>Usuarios</button>
             
+        }
+        @if(rol=='especialista')
+        {
+            <button mat-flat-button routerLink="pacientes" style="margin-top: 10px;"><mat-icon>group</mat-icon>Pacientes</button>
+
         }
         <button mat-flat-button routerLink="miPerfil" style="margin-top: 10px;"> <mat-icon>person</mat-icon> Mi perfil</button>
     </mat-drawer>
@@ -23,7 +28,6 @@
         <div class="w-full h-full">
             <router-outlet></router-outlet>            
         </div>
-            
         
         <!-- SPINNER -->
         <div *ngIf="cargando" class="spinner-overlay">

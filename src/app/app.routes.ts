@@ -11,6 +11,7 @@ import { authGuard } from './guards/auth.guard';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicitar-turnos.component';
 import { TurnosComponent } from './components/turnos/turnos.component';
+import { PacientesComponent } from './components/pacientes/pacientes.component';
 
 
 export const routes: Routes = [
@@ -28,6 +29,7 @@ export const routes: Routes = [
             {path:'miPerfil', component:MiPerfilComponent},
             {path:'usuarios', component:UsuariosComponent},
             {path:'turnos', component:TurnosComponent},
+            {path:'pacientes', component:PacientesComponent},
         ]
     },
 

@@ -28,7 +28,7 @@
                 
                 <ng-container matColumnDef="especialista">
                 <th mat-header-cell *matHeaderCellDef> Especialista </th>
-                <td mat-cell *matCellDef="let turno"> {{turno.especialistaNombre}} </td>
+                <td mat-cell *matCellDef="let turno"> {{turno.especialistaNombre | nombreEspecialistaCompleto }} </td>
                 </ng-container>
 
 

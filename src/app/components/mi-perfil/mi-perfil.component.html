@@ -1,4 +1,4 @@
-<div class="welcome-section rounded-2xl">
+<div class="welcome-section rounded-2xl overflow-auto">
     <section class="contenido flex gap-12 rounded-t-2xl object-contain bg-cover bg-no-repeat bg-center"  [ngStyle]="{'background-image': 'url(' + (imagen2 || fondoDePortada) + ')'}">
 
         
@@ -39,7 +39,7 @@
     {
         @case("especialista")
         {
-            <div>
+            <div class="h-auto">
 
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8  w-full h h-full">
 
@@ -90,10 +90,10 @@
 
         @case ("paciente")
         {
-            <section class=" w-full h-auto bg-gray-100 text-center justify-center pt-6">
+            <section class=" w-full h-auto auto bg-gray-100 text-center justify-center pt-6">
                 <div class="flex w-full justify-center">
                     <mat-icon class="mt-1.5 mr-2">history</mat-icon>
-                    <h2 class=" text-3xl font-semibold">Mi historial</h2>
+                    <h2 class=" text-3xl font-semibold">Historia clinica</h2>
                 </div>
             </section>
         }

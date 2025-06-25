@@ -1,0 +1,24 @@
+
+<div class="rounded-2xl bg-white px-12 py-20 h-full overflow-auto">
+
+    <div class="w-full text-center">
+        <h1 class="text-5xl font-bold mb-20 mt-2 ">Pacientes</h1>
+    </div>
+    <section class="flex gap-4">
+    
+        @for (paciente of pacientes; track $index) 
+        {
+            <mat-card class="w-72 h-96 !bg-blue-100">
+                <img mat-card-image class="h-52 " src="{{paciente.imagen}}" alt="">
+                <mat-card-header>
+                    <mat-card-title class="!font-medium">{{paciente.nombre}} {{paciente.apellido}}</mat-card-title>
+                    <mat-card-subtitle>{{paciente.obraSocial}}</mat-card-subtitle>
+                </mat-card-header>
+    
+                <mat-card-actions class="justify-evenly">
+                    <button mat-button>Historia c.</button>
+                </mat-card-actions>
+            </mat-card>
+        }
+    </section>
+</div>

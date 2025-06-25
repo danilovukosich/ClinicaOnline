@@ -44,6 +44,18 @@ export class UsuariosService {
     
   }
 
+  GetPacientesDeEspecialista(idsTurnos:string[])
+  {
+    console.log('tunros:', idsTurnos);
+    let col = collection(this.firestore, "userInfo");
+    let q!:any;
+
+    q = query(col, where('rol', '==', 'paciente'),
+                  where('id', 'in', idsTurnos));
+    
+    return collectionData(q, { idField: 'id' });
+  }
+
   SetEstadoCero(userId:any)
   {
     let docRef = doc(this.firestore, "userInfo", userId);
