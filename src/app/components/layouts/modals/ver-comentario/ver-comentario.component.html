@@ -1,0 +1,23 @@
+<div class="w-96 h-auto rounded-2xl bg-white flex flex-col text-center items-center p-8 py-10" >
+    <h1 class="text-3xl font-semibold ">Reseña</h1>
+    <!-- <h1 class="text-2xl font-semibold text-blue-500">{{data.dia}}</h1> -->
+    <section class="w-full h-full pt-10 text-center justify-center items-center">
+       
+
+            <div class="flex w-auto text-center justify-center gap-4">
+               {{data.turno.comentario ?? ''}}
+            </div>
+            
+            
+        
+        
+            <section class="w-full h-full flex flex-col items-center">
+                <div class="flex gap-2 pt-12" >
+                    <button (click)="Cerrar()" type="button" mat-raised-button class="!text-white !bg-red-400">
+                        Cerrar
+                    </button>
+                </div>
+            </section>
+        
+    </section>
+</div>

@@ -25,7 +25,7 @@ export class TurnosService {
     const col = collection(this.firestore, 'turnos');
     const q = query(col);
 
-    return collectionData(q);
+    return collectionData(q, { idField: 'id' });
   }
 
   getTurnosPaciente(solicitanteId: string)
@@ -77,6 +77,16 @@ export class TurnosService {
     })
     .catch(error => {
       console.error("Error al cambiar el comentario del tunro:", error);
+    });
+  }
+
+
+  async calificarAtencionTurno(idTurno:string, calificacion:number)
+  {
+    let col = collection(this.firestore, 'calificaciones')
+    await addDoc(col, {
+      idTurno: idTurno,
+      calificacion: calificacion
     });
   }
 

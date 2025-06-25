@@ -14,6 +14,9 @@ import { AuthService } from '../../services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dejar-comentario.component';
+import { MatInputModule } from '@angular/material/input';
+import { VerComentarioComponent } from '../layouts/modals/ver-comentario/ver-comentario.component';
+import { CalificarAtencionComponent } from '../layouts/modals/calificar-atencion/calificar-atencion.component';
 @Component({
     selector: 'app-mis-turnos',
     imports: [MatListModule,
@@ -24,7 +27,8 @@ import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dej
                     MatIcon,
                     MatTooltipModule,
                     NombreEspecialistaCompletoPipe,
-                    MatDialogModule],
+                    MatDialogModule,
+                    MatInputModule,],
     templateUrl: './mis-turnos.component.html',
     styleUrl: './mis-turnos.component.css'
 })
@@ -65,6 +69,12 @@ export class MisTurnosComponent {
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
                 this.dataSource.paginator = this.paginator;   
                 console.log(this.turnos, this.dataSource);
+
+                this.dataSource.filterPredicate = (data: Turno, filter: string) => {
+                    const dataStr = JSON.stringify(data).toLowerCase();
+                    return dataStr.includes(filter);
+                };
+
             });
         }
         else if(this.rol=='especialista')
@@ -74,8 +84,23 @@ export class MisTurnosComponent {
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
                 this.dataSource.paginator = this.paginator;   
                 console.log(this.turnos);
+
+                this.dataSource.filterPredicate = (data: Turno, filter: string) => {
+                    const dataStr = JSON.stringify(data).toLowerCase();
+                    return dataStr.includes(filter);
+                };
+                
             });
         }
+    }
+
+
+
+
+    applyFilter(event: Event) 
+    {
+        const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+        this.dataSource.filter = filterValue;
     }
 
     ngAfterViewInit() 
@@ -86,7 +111,7 @@ export class MisTurnosComponent {
 
     cambiarEstadoTurno(idTurno:string, estado:string)
     {
-        if(estado=='cancelado' || estado=='rechazado')
+        if(estado=='cancelado' || estado=='rechazado' || estado == 'finalizado')
         {
             this.dialog.open(DejarComentarioComponent, {
                 data:{
@@ -104,9 +129,13 @@ export class MisTurnosComponent {
 
     }
 
-    verComentario()
+    verComentario(turno:Turno)
     {
-
+        this.dialog.open(VerComentarioComponent, {
+                data:{
+                    turno: turno
+                }
+            });
     }
 
     dejarResenia()
@@ -119,9 +148,13 @@ export class MisTurnosComponent {
         this.toast.success('ver reseña');
     }
 
-    calificarAtencion()
+    calificarAtencion(turno:Turno)
     {
-
+        this.dialog.open(CalificarAtencionComponent, {
+                data:{
+                    turno: turno
+                }
+            });
     }
 
     completarEncuesta()

@@ -65,7 +65,7 @@ export class MiPerfilComponent {
   async ngOnInit() {
     
     
-    this.cargando=true
+    this.cargando=true;
     this.user = await this.authService.GetUserAsync();
     this.userInfo$ = this.authService.GetUserInfo();
     this.rol = this.authService.GetRole();

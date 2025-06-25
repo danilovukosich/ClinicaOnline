@@ -2,13 +2,13 @@
     <section class="contenido flex gap-12 rounded-t-2xl object-contain bg-cover bg-no-repeat bg-center"  [ngStyle]="{'background-image': 'url(' + (imagen2 || fondoDePortada) + ')'}">
 
         
-        <div class="foto mr-10 ml-6">
-            <img [src]="user?.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg'" class="profile-image">
+        <div class="foto mr-10 ml-6 ">
+            <img [src]="user?.photoURL ?? 'https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg'" class="profile-image shadow-2xl">
         </div>
 
         <div class=" w-2/3" *ngIf="userInfo$ | async as userInfo">
 
-            <section class=" mt-6 shadow-lg p-6 w-3/4 bg-blue-200 rounded-2xl">
+            <section class=" mt-6 shadow-xl p-6 w-3/4 bg-white rounded-2xl">
 
                 <div class=" ml-10">
                     <span class="text-4xl font-bold ">

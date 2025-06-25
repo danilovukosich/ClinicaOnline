@@ -1,5 +1,21 @@
 <div class="w-96 h-auto rounded-2xl bg-white flex flex-col text-center items-center p-8 py-10 overflow-hidden" >
-    <h1 class="text-3xl font-semibold ">{{data.estado == 'cancelado' ? '¿Cancelar turno?' : 'Rechazar turno?'}}</h1>
+
+    @switch (data.estado)
+    {
+        @case ('finalizado')
+        {
+            <h1 class="text-3xl font-semibold ">Dejar reseña</h1>
+        }
+        @case ('rechazado') 
+        {
+            <h1 class="text-3xl font-semibold ">Rechazar turno?</h1>
+        }
+        @default 
+        {
+            <h1 class="text-3xl font-semibold ">¿Cancelar turno?</h1>
+        }
+    }
+    
     <!-- <h1 class="text-2xl font-semibold text-blue-500">{{data.dia}}</h1> -->
     <section class="w-full h-full pt-10 justify-center items-center">
 

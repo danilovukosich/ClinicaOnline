@@ -55,14 +55,18 @@ export class DejarComentarioComponent {
       await this.turno.dejarComentarioEnTurno(this.data.idTurno, form.comentario)
       await this.turno.cambiarEstadoDeTurno(this.data.idTurno, this.data.estado);
       this.dialogRef.close(false);
-      
+
       if(this.data.estado=='cancelado')
       {
         this.toast.success('Turno cancelado');
       }
-      else
+      else if(this.data.estado=='rechazado')
       {
         this.toast.success('Turno rechazado');
+      }
+      else
+      {
+         this.toast.success('Turno Finalizado');
       }
 
     }
@@ -74,7 +78,7 @@ export class DejarComentarioComponent {
   }
 
 
-   Cancelar() 
+  Cancelar() 
   {
     this.dialogRef.close(false);
   }

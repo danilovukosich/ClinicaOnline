@@ -141,7 +141,7 @@ export class EditarDisponibilidadComponent {
       console.log('DISP',disp);
       
 
-      try 
+      try
       {
         
         await this.disponibilidadService.actualizarDisponibilidad(this.data.disponibilidad.id, disp);

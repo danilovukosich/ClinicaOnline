@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component,  inject} from '@angular/core';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -16,6 +17,7 @@ import { ConfirmarTurnoComponent } from '../layouts/modals/confirmar-turno/confi
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Auth } from '@angular/fire/auth';
 import { TurnosService } from '../../services/turnos.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -30,7 +32,8 @@ import { TurnosService } from '../../services/turnos.service';
             MatCardModule,
             MatIcon,
             DiasDeSemanaPipe,
-            MatDialogModule],
+            MatDialogModule,
+            MatProgressSpinnerModule],
   templateUrl: './solicitar-turnos.component.html',
   styleUrl: './solicitar-turnos.component.css'
 })
@@ -41,8 +44,11 @@ export class SolicitarTurnosComponent {
               private disponibilidadService:DisponibilidadService,
               private dialog:MatDialog,
               private auth:Auth,
+              private authService:AuthService,
               private turnosService:TurnosService
   ){}
+
+  cargando:boolean=false;
 
   especialidades:any[]=[];
   selectedEspecialidad: any = null;
@@ -71,16 +77,37 @@ export class SolicitarTurnosComponent {
   isLinear = false;
 
 
+  userInfo$!: Observable<any>;
+  nombreSolicitante!:string;
 
 
-  ngOnInit(): void 
+  async ngOnInit() 
   {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.cargando=true;
     this.especialista.GetEspecialidades().subscribe(epecialidades=>{
       this.especialidades=epecialidades;
       console.log(this.especialidades);
     });
+
+     this.userInfo$ = this.authService.GetUserInfo();
+
+    this.userInfo$.subscribe({
+        next: (userInfo) => {
+          console.log('Datos del usuario recibidos:', userInfo);
+          this.nombreSolicitante=userInfo.nombre + " " + userInfo.apellido;
+          console.log('(datos cargados)');
+          this.cargando = false;
+        },
+        error: (err) => {
+          console.error('Error al obtener datos del usuario:', err);
+          this.cargando = false;
+          console.log('(error)');
+        }
+    });
+
+    this.userInfo$ = await this.authService.GetUserInfo();
     
     
   }
@@ -95,7 +122,6 @@ export class SolicitarTurnosComponent {
             this.especialistas = usuarios;
             console.log('ESPECIALISTAS:', this.especialistas);
         });
-
 
     
   }
@@ -120,7 +146,7 @@ export class SolicitarTurnosComponent {
   {
     console.log('HOLAA');
     
-    this.selectedEspecialista = especialista.id;
+    this.selectedEspecialista = especialista;
     this.secondFormGroup.get('especialista')?.setValue(especialista.id);
     console.log('ESPECIALISTA:',especialista);
     
@@ -128,7 +154,7 @@ export class SolicitarTurnosComponent {
 
   isSeleccionadoEspecialista(especialista: any): boolean 
   {
-    return this.selectedEspecialista === especialista.id;
+    return this.selectedEspecialista === especialista;
   }
 
   async onNextStep2(stepper: MatStepper) 
@@ -153,7 +179,7 @@ export class SolicitarTurnosComponent {
   {
     let snapshot;
     this.traerTurnosOcupados();
-    this.disponibilidadService.getDisponibilidadesPorEspecialista(this.selectedEspecialista).subscribe((dispo:any[])=>{
+    this.disponibilidadService.getDisponibilidadesPorEspecialista(this.selectedEspecialista.id).subscribe((dispo:any[])=>{
       
       snapshot = dispo;
       console.log('hola1155', snapshot);
@@ -198,8 +224,10 @@ export class SolicitarTurnosComponent {
           fecha: actual.toLocaleDateString('es-AR'),
           diaDeSemana: actual.getDay(),
           especialidadId: this.selectedEspecialidad,
-          especialistaId:this.selectedEspecialista,
+          especialistaId:this.selectedEspecialista.id,
+          especialistaNombre:this.selectedEspecialista.nombre + " " + this.selectedEspecialista.apellido,
           solicitanteId: this.auth.currentUser?.uid,
+          solicitanteNombre: this.nombreSolicitante ,
           estado:'pendiente',
           timestamp: actual.getTime(), // clave única útil
         });
@@ -237,7 +265,7 @@ export class SolicitarTurnosComponent {
   async traerTurnosOcupados()
   {
     this.turnosService
-    .getTurnosSeleccionados(this.selectedEspecialista, this.selectedEspecialidad)
+    .getTurnosSeleccionados(this.selectedEspecialista.id, this.selectedEspecialidad)
     .subscribe((turnos: any[]) => {
       this.turnosOcupados = turnos.map(t => t.timestamp);
       console.log('Turnos ocupados:', this.turnosOcupados);
