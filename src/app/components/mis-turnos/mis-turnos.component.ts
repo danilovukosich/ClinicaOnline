@@ -17,6 +17,7 @@ import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dej
 import { MatInputModule } from '@angular/material/input';
 import { VerComentarioComponent } from '../layouts/modals/ver-comentario/ver-comentario.component';
 import { CalificarAtencionComponent } from '../layouts/modals/calificar-atencion/calificar-atencion.component';
+import { CargarHistoriaClinicaComponent } from '../layouts/modals/cargar-historia-clinica/cargar-historia-clinica.component';
 @Component({
     selector: 'app-mis-turnos',
     imports: [MatListModule,
@@ -124,10 +125,6 @@ export class MisTurnosComponent {
         this.turnosService.cambiarEstadoDeTurno(idTurno, estado);
     }
 
-    comentarioCancelar()
-    {
-
-    }
 
     verComentario(turno:Turno)
     {
@@ -138,15 +135,6 @@ export class MisTurnosComponent {
             });
     }
 
-    dejarResenia()
-    {
-        this.toast.success('dejar reseña');
-    }
-
-    verResenia()
-    {
-        this.toast.success('ver reseña');
-    }
 
     calificarAtencion(turno:Turno)
     {
@@ -157,9 +145,9 @@ export class MisTurnosComponent {
             });
     }
 
-    completarEncuesta()
+    cargarHistoriaClinica()
     {
-
+        this.dialog.open(CargarHistoriaClinicaComponent);
     }
 
 

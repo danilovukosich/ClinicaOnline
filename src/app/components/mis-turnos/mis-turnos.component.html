@@ -120,7 +120,7 @@
                     </button>
 
                     <button *ngIf="turno.estado=='finalizado' && turno.comentario" 
-                            (click)="verResenia()"
+                            (click)="cargarHistoriaClinica()"
                             mat-mini-fab matTooltip="Cargar historia clinica" 
                             [matTooltipPosition]="'above'" 
                             class="!bg-blue-400 !text-white !shadow-md">

@@ -1,0 +1,58 @@
+<div class="w-96 h-auto rounded-2xl bg-white flex flex-col text-center items-center p-4 pt-6" >
+    <h1 class="text-2xl font-semibold ">Historia clinica</h1>
+    <section class="w-full h-full pt-10">
+       
+        <form class="form w-full h-full">
+        <!-- <form class="form w-full h-full" [formGroup]="formCrearDisponibilidad" (submit)="CrearDisponibilidad()"> -->
+            <section class="w-full h-full flex flex-col items-center">
+                
+                <!-- <mat-form-field  class="text-sm h-17 w-80">
+                    <mat-label>Selecciona Especialidad</mat-label>
+                    <mat-select
+                    formControlName="especialidadForm">
+                        <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
+                            {{ especialidad }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field  class="text-sm h-17 w-80">
+                    <mat-label>Selecciona Frecuencia</mat-label>
+                    <mat-select
+                    [(ngModel)]="frecuenciaSeleccionada"
+                    formControlName="frecuenciaSeleccionadaForm">
+                        <mat-option value="120m">120 Min.</mat-option>
+                        <mat-option value="60m">60 Min.</mat-option>
+                        <mat-option value="40m">40 Min.</mat-option>
+                        <mat-option value="30m">30 Min.</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                
+                <mat-form-field class="text-sm h-17 w-80">
+                    <mat-label>Desde</mat-label>
+                    <input matInput [matTimepicker]="pickerDesde" matTimepickerMin = "8:00" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}"  formControlName="horarioDesde">
+                    <mat-timepicker-toggle matIconSuffix [for]="pickerDesde"/>
+                    <mat-timepicker #pickerDesde interval="{{frecuenciaSeleccionada}}"/>
+                </mat-form-field>
+
+                <mat-form-field class="text-sm h-17 w-80">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput [matTimepicker]="pickerHasta" [matTimepickerMin]="formCrearDisponibilidad.value.horarioDesde" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}" formControlName="horarioHasta">
+                    <mat-timepicker-toggle matIconSuffix [for]="pickerHasta"/>
+                    <mat-timepicker #pickerHasta interval="{{frecuenciaSeleccionada}}"/>
+                </mat-form-field> -->
+
+
+                <div class="flex gap-2 pt-10" >
+                    <button (click)="Cancelar()" type="button" mat-raised-button class="!text-white !bg-red-400">
+                        Cancelar
+                    </button>
+                    <button type="submit" mat-flat-button >Cargar</button>
+                </div>
+
+               
+            </section>
+        </form>
+    </section>
+</div>
