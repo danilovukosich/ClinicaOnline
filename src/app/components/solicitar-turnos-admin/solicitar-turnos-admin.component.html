@@ -1,1 +1,151 @@
-<p>solicitar-turnos-admin works!</p>
+<div class="bg-white w-full h-full rounded-2xl shadow-lg p-4 select-none">
+    <mat-stepper linear #stepper class="!rounded-2xl !h-full" [animationDuration]="'700'">
+         <mat-step [stepControl]="baseFormGroup" label="Seleccionar especialista">
+            <form [formGroup]="secondFormGroup">
+                <section class="flex flex-wrap gap-6 h-full items-center justify-center mt-20">
+                    @if(pacientes.length != 0)
+                    {
+
+                        @for (paciente of pacientes; track $index)
+                        {
+                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
+                                    [ngClass]="{'transition ease-in !border-3 !border-blue-400': isSeleccionadoPaciente(paciente)}"
+                                    (click)="seleccionarPaciente(paciente)">
+                                <mat-card-header>
+                                    <mat-card-title class="!font-medium">{{paciente.nombre}} {{paciente.apellido}}</mat-card-title>
+                                </mat-card-header>
+                                <img mat-card-image  [src]="paciente.imagen" class="h-40 w-full object-cover rounded-b-md">
+                            </mat-card>
+                        }
+                    }
+                    @else
+                    {
+                        <div class="w-full h-full flex flex-col justify-center items-center">
+                            <mat-icon class="!text-6xl !w-auto !h-auto ">highlight_off</mat-icon>
+                            <h1 class="text-2xl mt-6">No hay pacientes...</h1>
+                        </div>
+                    }
+                    
+                </section>
+                 <div class="w-full flex justify-center pt-10">
+                    @if (baseFormGroup.get('paciente')?.invalid && baseFormGroup.get('paciente')?.touched) 
+                    {   
+                        <mat-error class="text-red-400">Debe <strong>selccionar</strong> un paciente</mat-error>
+                    }
+                </div>
+                <div class="w-full flex justify-end pr-10 mt-6 ">
+                    <button mat-button (click)="onNextStep1(stepper)" >Siguiente</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup" label="Seleccionar Especialidad" class="!h-full">
+            <form [formGroup]="firstFormGroup" class="w-full h-full ">
+               
+                    <section class="flex flex-wrap gap-4 h-full items-center justify-center mt-20">
+
+                        <div *ngFor="let especialidad of especialidades"
+                        class="p-4 rounded bg-white w-60 cursor-pointer mt-2 shadow-md transition ease-in hover:scale-110"
+                        [ngClass]="{'bg-blue-100 ring-2 ring-blue-400': isSeleccionada(especialidad)}"
+                        (click)="seleccionarEspecialidad(especialidad)">
+    
+                            <h4 class="text-lg font-semibold text-center">{{ especialidad.name }}</h4>
+    
+                        </div>
+                    </section>
+                    <div class="w-full flex justify-center pt-10">
+                        @if (firstFormGroup.get('especialidad')?.invalid && firstFormGroup.get('especialidad')?.touched) 
+                        {
+                            <div class="text-red-400">Debe <strong>selccionar</strong> una especialidad</div>
+                        }
+                    </div>
+                
+                <div class="w-full flex justify-between px-10 mt-6">
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button  mat-button (click)="onNextStep(stepper)">Siguiente</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Seleccionar especialista">
+            <form [formGroup]="secondFormGroup">
+                <section class="flex flex-wrap gap-6 h-full items-center justify-center mt-20">
+                    @if(especialistas.length != 0)
+                    {
+
+                        @for (especialista of especialistas; track $index)
+                        {
+                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
+                                    [ngClass]="{'transition ease-in !border-3 !border-blue-400': isSeleccionadoEspecialista(especialista)}"
+                                    (click)="seleccionarEspecialista(especialista)">
+                                <mat-card-header>
+                                    <mat-card-title class="!font-medium">{{especialista.nombre}} {{especialista.apellido}}</mat-card-title>
+                                </mat-card-header>
+                                <img mat-card-image  [src]="especialista.imagen" class="h-40 w-full object-cover rounded-b-md">
+                            </mat-card>
+                        }
+                    }
+                    @else
+                    {
+                        <div class="w-full h-full flex flex-col justify-center items-center">
+                            <mat-icon class="!text-6xl !w-auto !h-auto ">highlight_off</mat-icon>
+                            <h1 class="text-2xl mt-6">No hay especilistas con esa especialidad...</h1>
+                        </div>
+                    }
+                    
+                </section>
+                 <div class="w-full flex justify-center pt-10">
+                    @if (secondFormGroup.get('especialista')?.invalid && secondFormGroup.get('especialista')?.touched) 
+                    {   
+                        <mat-error class="text-red-400">Debe <strong>selccionar</strong> un especilista</mat-error>
+                    }
+                </div>
+                <div class="w-full flex justify-between px-10 mt-6">
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button (click)="onNextStep2(stepper)" >Siguiente</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step label="Selecciona horario">
+           
+            <!-- <div class="w-full h-full flex flex-col justify-center items-center pt-24">
+                            <mat-icon class="!text-6xl !w-auto !h-auto ">schedule</mat-icon>
+                            <h1 class="text-2xl mt-6">Seleccionar horario</h1>
+            </div> -->
+            <div class="w-full h-full flex flex-col items-center pt-6">
+                <div class="grid grid-cols-1 md:grid-cols-5  gap-4">
+                    <button
+                        *ngFor="let turno of turnosGenerados"
+                        mat-stroked-button
+                        color="primary"
+                        [disabled]="turnosOcupados.includes(turno.timestamp)"
+                        (click)="seleccionarTurno(turno)">
+                        <div class="flex flex-col justify-center p-2">
+                            <div class="text-sm">{{ turno.fecha }}</div>
+                            <div class="flex items-center">
+                                <div class="text-sm font-semibold">{{ turno.hora }}</div>
+                                <div class="text-sm font-semibold ml-4">{{ turno.diaDeSemana | diasDeSemana }}</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div *ngIf="turnosGenerados.length === 0" class="py-40 text-gray-500">
+                    No hay turnos disponibles para los próximos 15 días.
+                </div>
+            </div>
+            <div class="w-full flex justify-between px-10 mt-6 self-baseline">
+                <button mat-button matStepperPrevious>Atras</button>
+                <button mat-button (click)="stepper.reset()">Salir</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+
+    <!-- <div *ngIf="cargando" class="spinner-overlay">
+        <mat-progress-spinner
+        mode="indeterminate"
+        diameter="50">
+        </mat-progress-spinner>
+    </div>
+    <div [class.loading]="cargando"></div> -->
+
+</div>
+

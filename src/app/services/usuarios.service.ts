@@ -27,7 +27,7 @@ export class UsuariosService {
         break;
     }
 
-    return collectionData(q);
+    return collectionData(q, { idField: 'id' });
   }
 
   GetEspecialistas(especialidad:any)

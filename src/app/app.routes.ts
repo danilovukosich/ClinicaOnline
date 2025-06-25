@@ -12,6 +12,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicitar-turnos.component';
 import { TurnosComponent } from './components/turnos/turnos.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { SolicitarTurnosAdminComponent } from './components/solicitar-turnos-admin/solicitar-turnos-admin.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
             {path:'welcomeText', component:WelcomeTextComponent},
             {path:'misTurnos', component:MisTurnosComponent},
             {path:'solicitarTurno', component:SolicitarTurnosComponent},
+            {path:'solicitarTurnoAdmin', component:SolicitarTurnosAdminComponent},
             {path:'miPerfil', component:MiPerfilComponent},
             {path:'usuarios', component:UsuariosComponent},
             {path:'turnos', component:TurnosComponent},
