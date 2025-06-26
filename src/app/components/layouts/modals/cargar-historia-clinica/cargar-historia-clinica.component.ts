@@ -12,6 +12,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { HistoriaClinicaService } from '../../../../services/historia-clinica.service';
 import { HistoriaClinica } from '../../../../models/historia-clinica';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-cargar-historia-clinica',
@@ -79,14 +80,17 @@ export class CargarHistoriaClinicaComponent {
     
     this.isLoading = true;
 
+    let fecha = new Date()
+
     const historia: HistoriaClinica = {
       altura: this.form.value.altura,
       peso: this.form.value.peso,
       temperatura: this.form.value.temperatura,
       presion: this.form.value.presion,
-      fecha: new Date().toLocaleDateString('es-AR'),
+      fecha: fecha.toLocaleDateString('es-AR'),
       turnoId: this.data.turno.id,
       pacienteId: this.data.turno.solicitanteId,
+      timestamp: fecha.getTime()
     };
 
     // Campos dinámicos

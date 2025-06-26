@@ -11,11 +11,11 @@ export class HistoriaClinicaService {
 
   getHistoriaClinicaPaciente(pacienteId:string)
   {
-    const col = collection(this.firestore, 'disponibilidades');
+    const col = collection(this.firestore, 'historiasClinicas');
     const q = query(col, where('pacienteId', '==', pacienteId));
     
     return collectionData(q, { idField: 'id' }) as any;
-    
+
   }
 
   async cargarHistoriaClinica(historiaClinica: HistoriaClinica) 

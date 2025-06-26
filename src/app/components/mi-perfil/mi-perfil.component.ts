@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CrearDisponibilidadComponent } from '../layouts/modals/crear-disponibilidad/crear-disponibilidad.component';
 import { EditarDisponibilidadComponent } from '../layouts/modals/editar-disponibilidad/editar-disponibilidad.component';
+import { HistoriaClinicaService } from '../../services/historia-clinica.service';
+import { HistoriaClinica } from '../../models/historia-clinica';
 
 
 export interface DisponibilidadPorDia {
@@ -53,11 +55,14 @@ export class MiPerfilComponent {
   dataSource: Disponibilidad[] = [];
   diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
+  historiasClinicas: HistoriaClinica[] = [];
+  columnasHistorias: string[] = ['fecha', 'altura', 'peso', 'temperatura', 'presion', 'datoExtra'];
 
   constructor(private authService: AuthService, 
               private auth: Auth,
               private disponibilidadService: DisponibilidadService,
-              private dialog:MatDialog)
+              private dialog:MatDialog,
+              private historiaClinicaService:HistoriaClinicaService)
   {
     
   }
@@ -95,8 +100,25 @@ export class MiPerfilComponent {
       }
       });
     }
+
+    if (this.rol === 'paciente') 
+    {
+      console.log('hola', this.user.uid);
+      
+      this.historiaClinicaService.getHistoriaClinicaPaciente(this.user.uid).subscribe((historial: HistoriaClinica[]) => {
+        this.historiasClinicas = historial;
+        console.log('Historias clínicas del paciente:', historial);
+      });
+    }
+
       
 
+  }
+
+  obtenerCamposDinamicos(historia: any): string[] 
+  {
+    const clavesFijas = ['id', 'altura', 'peso', 'temperatura', 'presion', 'fecha', 'turnoId', 'pacienteId', 'timestamp'];
+    return Object.keys(historia).filter(key => !clavesFijas.includes(key));
   }
 
   cargarDisponibilidades() 

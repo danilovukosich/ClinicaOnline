@@ -1,4 +1,4 @@
-import { addDoc, collection, collectionData, doc, Firestore, query, updateDoc, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, Firestore, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Turno } from '../models/turno';
 
@@ -40,6 +40,15 @@ export class TurnosService {
   {
     const col = collection(this.firestore, 'turnos');
     const q = query(col, where('especialistaId', '==', especialistaId));
+
+    return collectionData(q, { idField: 'id' });
+  }
+
+  getTurnosFinalizadosEspecialista(especialistaId: string)
+  {
+    const col = collection(this.firestore, 'turnos');
+    const q = query(col, where('especialistaId', '==', especialistaId),
+                          where('estado', '==' , 'finalizado'));
 
     return collectionData(q, { idField: 'id' });
   }

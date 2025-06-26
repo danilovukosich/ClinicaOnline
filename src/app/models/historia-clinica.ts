@@ -8,5 +8,6 @@ export interface HistoriaClinica {
     fecha: string;
     turnoId: string | any;
     pacienteId: string;
+    timestamp:number;
     [key: string]: any;
 }

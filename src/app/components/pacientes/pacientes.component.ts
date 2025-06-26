@@ -32,7 +32,7 @@ export class PacientesComponent {
 
     this.userId = await this.auth.GetUserId();
 
-    this.turnosService.getTurnosEspecialista(this.userId).subscribe((turnos:any[])=>{
+    this.turnosService.getTurnosFinalizadosEspecialista(this.userId).subscribe((turnos:any[])=>{
         this.turnos = turnos;
             
         console.log('TURNOS',this.turnos);
