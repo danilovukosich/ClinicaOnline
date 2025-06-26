@@ -92,8 +92,12 @@
         {
             <section class=" w-full h-auto auto bg-gray-50 text-center justify-center pt-6">
                 <div class="flex w-full justify-center">
-                    <mat-icon class="mt-1.5 mr-2">history</mat-icon>
-                    <h2 class=" text-3xl font-semibold mb-10">Historia clinica</h2>
+                    <div>
+                        <h2 class=" text-3xl font-semibold ">Historia clinica</h2>
+                        <button mat-button >
+                            <mat-icon>picture_as_pdf</mat-icon>Descargar historia clinica
+                        </button>
+                    </div>
                 </div>
 
                 @if(historiasClinicas.length > 0)
