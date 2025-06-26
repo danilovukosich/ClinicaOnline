@@ -65,8 +65,10 @@ export class MisTurnosComponent {
 
         if(this.rol=='paciente')
         {
-            this.turnosService.getTurnosPaciente(this.userId).subscribe((turnos:any[])=>{
-                this.turnos = turnos;
+            this.turnosService.getTurnosPacienteConHistoria(this.userId).subscribe((turnos:any[])=>{
+
+                const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+                this.turnos = turnosOrdenados;
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
                 this.dataSource.paginator = this.paginator;   
                 console.log(this.turnos, this.dataSource);
@@ -80,8 +82,10 @@ export class MisTurnosComponent {
         }
         else if(this.rol=='especialista')
         {
-            this.turnosService.getTurnosEspecialista(this.userId).subscribe((turnos:any[])=>{
-                this.turnos = turnos;
+            this.turnosService.getTurnosEspecialistaConHistoria(this.userId).subscribe((turnos:any[])=>{
+
+                const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+                this.turnos = turnosOrdenados;
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
                 this.dataSource.paginator = this.paginator;   
                 console.log(this.turnos);

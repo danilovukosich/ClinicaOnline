@@ -1,6 +1,8 @@
-import { addDoc, collection, collectionData, doc, Firestore, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, Firestore, getDocs, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Turno } from '../models/turno';
+import { switchMap } from 'rxjs';
+import { HistoriaClinica } from '../models/historia-clinica';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,32 @@ export class TurnosService {
     return collectionData(q, { idField: 'id' });
   }
 
+  getTodosTurnosConHistoria()
+  {
+    const col = collection(this.firestore, 'turnos');
+    const q = query(col);
+
+    return collectionData(q, { idField: 'id' }).pipe(
+      switchMap(async (turnos: any[]) => {
+        const historiasCol = collection(this.firestore, 'historiasClinicas');
+        const historiasSnap = await getDocs(historiasCol);
+
+        const historias = historiasSnap.docs.map(doc => ({
+          id: doc.id,
+          ...(doc.data() as HistoriaClinica)
+        }));
+
+        return turnos.map(turno => {
+          const historia = historias.find(h => h.turnoId === turno.id);
+          return {
+            ...turno,
+            historiaC: historia || null
+          };
+        });
+      })
+    );
+  }
+
   getTurnosPaciente(solicitanteId: string)
   {
     const col = collection(this.firestore, 'turnos');
@@ -36,12 +64,65 @@ export class TurnosService {
     return collectionData(q, { idField: 'id' });
   }
 
+  getTurnosPacienteConHistoria(uid: string) {
+    const colTurnos = collection(this.firestore, 'turnos');
+    const q = query(colTurnos, where('solicitanteId', '==', uid));
+
+    return collectionData(q, { idField: 'id' }).pipe(
+      switchMap(async (turnos: any[]) => {
+        const historiasCol = collection(this.firestore, 'historiasClinicas');
+        const historiasSnap = await getDocs(historiasCol);
+
+        const historias = historiasSnap.docs.map(doc => ({
+          id: doc.id,
+          ...(doc.data() as HistoriaClinica)
+        }));
+
+        return turnos.map(turno => {
+          const historia = historias.find(h => h.turnoId === turno.id);
+          return {
+            ...turno,
+            historiaC: historia || null
+          };
+        });
+      })
+    );
+  }
+
+
+
   getTurnosEspecialista(especialistaId: string)
   {
     const col = collection(this.firestore, 'turnos');
     const q = query(col, where('especialistaId', '==', especialistaId));
 
     return collectionData(q, { idField: 'id' });
+  }
+
+
+  getTurnosEspecialistaConHistoria(uid: string) {
+    const colTurnos = collection(this.firestore, 'turnos');
+    const q = query(colTurnos, where('especialistaId', '==', uid));
+
+    return collectionData(q, { idField: 'id' }).pipe(
+      switchMap(async (turnos: any[]) => {
+        const historiasCol = collection(this.firestore, 'historiasClinicas');
+        const historiasSnap = await getDocs(historiasCol);
+
+        const historias = historiasSnap.docs.map(doc => ({
+          id: doc.id,
+          ...(doc.data() as HistoriaClinica)
+        }));
+
+        return turnos.map(turno => {
+          const historia = historias.find(h => h.turnoId === turno.id);
+          return {
+            ...turno,
+            historiaC: historia || null
+          };
+        });
+      })
+    );
   }
 
   getTurnosFinalizadosEspecialista(especialistaId: string)
