@@ -1,3 +1,4 @@
+import { HorizontalPageBreakBehaviourType } from './../../../../node_modules/jspdf-autotable/dist/index.d';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +9,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { TurnosService } from '../../services/turnos.service';
 import { AuthService } from '../../services/auth.service';
 import { Turno } from '../../models/turno';
+import { VerHistoriaClinicaComponent } from '../layouts/modals/ver-historia-clinica/ver-historia-clinica.component';
 
 @Component({
   selector: 'app-pacientes',
@@ -22,7 +24,10 @@ export class PacientesComponent {
   idPacientes!:string[];
   userId!:any;
 
-  constructor(private turnosService:TurnosService, private auth:AuthService, private usuarios:UsuariosService, private dialog:MatDialog)
+  constructor(private turnosService:TurnosService, 
+              private auth:AuthService, 
+              private usuarios:UsuariosService, 
+              private dialog:MatDialog)
   {
     
   }
@@ -71,6 +76,18 @@ export class PacientesComponent {
 
     console.log('IDs únicos de pacientes:', this.idPacientes);
 
+  }
+
+  verHistoriaClinica(pacienteId:any, paceinteData:any)
+  {
+    console.log('Id ????', pacienteId);
+    
+    this.dialog.open(VerHistoriaClinicaComponent, {
+                    data:{
+                        pacienteId: pacienteId,
+                        pacienteData: paceinteData
+                    }
+                });
   }
 
 

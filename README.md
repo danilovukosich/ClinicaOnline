@@ -86,7 +86,7 @@ para la creacion de turnos.
 * Sección usuarios ❌
     - Solamente para el perfil Administrador, poder descargar un excel general con los datos de todos los usuarios. Mostrar los usuarios con CARD y al seleccionar un paciente me descarga los datos de que turnos tomo y con quien los tomó, también en excel.
 
-* Mi perfil	❌
+* Mi perfil	❌✅
     - Para los usuarios paciente, poder descargar un pdf con toda su historia clínica. El PDF tiene que tener logo de la clínica, título del informe y fecha de emisión."	Poder bajar Todas las atenciones que realice segun una ESPECIALIDAD seleccionada
 
 * Animaciones ❌

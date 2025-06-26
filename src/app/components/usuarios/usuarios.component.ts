@@ -9,6 +9,7 @@ import { RegisterPacienteComponent } from '../auth/register-paciente/register-pa
 import { MatIcon } from '@angular/material/icon';
 import { RegisterEspecialistaComponent } from '../auth/register-especialista/register-especialista.component';
 import { RegisterAdministradorComponent } from '../auth/register-administrador/register-administrador.component';
+import { VerHistoriaClinicaComponent } from '../layouts/modals/ver-historia-clinica/ver-historia-clinica.component';
 
 @Component({
     selector: 'app-usuarios',
@@ -76,4 +77,16 @@ export class UsuariosComponent {
 
         }
     }
+
+    verHistoriaClinica(pacienteId:any, paceinteData:any)
+      {
+        console.log('Id ????', pacienteId);
+        
+        this.dialog.open(VerHistoriaClinicaComponent, {
+                        data:{
+                            pacienteId: pacienteId,
+                            pacienteData: paceinteData
+                        }
+                    });
+      }
 }

@@ -33,7 +33,7 @@ export class DescargarPdfService {
       const xPos = (width - logoWidth) / 2;  
       const yPos = 10;  
 
-      doc.text(`Fecha emision: ${new Date().toLocaleDateString('es-AR')}`, 130, 10);
+      doc.text(`Fecha de emision: ${new Date().toLocaleDateString('es-AR')}`, 130, 10);
       doc.addImage(logo, 'PNG', xPos, yPos, logoWidth, logoHeight);
 
       const title = 'Clinica Online';
@@ -45,13 +45,15 @@ export class DescargarPdfService {
 
       // Datos del paciente
       doc.setFontSize(12);
-      doc.text(`Nombre del paciente: ${userInfo.nombre} ${userInfo.apellido}`, 10, titleYPos + 20);
-
+      doc.text(`Nombre del paciente: ${userInfo.nombre} ${userInfo.apellido}`, 10, titleYPos + 15);
+      doc.text(`DNI: ${userInfo.dni}`, 10, titleYPos + 20);
+      doc.text(`Edad: ${userInfo.edad}`, 10, titleYPos + 25);
+      doc.text(`Obra social: ${userInfo.swiss}`, 10, titleYPos + 30);
       // Validar si es paciente
       if (userInfo.rol === 'paciente') 
       {
         doc.setFontSize(16);
-        doc.text('Historial clinico del paciente', 10, titleYPos + 40);
+        doc.text('Historial clinico del paciente', 10, titleYPos + 45);
 
         const headers = ['Altura (cm)', 'Peso (kg)', 'Presión', 'Temperatura (°C)', 'Extra'];
         const clavesFijas = ['id', 'altura', 'peso', 'temperatura', 'presion', 'fecha', 'turnoId', 'pacienteId', 'timestamp'];
