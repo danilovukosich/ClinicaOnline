@@ -15,6 +15,8 @@ import { CrearDisponibilidadComponent } from '../layouts/modals/crear-disponibil
 import { EditarDisponibilidadComponent } from '../layouts/modals/editar-disponibilidad/editar-disponibilidad.component';
 import { HistoriaClinicaService } from '../../services/historia-clinica.service';
 import { HistoriaClinica } from '../../models/historia-clinica';
+import { DescargarPdfService } from '../../services/descargar-pdf.service';
+import { NgToastService } from 'ng-angular-popup';
 
 
 export interface DisponibilidadPorDia {
@@ -46,6 +48,7 @@ export class MiPerfilComponent {
 
   user:any;
   userInfo$!: Observable<any>;
+  userData!:any;
   imagen2!:string;
   fondoDePortada: string = 'https://cdn.wallpapersafari.com/30/78/5j8kxe.jpg';
   rol!:any;
@@ -62,7 +65,9 @@ export class MiPerfilComponent {
               private auth: Auth,
               private disponibilidadService: DisponibilidadService,
               private dialog:MatDialog,
-              private historiaClinicaService:HistoriaClinicaService)
+              private historiaClinicaService:HistoriaClinicaService,
+              private pdf:DescargarPdfService,
+              private toast:NgToastService)
   {
     
   }
@@ -74,6 +79,7 @@ export class MiPerfilComponent {
     this.user = await this.authService.GetUserAsync();
     this.userInfo$ = this.authService.GetUserInfo();
     this.rol = this.authService.GetRole();
+    
 
     this.userInfo$.subscribe({
         next: (userInfo) => {
@@ -81,6 +87,7 @@ export class MiPerfilComponent {
           this.imagen2 = userInfo.imagen2;
           this.especialidades=userInfo.especialidades;
           this.cargando = false; 
+          this.userData = userInfo;
           console.log('(datos cargados)');
         },
         error: (err) => {
@@ -167,6 +174,20 @@ export class MiPerfilComponent {
         especialidades: this.especialidades
       }
     });
+  }
+
+  async descargarHistoriaClinica() 
+  {
+    if(this.historiasClinicas.length > 0)
+    { 
+      await this.pdf.descargarHistoriaClinica(this.historiasClinicas, this.userData);
+      this.toast.success("¡Comenzo la descarga!")
+    }
+    else
+    {
+      this.toast.danger("¡No posee hitorial clinico!")
+    }
+    
   }
 
     
