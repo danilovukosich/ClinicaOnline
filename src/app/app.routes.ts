@@ -20,9 +20,9 @@ export const routes: Routes = [
 
     {path: "", redirectTo:"landing", pathMatch:'full' },
     {path:'landing', component:LandingComponent },
-    {path:'login', component:LoginComponent },
-    {path:'registroPaciente', component:RegisterPacienteComponent},
-    {path:'registroEspecialista', component:RegisterEspecialistaComponent},
+    {path:'login', component:LoginComponent , data: { animation: 'slideDown' }},
+    {path:'registroPaciente', component:RegisterPacienteComponent,  data: { animation: 'slideLeft' }},
+    {path:'registroEspecialista', component:RegisterEspecialistaComponent, data: { animation: 'slideRight' }},
     {path:'home', component:HomeComponent,/* canActivate: [authGuard],*/
         children:[
             {path:'welcomeText', component:WelcomeTextComponent},

@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+
 @Component({
     selector: 'app-home',
     imports: [MatButtonModule,
@@ -16,7 +17,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
         MatProgressSpinnerModule, CommonModule, RouterOutlet, RouterLink],
     templateUrl: './home.component.html',
-    styleUrl: './home.component.css'
+    styleUrl: './home.component.css',
+    
 })
 export class HomeComponent {
 
