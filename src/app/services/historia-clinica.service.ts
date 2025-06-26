@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, Firestore, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { HistoriaClinica } from '../models/historia-clinica';
 
 @Injectable({
@@ -9,6 +9,14 @@ export class HistoriaClinicaService {
 
   constructor(private firestore:Firestore) { }
 
+  getHistoriaClinicaPaciente(pacienteId:string)
+  {
+    const col = collection(this.firestore, 'disponibilidades');
+    const q = query(col, where('pacienteId', '==', pacienteId));
+    
+    return collectionData(q, { idField: 'id' }) as any;
+    
+  }
 
   async cargarHistoriaClinica(historiaClinica: HistoriaClinica) 
   {

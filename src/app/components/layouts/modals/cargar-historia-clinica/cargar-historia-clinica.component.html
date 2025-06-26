@@ -112,7 +112,12 @@
                     <button (click)="Cancelar()" type="button" mat-raised-button class="!text-white !bg-red-400">
                         Cancelar
                     </button>
-                    <button type="submit" mat-flat-button >Cargar</button>
+                    <button type="submit" mat-flat-button [disabled]="isLoading">
+                        <div class="flex gap-4">
+                            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                            <span *ngIf="!isLoading">Cargar</span>
+                        </div>
+                    </button>
                 </div>
 
                

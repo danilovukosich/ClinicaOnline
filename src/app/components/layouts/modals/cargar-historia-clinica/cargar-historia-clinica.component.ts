@@ -11,6 +11,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 import { NgToastService } from 'ng-angular-popup';
 import { HistoriaClinicaService } from '../../../../services/historia-clinica.service';
 import { HistoriaClinica } from '../../../../models/historia-clinica';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-cargar-historia-clinica',
@@ -21,7 +22,8 @@ import { HistoriaClinica } from '../../../../models/historia-clinica';
             MatSelectModule,
             MatButtonModule,
             MatFormFieldModule,
-            MatTimepickerModule],
+            MatTimepickerModule,
+            MatProgressSpinnerModule],
   templateUrl: './cargar-historia-clinica.component.html',
   styleUrl: './cargar-historia-clinica.component.css'
 })
@@ -36,6 +38,8 @@ export class CargarHistoriaClinicaComponent {
   valueDinamico1:any = '';
   valueDinamico2:any = '';
   valueDinamico3:any = '';
+
+  isLoading = false;
 
 
   constructor(private toast: NgToastService,
@@ -66,7 +70,14 @@ export class CargarHistoriaClinicaComponent {
 
   async cargarHistoriaClinica()
   {
-    let actual = new Date();
+
+    if (this.form.invalid) 
+    {
+      this.toast.danger('Complete correctamente los campos');
+      return;
+    }
+    
+    this.isLoading = true;
 
     const historia: HistoriaClinica = {
       altura: this.form.value.altura,
@@ -112,6 +123,10 @@ export class CargarHistoriaClinicaComponent {
     {
       this.toast.danger('Error inesperado al guardar la historia');
       console.error(error);
+    }
+    finally
+    {
+      this.isLoading = false;
     }
 
   }
