@@ -145,9 +145,13 @@ export class MisTurnosComponent {
             });
     }
 
-    cargarHistoriaClinica()
+    cargarHistoriaClinica(turno:Turno)
     {
-        this.dialog.open(CargarHistoriaClinicaComponent);
+        this.dialog.open(CargarHistoriaClinicaComponent, {
+                data:{
+                    turno: turno
+                }
+            });
     }
 
 

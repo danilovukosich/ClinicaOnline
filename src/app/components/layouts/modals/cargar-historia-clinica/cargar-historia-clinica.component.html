@@ -1,47 +1,111 @@
-<div class="w-96 h-auto rounded-2xl bg-white flex flex-col text-center items-center p-4 pt-6" >
-    <h1 class="text-2xl font-semibold ">Historia clinica</h1>
-    <section class="w-full h-full pt-10">
+<div class="w-auto h-auto rounded-2xl bg-white flex flex-col text-center items-center p-8 " >
+    <h1 class="text-3xl font-semibold ">Historia clinica</h1>
+    <section class="w-auto h-auto pt-10">
        
-        <form class="form w-full h-full">
-        <!-- <form class="form w-full h-full" [formGroup]="formCrearDisponibilidad" (submit)="CrearDisponibilidad()"> -->
-            <section class="w-full h-full flex flex-col items-center">
+        <form class="form w-auto h-auto " [formGroup]="form" (submit)="cargarHistoriaClinica()">
+       
+            <section class="w-auto h-auto flex flex-col items-center">
+
+                <section class="flex flex-col w-full px-10">
+
+                    <mat-form-field id="control-altura">
+                        <mat-label>Altura (cm)</mat-label>
+                        <input matInput
+                        placeholder="Ingresar"
+                        formControlName="altura"
+                        maxlength="3"
+                        type="number"
+                        min="0"
+                        max="300">
+                        <mat-error *ngIf="altura?.hasError('min')">Debe ser mayor o igual a 0.</mat-error>
+                        <mat-error *ngIf="altura?.hasError('max')">Debe ser menor o igual a 300.</mat-error>
+                    </mat-form-field>
                 
-                <!-- <mat-form-field  class="text-sm h-17 w-80">
-                    <mat-label>Selecciona Especialidad</mat-label>
-                    <mat-select
-                    formControlName="especialidadForm">
-                        <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
-                            {{ especialidad }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field  class="text-sm h-17 w-80">
-                    <mat-label>Selecciona Frecuencia</mat-label>
-                    <mat-select
-                    [(ngModel)]="frecuenciaSeleccionada"
-                    formControlName="frecuenciaSeleccionadaForm">
-                        <mat-option value="120m">120 Min.</mat-option>
-                        <mat-option value="60m">60 Min.</mat-option>
-                        <mat-option value="40m">40 Min.</mat-option>
-                        <mat-option value="30m">30 Min.</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
+        
                 
-                <mat-form-field class="text-sm h-17 w-80">
-                    <mat-label>Desde</mat-label>
-                    <input matInput [matTimepicker]="pickerDesde" matTimepickerMin = "8:00" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}"  formControlName="horarioDesde">
-                    <mat-timepicker-toggle matIconSuffix [for]="pickerDesde"/>
-                    <mat-timepicker #pickerDesde interval="{{frecuenciaSeleccionada}}"/>
-                </mat-form-field>
-
-                <mat-form-field class="text-sm h-17 w-80">
-                    <mat-label>Hasta</mat-label>
-                    <input matInput [matTimepicker]="pickerHasta" [matTimepickerMin]="formCrearDisponibilidad.value.horarioDesde" matTimepickerMax = "{{data.dia == 'Sábado' ? '14:00': '19:00'}}" formControlName="horarioHasta">
-                    <mat-timepicker-toggle matIconSuffix [for]="pickerHasta"/>
-                    <mat-timepicker #pickerHasta interval="{{frecuenciaSeleccionada}}"/>
-                </mat-form-field> -->
+                
+                    <mat-form-field id="control-altura">
+                        <mat-label>Peso (kg)</mat-label>
+                        <input matInput
+                        placeholder="Ingresar"
+                        formControlName="peso"
+                        maxlength="3"
+                        type="number"
+                        min="0"
+                        max="400">
+                        <mat-error *ngIf="peso?.hasError('min')">Debe ser mayor o igual a 0.</mat-error>
+                        <mat-error *ngIf="peso?.hasError('max')">Debe ser menor o igual a 400.</mat-error>
+                    </mat-form-field>
+                
+        
+                
+                    <mat-form-field id="control-altura">
+                        <mat-label>Temperatura (°C)</mat-label>
+                        <input matInput
+                        placeholder="Ingresar"
+                        formControlName="temperatura"
+                        maxlength="2"
+                        type="number"
+                        min="35"
+                        max="42">
+                        <mat-error *ngIf="temperatura?.hasError('min')">Debe ser mayor o igual a 35.</mat-error>
+                        <mat-error *ngIf="temperatura?.hasError('max')">Debe ser menor o igual a 42.</mat-error>
+                    </mat-form-field>
+                    
+                
+                    <mat-form-field id="control-altura">
+                        <mat-label>Presión Arterial</mat-label>
+                        <input matInput
+                        placeholder="Ejemplo: 120/80"
+                        formControlName="presion"
+                        type="text"
+                        maxlength="7">
+                        <mat-error *ngIf="presion?.hasError('pattern')">Formato inválido. Ejemplo: 120/80.</mat-error>
+                    </mat-form-field>
+                </section>
+                
+    
+                <!-- Campo Dinámico 1 -->
+                <div class="flex gap-4">
+                    <mat-form-field>
+                        <mat-label>Clave</mat-label> 
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoUno" type="text" [(ngModel)]="keyDinamico1">
+                        </mat-form-field>
+                
+                    <mat-form-field>
+                        <mat-label>Valor</mat-label>
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoUno" type="text" [(ngModel)]="valueDinamico1">
+                    </mat-form-field>
+                </div>
+                
+        
+                <!-- Campo Dinámico 2 -->
+                <div class="flex gap-4">
+                    <mat-form-field>
+                        <mat-label>Clave</mat-label> 
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoDos" type="text" [(ngModel)]="keyDinamico2">
+                        </mat-form-field>
+                
+                    <mat-form-field>
+                        <mat-label>Valor</mat-label>
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoDos" type="text" [(ngModel)]="valueDinamico2">
+                    </mat-form-field>
+                </div>
+                
+        
+                <!-- Campo Dinámico 3 -->
+                <div class="flex gap-4">
+                    <mat-form-field>
+                        <mat-label>Clave</mat-label> 
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoTres" type="text" [(ngModel)]="keyDinamico3">
+                        </mat-form-field>
+                
+                    <mat-form-field>
+                        <mat-label>Valor</mat-label>
+                        <input matInput placeholder="Ingresar" formControlName="campoDinamicoTres" type="text" [(ngModel)]="valueDinamico3">
+                    </mat-form-field>
+                </div>
+                    
 
 
                 <div class="flex gap-2 pt-10" >
