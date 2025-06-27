@@ -10,6 +10,7 @@ import { TurnosService } from '../../services/turnos.service';
 import { AuthService } from '../../services/auth.service';
 import { Turno } from '../../models/turno';
 import { VerHistoriaClinicaComponent } from '../layouts/modals/ver-historia-clinica/ver-historia-clinica.component';
+import { VerUltimosTurnosComponent } from '../layouts/modals/ver-ultimos-turnos/ver-ultimos-turnos.component';
 
 @Component({
   selector: 'app-pacientes',
@@ -86,6 +87,19 @@ export class PacientesComponent {
                     data:{
                         pacienteId: pacienteId,
                         pacienteData: paceinteData
+                    }
+                });
+  }
+
+
+  verUltimosTurnosPaciente(pacienteId:any, especialistaId:any)
+  {
+    console.log('Id ????', pacienteId);
+    
+    this.dialog.open(VerUltimosTurnosComponent, {
+                    data:{
+                        pacienteId: pacienteId,
+                        especialistaId: especialistaId
                     }
                 });
   }

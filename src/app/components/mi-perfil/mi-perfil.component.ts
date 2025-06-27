@@ -17,6 +17,9 @@ import { HistoriaClinicaService } from '../../services/historia-clinica.service'
 import { HistoriaClinica } from '../../models/historia-clinica';
 import { DescargarPdfService } from '../../services/descargar-pdf.service';
 import { NgToastService } from 'ng-angular-popup';
+import { MatSelectModule } from '@angular/material/select';
+import { EspecialistaService } from '../../services/especialista.service';
+import { DescargarHistorialTurnosComponent } from '../layouts/modals/descargar-historial-turnos/descargar-historial-turnos.component';
 
 
 export interface DisponibilidadPorDia {
@@ -37,7 +40,8 @@ export interface DisponibilidadPorDia {
         MatButtonModule,
         MatIcon,
         MatTooltipModule,
-        MatDialogModule],
+        MatDialogModule,
+        MatSelectModule],
     templateUrl: './mi-perfil.component.html',
     styleUrl: './mi-perfil.component.css'
 })
@@ -61,19 +65,23 @@ export class MiPerfilComponent {
   historiasClinicas: HistoriaClinica[] = [];
   columnasHistorias: string[] = ['fecha', 'altura', 'peso', 'temperatura', 'presion', 'datoExtra'];
 
+  especialidadesSelect!: Observable<any[]>;
+
   constructor(private authService: AuthService, 
               private auth: Auth,
               private disponibilidadService: DisponibilidadService,
               private dialog:MatDialog,
               private historiaClinicaService:HistoriaClinicaService,
               private pdf:DescargarPdfService,
-              private toast:NgToastService)
+              private toast:NgToastService,
+              private especialista:EspecialistaService)
   {
     
   }
   
   async ngOnInit() {
     
+    this.especialidadesSelect=this.especialista.GetEspecialidades();
     
     this.cargando=true;
     this.user = await this.authService.GetUserAsync();
@@ -117,6 +125,8 @@ export class MiPerfilComponent {
         console.log('Historias clínicas del paciente:', historial);
       });
     }
+
+    
 
       
 
@@ -179,7 +189,7 @@ export class MiPerfilComponent {
   async descargarHistoriaClinica() 
   {
     if(this.historiasClinicas.length > 0)
-    { 
+    {
       await this.pdf.descargarHistoriaClinica(this.historiasClinicas, this.userData);
       this.toast.success("¡Comenzo la descarga!")
     }
@@ -190,6 +200,15 @@ export class MiPerfilComponent {
     
   }
 
+
+  descargarHistorialTurnos() 
+  { 
+    this.dialog.open(DescargarHistorialTurnosComponent, {
+      data: {
+        userId: this.userData.id,
+      }
+    });
+  }
     
     
 

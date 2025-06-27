@@ -91,11 +91,17 @@
         @case ("paciente")
         {
             <section class=" w-full h-auto auto bg-gray-50 text-center justify-center pt-6">
-                <div class="flex w-full justify-center">
-                    <div>
+                <div class="flex w-full justify-between px-12 items-center">
+                    <div class="text-start">
                         <h2 class=" text-3xl font-semibold ">Historia clinica</h2>
+                        <h3 class="text-gray-400">Historial clinico del paciente.</h3>
+                    </div>
+                    <div class="flex flex-col items-start">
                         <button mat-button (click)="descargarHistoriaClinica()">
                             <mat-icon>picture_as_pdf</mat-icon>Descargar historia clinica
+                        </button>
+                        <button mat-button (click)="descargarHistorialTurnos()">
+                            <mat-icon>picture_as_pdf</mat-icon>Descargar turnos
                         </button>
                     </div>
                 </div>
