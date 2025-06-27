@@ -12,6 +12,7 @@ import { EspecialistaService } from '../../../../services/especialista.service';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { Turno } from '../../../../models/turno';
+import { DescargarExelService } from '../../../../services/descargar-exel.service';
 
 @Component({
   selector: 'app-descargar-historial-turnos',
@@ -39,6 +40,7 @@ export class DescargarHistorialTurnosComponent {
               private toast:NgToastService,
               private especialista: EspecialistaService,
               private turnosService:TurnosService,
+              private excel:DescargarExelService,
               @Inject(MAT_DIALOG_DATA) public data: { userId: string},
               private dialogRef: MatDialogRef<DescargarHistorialTurnosComponent>
   ){}
@@ -94,23 +96,20 @@ export class DescargarHistorialTurnosComponent {
   {
     this.form.markAllAsTouched();
     const form= this.form.value;
-
+    
     if(this.form.valid)
     {
       this.descargando = true;
 
-      this.turnosService.getTurnosPacienteFinalizadosPorEspecialidad(this.data.userId, form.especialidad).subscribe((turnos:any[])=>{
+      this.turnosService.getTurnosPacienteFinalizadosPorEspecialidad(this.data.userId, form.especialidad.key).subscribe((turnos:any[])=>{
 
         const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
         this.turnos = turnosOrdenados;
-
-
         console.log("Turnos para des:",this.turnos);
+
+        this.excel.descargarAtenciones(this.turnos, `Atenciones_${form.especialidad.name}`, form.especialidad.name);
+        
         this.descargando = false;
-
-
-        //DESCARGAR
-
         this.dialogRef.close(false);
 
       });

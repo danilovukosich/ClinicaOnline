@@ -1,7 +1,7 @@
 import { addDoc, collection, collectionData, doc, Firestore, getDocs, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Turno } from '../models/turno';
-import { switchMap } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { HistoriaClinica } from '../models/historia-clinica';
 
 @Injectable({
@@ -82,7 +82,7 @@ export class TurnosService {
                           where('especialidadId.key', '==', especialidadId),
                           where('estado', '==', 'finalizado'));
 
-    return collectionData(q, { idField: 'id' });
+    return collectionData(q, { idField: 'id' }).pipe(take(1));
   }
 
   getTurnosPacienteConEspecialista(solicitanteId: string, especialistaId:string)
