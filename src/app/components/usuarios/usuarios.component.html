@@ -1,9 +1,13 @@
 <div class="rounded-2xl bg-white px-8 py-8 h-full overflow-auto">
-    <div class="sticky flex justify-between">
+    <div class="sticky flex justify-between items-center">
             <div>
                 <h1 class="text-3xl font-medium">Usuarios</h1>
                 <h2 class="text-gray-500 mb-6">Listado de todos los usuarios del sistema.</h2>
-
+            </div>
+            <div>
+                 <button mat-button (click)="descargarInfoUsuarios()">
+                    <mat-icon>picture_as_pdf</mat-icon>Descargar Info. Usuarios
+                </button>
             </div>
     </div>
     <mat-tab-group class="h-auto">
@@ -28,6 +32,7 @@
             
                             <mat-card-actions class="justify-evenly">
                                 <button mat-button (click)="verHistoriaClinica(paciente.id, paciente)">Historia c.</button>
+                                <button mat-button (click)="descargarTurnos(paciente)">Historial Turnos.</button>
                             </mat-card-actions>
                         </mat-card>
                     }

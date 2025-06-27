@@ -83,7 +83,7 @@ para la creacion de turnos.
 * Sección Pacientes ✅
     - Para los especialistas. Solo deberá mostrar los usuarios que el especialista haya atendido al menos 1 vez. Mostrar los usuarios con CARD , con un detalle de CUANDO FUERON LOS ULTIMOS 3 TURNOS de ese paciente, junto con un acceso a su historia clinica.
 
-* Sección usuarios ❌
+* Sección usuarios ✅
     - Solamente para el perfil Administrador, poder descargar un excel general con los datos de todos los usuarios. 
     - Mostrar los usuarios con CARD y al seleccionar un paciente me descarga los datos de que turnos tomo y con quien los tomó, también en excel.
 

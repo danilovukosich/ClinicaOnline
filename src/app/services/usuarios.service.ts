@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, query, updateDoc, where } from '@angular/fire/firestore';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,14 @@ export class UsuariosService {
     }
 
     return collectionData(q, { idField: 'id' });
+  }
+
+  getAllUsers()
+  {
+    let col = collection(this.firestore, "userInfo");
+    const q = query(col);
+
+    return collectionData(q).pipe(take(1));
   }
 
   GetEspecialistas(especialidad:any)
