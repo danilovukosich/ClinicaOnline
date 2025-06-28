@@ -44,7 +44,7 @@ export class UsuariosService {
     let col = collection(this.firestore, "logs");
     const q = query(col);
 
-    return collectionData(q).pipe(take(1)); 
+    return collectionData(q); 
   }
 
   GetEspecialistas(especialidad:any)
