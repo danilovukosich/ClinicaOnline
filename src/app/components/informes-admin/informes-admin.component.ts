@@ -98,7 +98,12 @@ export class InformesAdminComponent {
                 labels: labelsEspecialidades,
                 datasets: [{
                     label:'Cantidad de turnos',
+                    barThickness: 50,
                     data: valoresEspecialidades,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(53, 112, 221, 0.7)',
+                    borderWidth: 1,
+                    borderColor: 'rgb(53, 112, 221)'
                   }]
               },
           });
