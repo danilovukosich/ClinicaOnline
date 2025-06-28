@@ -1,10 +1,49 @@
-<div class="bg-white w-full h-full rounded-2xl shadow-lg p-8 overflow-auto">
+<div class="bg-white w-full h-full rounded-2xl shadow-lg p-8 overflow-auto flex flex-col">
     <div class="sticky flex justify-between">
             <div>
                 <h1 class="text-3xl font-medium">Informes</h1>
                 <h2 class="text-gray-500 mb-6">Listado de infomrmes.</h2>
-
             </div>
-
     </div>
+    <section class="w-auto h-auto flex justify-evenly gap-10 mt-2 items-center">
+
+        <div class=" !w-80 !h-80 justify-center items-center text-center">
+            <h2 class="text-2xl font-medium text-gray-600">Cantidad de turnos por día:</h2>
+            <canvas  id="chartPie"></canvas>
+            <button class="mt-2" mat-button (click)="exportarGraficosPdf('chartPie','Cantidad de turnos por día:','estadisticas_cant_tunros_por_dia')">
+                <mat-icon>picture_as_pdf</mat-icon>Descargar
+            </button>
+        </div>
+
+        <div class=" !w-[50%] !h-80 justify-center items-center  text-center">
+            <h2 class="text-2xl font-medium text-gray-600">Cantidad de turnos por especialidad:</h2>
+            <canvas id="barChart"></canvas>
+            <button class="mt-2" mat-button (click)="exportarGraficosPdf('barChart','Cantidad de turnos por especialidad:','estadisticas_cant_tunros_por_especialidad')">
+                <mat-icon>picture_as_pdf</mat-icon>Descargar
+            </button>
+        </div>
+    </section>
+    <section class="flex mt-24 justify-evenly gap-2 pt-10">
+        <div class="h-auto w-96 text-center">
+            <h2 class="text-2xl font-medium text-gray-600">Ingresos al sistema:</h2>
+            <button class="mt-12" mat-button >
+                <mat-icon class="">download</mat-icon>Descargar
+            </button>
+        </div>
+
+        <div class="h-auto w-96 text-center">
+            <h2 class="text-2xl font-medium text-gray-600">Turnos solicitados:</h2>
+            <button class="mt-2" mat-button > 
+                <mat-icon class="">download</mat-icon>Descargar
+            </button>
+        </div>
+
+        <div class="h-auto w-96 text-center">
+           <h2 class="text-2xl font-medium text-gray-600">Turnos finalizados:</h2>
+            <button class="mt-2" mat-button >
+                <mat-icon class="">download</mat-icon>Descargar
+            </button>
+        </div>
+    </section>
+    
 </div>

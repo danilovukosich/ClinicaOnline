@@ -121,7 +121,7 @@ export class UsuariosComponent
         });
     }
 
-    async descargarTurnos(paciente:any)
+    descargarTurnos(paciente:any)
     {
         this.turnosService.getTurnosPacienteConHistoria(paciente.id).subscribe((turnos:any[])=>{
 
