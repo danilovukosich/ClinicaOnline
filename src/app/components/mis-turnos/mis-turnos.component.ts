@@ -87,7 +87,8 @@ export class MisTurnosComponent {
                 const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
                 this.turnos = turnosOrdenados;
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
-                this.dataSource.paginator = this.paginator;   
+                this.dataSource.paginator = this.paginator;
+                
                 console.log(this.turnos);
 
                 this.dataSource.filterPredicate = (data: Turno, filter: string) => {

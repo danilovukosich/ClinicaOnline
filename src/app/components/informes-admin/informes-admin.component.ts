@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import {
   ChartConfiguration,
   ChartType,
@@ -11,6 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import jsPDF from 'jspdf';
 import { TurnosService } from '../../services/turnos.service';
+import { UsuariosService } from '../../services/usuarios.service';
+import { take } from 'rxjs';
+import { DescargarExelService } from '../../services/descargar-exel.service';
+import { MatSelectModule } from '@angular/material/select';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgToastService } from 'ng-angular-popup';
 
 
 Chart.register(...registerables);
@@ -18,7 +27,15 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-informes-admin',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, 
+            MatIconModule, 
+            MatButtonModule, 
+            MatSelectModule,
+            FormsModule, 
+            ReactiveFormsModule,
+            MatFormFieldModule, 
+            MatDatepickerModule,
+            MatNativeDateModule ],
   templateUrl: './informes-admin.component.html',
   styleUrl: './informes-admin.component.css'
 })
@@ -28,13 +45,29 @@ export class InformesAdminComponent {
   
   public chartPie: Chart | undefined;
   public barChart: Chart | undefined;
+
+  public especialistasOptions!:any;
+
+  form1!:FormGroup;
+  form2!:FormGroup;
   
 
-  constructor(private turnosService:TurnosService){}
+  constructor(private turnosService:TurnosService,
+              private userService:UsuariosService,
+              private excel:DescargarExelService,
+              private toast:NgToastService,
+  ){}
 
 
   ngOnInit() 
   {
+
+    this.userService.GetUsuarios('especialista').subscribe((usuarios:any[])=>{
+            this.especialistasOptions = usuarios;
+            console.log('ESPECIALISTAS:', this.especialistasOptions);
+        });
+
+    
     
     this.turnosService.getTodosTurnosConHistoria().subscribe((turnos:any[])=>{
 
@@ -111,6 +144,22 @@ export class InformesAdminComponent {
 
     });
 
+
+
+    this.form1 = new FormGroup({
+
+      especialista1 : new FormControl('', [Validators.required]),
+      start: new FormControl(<Date | null>(null), Validators.required),
+      end: new FormControl(<Date | null>(null), Validators.required),
+    });
+
+    this.form2 = new FormGroup({
+
+      especialista2 : new FormControl('', [Validators.required]),
+      start: new FormControl(<Date | null>(null), Validators.required),
+      end: new FormControl(<Date | null>(null), Validators.required),
+    });
+
   }
 
 
@@ -126,7 +175,7 @@ export class InformesAdminComponent {
     logo.src = 'assets/logo_clinica.png';
   
     logo.onload = () => {
-       const logoWidth = 60; 
+      const logoWidth = 60; 
       const logoHeight = 60; 
       const xPos = (width - logoWidth) / 2;  
       const yPos = 10;   
@@ -163,6 +212,145 @@ export class InformesAdminComponent {
     };
   }
 
+
+
+  decargarlogs()
+  {
+    this.userService.getLogs().pipe(take(1)).subscribe((logs: any[]) => {
+    
+
+      const data = logs.map(log => {
+        const fechaFirestore = log.fecha;
+        const fecha = fechaFirestore?.toDate?.() ?? new Date(fechaFirestore);
+        const fechaFormateada = fecha.toLocaleDateString('es-AR');
+        const horaFormateada = fecha.toLocaleTimeString('es-AR');
+
+          return {
+            mail: log.userMail || '',
+            fecha: fechaFormateada,
+            horario: horaFormateada,
+          };
+      }); 
+
+      this.excel.descargarLogs(data, 'logs_sistema');
+    });
+  }
+
+  decargarTurnosSolicitados()
+  {
+
+    console.log(this.form1.value);
+
+    if(this.form1.valid)
+    {
+      const start = new Date(this.form1.value.start);
+      const end = new Date(this.form1.value.end);
+
+      // Asegurar que incluimos todo el día del "end"
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+
+      const startMs = start.getTime();
+      const endMs = end.getTime();
+      
+      this.turnosService.getTurnosEspecialista(this.form1.value.especialista1.id).pipe(take(1)).subscribe((turnos: any[]) => {
+      
+         const turnosFiltrados = turnos.filter(turno => {
+          let fechaTurno: Date;
+
+          // Convertir correctamente desde Timestamp
+          if (turno.fechaDatetime?.toDate) {
+            fechaTurno = turno.fechaDatetime.toDate();
+          } else {
+            fechaTurno = new Date(turno.fechaDatetime);
+          }
+
+          const turnoMs = fechaTurno.getTime();
+
+          return turnoMs >= startMs && turnoMs <= endMs;
+        });
+
+        console.log('FILTRADOS:', turnosFiltrados);
+
+        if(turnosFiltrados.length > 0)
+        {
+          this.excel.descargarTunrnosInformes(turnosFiltrados, `Turnos_solicitados_${this.form1.value.especialista1.nombre}_${this.form1.value.especialista1.apellido}`);
+          this.toast.success('¡Descargado turnos!');
+        }
+        else
+        {
+          this.toast.info('¡No se encontraron turnos!');
+        }
+
+        
+
+      });
+    }
+    
+  }
+
+  decargarTurnosFinalizados()
+  {
+
+    console.log(this.form2.value);
+
+    if(this.form2.valid)
+    {
+      const start = new Date(this.form2.value.start);
+      const end = new Date(this.form2.value.end);
+
+      // Asegurar que incluimos todo el día del "end"
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+
+      const startMs = start.getTime();
+      const endMs = end.getTime();
+      
+      this.turnosService.getTurnosFinalizadosEspecialista(this.form2.value.especialista2.id).pipe(take(1)).subscribe((turnos: any[]) => {
+      
+         const turnosFiltrados = turnos.filter(turno => {
+          let fechaTurno: Date;
+
+          // Convertir correctamente desde Timestamp
+          if (turno.fechaDatetime?.toDate) {
+            fechaTurno = turno.fechaDatetime.toDate();
+          } else {
+            fechaTurno = new Date(turno.fechaDatetime);
+          }
+
+          const turnoMs = fechaTurno.getTime();
+
+          return turnoMs >= startMs && turnoMs <= endMs;
+        });
+
+        console.log('FILTRADOS finalizados:', turnosFiltrados);
+
+        if(turnosFiltrados.length > 0)
+        {
+          this.excel.descargarTunrnosInformes(turnosFiltrados, `Turnos_finalizados_${this.form2.value.especialista2.nombre}_${this.form2.value.especialista2.apellido}`);
+          this.toast.success('¡Descargado turnos!');
+        }
+        else
+        {
+          this.toast.info('¡No se encontraron turnos!');
+        }
+
+        
+
+      });
+    }
+    
+  }
+
+  get especialista1()
+  {
+    return this.form1.get('especialista1');
+  }
+
+  get especialista2()
+  {
+    return this.form1.get('especialista2');
+  }
   
 
 }

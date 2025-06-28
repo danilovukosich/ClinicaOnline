@@ -7,7 +7,7 @@
             </div>
     </div>
     <mat-stepper linear #stepper class="!rounded-2xl !h-auto" [animationDuration]="'700'">
-         <mat-step [stepControl]="baseFormGroup" label="Seleccionar especialista">
+         <mat-step [stepControl]="baseFormGroup" label="Seleccionar paciente">
             <form [formGroup]="secondFormGroup">
                 <section class="flex flex-wrap gap-6 h-full items-center justify-center mt-20">
                     @if(pacientes.length != 0)

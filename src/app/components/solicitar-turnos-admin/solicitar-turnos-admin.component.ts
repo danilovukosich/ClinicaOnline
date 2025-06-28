@@ -263,6 +263,7 @@ export class SolicitarTurnosAdminComponent {
           //fecha: new Date(actual),
           hora: actual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           fecha: actual.toLocaleDateString('es-AR'),
+          fechaDatetime: actual,
           diaDeSemana: actual.getDay(),
           especialidadId: this.selectedEspecialidad,
           especialistaId:this.selectedEspecialista.id,

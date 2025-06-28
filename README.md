@@ -89,7 +89,7 @@ para la creacion de turnos.
 
 * Mi perfil	✅
     - Para los usuarios paciente, poder descargar un pdf con toda su historia clínica. El PDF tiene que tener logo de la clínica, título del informe y fecha de emisión.
-    - Poder bajar Todas las atenciones que realice segun una ESPECIALIDAD seleccionada
+    - Poder bajar Todas las atenciones que realice segun una ESPECIALIDAD seleccionada.
 
 * Animaciones ✅
     - Se debe agregar al menos 2, como mínimo, animaciones de transición entre componentes al navegar la aplicación."	Una debe ser de izquierda a derecha
