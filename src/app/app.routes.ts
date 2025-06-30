@@ -15,13 +15,14 @@ import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { SolicitarTurnosAdminComponent } from './components/solicitar-turnos-admin/solicitar-turnos-admin.component';
 import { InformesAdminComponent } from './components/informes-admin/informes-admin.component';
 import { roleGuard } from './guards/role.guard';
+import { guestGuard } from './guards/guest.guard';
 
 
 export const routes: Routes = [
 
     {path: "", redirectTo:"landing", pathMatch:'full' },
-    {path:'landing', component:LandingComponent },
-    {path:'login', component:LoginComponent , data: { animation: 'slideDown' }},
+    {path:'landing', component:LandingComponent , canActivate: [guestGuard]},
+    {path:'login', component:LoginComponent , canActivate: [guestGuard], data: { animation: 'slideDown' }},
     {path:'registroPaciente', component:RegisterPacienteComponent,  data: { animation: 'slideLeft' }},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent, data: { animation: 'slideRight' }},
     {path:'home', component:HomeComponent, canActivate: [authGuard],
