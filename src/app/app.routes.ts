@@ -14,6 +14,7 @@ import { TurnosComponent } from './components/turnos/turnos.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { SolicitarTurnosAdminComponent } from './components/solicitar-turnos-admin/solicitar-turnos-admin.component';
 import { InformesAdminComponent } from './components/informes-admin/informes-admin.component';
+import { roleGuard } from './guards/role.guard';
 
 
 export const routes: Routes = [
@@ -26,14 +27,14 @@ export const routes: Routes = [
     {path:'home', component:HomeComponent, canActivate: [authGuard],
         children:[
             {path:'welcomeText', component:WelcomeTextComponent},
-            {path:'misTurnos', component:MisTurnosComponent},
-            {path:'solicitarTurno', component:SolicitarTurnosComponent},
-            {path:'solicitarTurnoAdmin', component:SolicitarTurnosAdminComponent},
-            {path:'miPerfil', component:MiPerfilComponent},
-            {path:'usuarios', component:UsuariosComponent},
-            {path:'turnos', component:TurnosComponent},
-            {path:'pacientes', component:PacientesComponent},
-            {path:'informes', component:InformesAdminComponent}
+            {path:'misTurnos', component:MisTurnosComponent, canActivate: [roleGuard(['paciente', 'especialista'])]},
+            {path:'solicitarTurno', component:SolicitarTurnosComponent, canActivate: [roleGuard(['paciente'])]},
+            {path:'solicitarTurnoAdmin', component:SolicitarTurnosAdminComponent, canActivate: [roleGuard(['admin'])]},
+            {path:'miPerfil', component:MiPerfilComponent, canActivate: [roleGuard(['paciente', 'especialista', 'admin'])]},
+            {path:'usuarios', component:UsuariosComponent, canActivate: [roleGuard(['admin'])]},
+            {path:'turnos', component:TurnosComponent, canActivate: [roleGuard(['admin'])]},
+            {path:'pacientes', component:PacientesComponent, canActivate: [roleGuard(['especialista'])]},
+            {path:'informes', component:InformesAdminComponent, canActivate: [roleGuard(['admin'])]}
         ]
     },
 
