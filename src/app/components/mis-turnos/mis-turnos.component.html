@@ -119,8 +119,8 @@
                         <mat-icon class="">star</mat-icon>
                     </button>
 
-                    <button *ngIf="turno.estado=='finalizado' && turno.comentario" 
-                            (click)="verResenia()"
+                    <button *ngIf="turno.estado=='finalizado' && turno.comentario && !turno.historiaClinica && rol=='especialista'"
+                            (click)="cargarHistoriaClinica(turno)"
                             mat-mini-fab matTooltip="Cargar historia clinica" 
                             [matTooltipPosition]="'above'" 
                             class="!bg-blue-400 !text-white !shadow-md">

@@ -1,0 +1,29 @@
+
+<div class="rounded-2xl bg-white px-8 py-8 h-full overflow-auto">
+
+    <div class="sticky flex justify-between">
+            <div>
+                <h1 class="text-3xl font-medium">Mis pacientes</h1>
+                <h2 class="text-gray-500 mb-6">Listado de pacientes atendidos.</h2>
+
+            </div>
+
+    </div>
+    <section class="flex gap-4 mt-12">
+    
+        @for (paciente of pacientes; track $index) 
+        {
+            <mat-card class="w-72 h-96 !bg-blue-100">
+                <img mat-card-image class="h-52 " src="{{paciente.imagen}}" alt="">
+                <mat-card-header>
+                    <mat-card-title class="!font-medium">{{paciente.nombre}} {{paciente.apellido}}</mat-card-title>
+                    <mat-card-subtitle>{{paciente.obraSocial}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions class="justify-evenly">
+                    <button mat-button (click)="verHistoriaClinica(paciente.id, paciente)">Historia c.</button>
+                    <button mat-button (click)="verUltimosTurnosPaciente(paciente.id, userId)">Ultimos turnos</button>
+                </mat-card-actions>
+            </mat-card>
+        }
+    </section>
+</div>

@@ -1,0 +1,66 @@
+
+<div class="w-auto h-auto rounded-2xl bg-white flex flex-col text-center items-center p-10 ">
+
+    <div class="flex w-full justify-center">
+        <div class="mb-10">
+            <h2 class=" text-3xl font-semibold">Historia clinica</h2>
+            @if(historiasClinicas.length > 0)
+            {
+                <button mat-button (click)="descargarHistoriaClinica()">
+                    <mat-icon>picture_as_pdf</mat-icon>Descargar historia clinica
+                </button>
+            }
+        </div>
+    </div>
+    @if(historiasClinicas.length > 0)
+    {
+        <div>
+
+            <table mat-table [dataSource]="historiasClinicas" class="mat-elevation-z8 w-full h-full">
+    
+                <ng-container matColumnDef="fecha">
+                    <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                    <td mat-cell *matCellDef="let h">{{ h.fecha }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="altura">
+                    <th mat-header-cell *matHeaderCellDef>Altura</th>
+                    <td mat-cell *matCellDef="let h">{{ h.altura }} cm</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="peso">
+                    <th mat-header-cell *matHeaderCellDef>Peso</th>
+                    <td mat-cell *matCellDef="let h">{{ h.peso }} kg</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="temperatura">
+                    <th mat-header-cell *matHeaderCellDef>Temperatura</th>
+                    <td mat-cell *matCellDef="let h">{{ h.temperatura }} °C</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="presion">
+                    <th mat-header-cell *matHeaderCellDef>Presión</th>
+                    <td mat-cell *matCellDef="let h">{{ h.presion }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="datoExtra">
+                    <th mat-header-cell *matHeaderCellDef>Extra</th>
+                    <td mat-cell *matCellDef="let h">
+                    <div *ngFor="let key of obtenerCamposDinamicos(h)">
+                        <strong>{{ key }}:</strong> {{ h[key] }}
+                    </div>
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="columnasHistorias"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasHistorias;"></tr>
+            </table>
+        </div>
+    }
+    @else 
+    {
+        <div class="py-24 text-gray-500">
+            No tiene historia clinica cargada.
+        </div>
+    }
+</div>

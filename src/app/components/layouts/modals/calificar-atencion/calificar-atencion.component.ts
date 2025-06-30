@@ -44,10 +44,13 @@ export class CalificarAtencionComponent {
   CalificarAtencion()
   {
     
+    
     this.form.markAllAsTouched();
     
     if(this.form.valid)
     {
+      
+      this.toast.success('Atencion calificada!');
       this.dialogRef.close(false);
 
     }

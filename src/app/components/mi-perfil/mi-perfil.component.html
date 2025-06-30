@@ -1,4 +1,4 @@
-<div class="welcome-section rounded-2xl">
+<div class="welcome-section rounded-2xl overflow-auto bg-gray-50">
     <section class="contenido flex gap-12 rounded-t-2xl object-contain bg-cover bg-no-repeat bg-center"  [ngStyle]="{'background-image': 'url(' + (imagen2 || fondoDePortada) + ')'}">
 
         
@@ -39,7 +39,7 @@
     {
         @case("especialista")
         {
-            <div>
+            <div class="h-auto">
 
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8  w-full h h-full">
 
@@ -90,11 +90,72 @@
 
         @case ("paciente")
         {
-            <section class=" w-full h-auto bg-gray-100 text-center justify-center pt-6">
-                <div class="flex w-full justify-center">
-                    <mat-icon class="mt-1.5 mr-2">history</mat-icon>
-                    <h2 class=" text-3xl font-semibold">Mi historial</h2>
+            <section class=" w-full h-auto auto bg-gray-50 text-center justify-center pt-6">
+                <div class="flex w-full justify-between px-12 items-center">
+                    <div class="text-start">
+                        <h2 class=" text-3xl font-semibold ">Historia clinica</h2>
+                        <h3 class="text-gray-400">Historial clinico del paciente.</h3>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <button mat-button (click)="descargarHistoriaClinica()">
+                            <mat-icon>picture_as_pdf</mat-icon>Descargar historia clinica
+                        </button>
+                        <button mat-button (click)="descargarHistorialTurnos()">
+                            <mat-icon>picture_as_pdf</mat-icon>Descargar atenciones
+                        </button>
+                    </div>
                 </div>
+
+                @if(historiasClinicas.length > 0)
+                {
+
+                    <table mat-table [dataSource]="historiasClinicas" class="mat-elevation-z8">
+    
+                        <ng-container matColumnDef="fecha">
+                            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                            <td mat-cell *matCellDef="let h">{{ h.fecha }}</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="altura">
+                            <th mat-header-cell *matHeaderCellDef>Altura</th>
+                            <td mat-cell *matCellDef="let h">{{ h.altura }} cm</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="peso">
+                            <th mat-header-cell *matHeaderCellDef>Peso</th>
+                            <td mat-cell *matCellDef="let h">{{ h.peso }} kg</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="temperatura">
+                            <th mat-header-cell *matHeaderCellDef>Temperatura</th>
+                            <td mat-cell *matCellDef="let h">{{ h.temperatura }} °C</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="presion">
+                            <th mat-header-cell *matHeaderCellDef>Presión</th>
+                            <td mat-cell *matCellDef="let h">{{ h.presion }}</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="datoExtra">
+                            <th mat-header-cell *matHeaderCellDef>Extra</th>
+                            <td mat-cell *matCellDef="let h">
+                            <div *ngFor="let key of obtenerCamposDinamicos(h)">
+                                <strong>{{ key }}:</strong> {{ h[key] }}
+                            </div>
+                            </td>
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="columnasHistorias"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasHistorias;"></tr>
+                    </table>
+                }
+                @else 
+                {
+                    <div class="py-24 text-gray-500">
+                        No tiene historia clinica cargada.
+                    </div>
+                }
+
             </section>
         }
     }

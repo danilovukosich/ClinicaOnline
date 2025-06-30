@@ -1,3 +1,4 @@
+import { orderBy } from '@angular/fire/firestore';
 import { Component, ViewChild } from '@angular/core';
 import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dejar-comentario.component';
 import { VerComentarioComponent } from '../layouts/modals/ver-comentario/ver-comentario.component';
@@ -59,8 +60,11 @@ export class TurnosComponent {
         this.userId = await this.auth.GetUserId();
         this.rol= await this.auth.GetRoleHome();
 
-        this.turnosService.getTodosTurnos().subscribe((turnos:any[])=>{
-            this.turnos = turnos;
+        this.turnosService.getTodosTurnosConHistoria().subscribe((turnos:any[])=>{
+
+            const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+
+            this.turnos = turnosOrdenados;
             this.dataSource = new MatTableDataSource<Turno>(turnos); 
             this.dataSource.paginator = this.paginator;   
             console.log(this.turnos, this.dataSource);

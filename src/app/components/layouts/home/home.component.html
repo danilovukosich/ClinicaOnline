@@ -1,41 +1,38 @@
-<mat-drawer-container class="">
-    
-    <mat-drawer #drawer  mode="side" opened>
-        <button mat-flat-button routerLink="welcomeText"><mat-icon>home</mat-icon>Home</button>
-        <button *ngIf="rol!='especialista'" mat-flat-button routerLink="solicitarTurno" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Solicitar turno</button>
+    <div class="w-full h-full" >
+        <mat-drawer-container class="">
         
-        @if (rol!='admin')
-        {
-            <button mat-flat-button routerLink="misTurnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Mis turnos</button>
-        }
-        @if (rol=="admin")
-        {
-            <button mat-flat-button routerLink="usuarios" style="margin-top: 10px;"><mat-icon>group</mat-icon>Usuarios</button>
-            <button mat-flat-button routerLink="turnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Turnos</button>
-            
-        }
-        <button mat-flat-button routerLink="miPerfil" style="margin-top: 10px;"> <mat-icon>person</mat-icon> Mi perfil</button>
-    </mat-drawer>
-    
-    
-    <mat-drawer-content class="px-10 pb-10 !pt-22  bg-gray-200">
-       
-        <div class="w-full h-full">
-            <router-outlet></router-outlet>            
-        </div>
-            
+        <mat-drawer #drawer  mode="side" opened>
+            <button mat-flat-button routerLink="welcomeText"><mat-icon>home</mat-icon>Home</button>
+            <button *appIfRole="['paciente']" mat-flat-button routerLink="solicitarTurno" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Solicitar turno</button>
+            <button *appIfRole="['paciente', 'especialista']"  mat-flat-button routerLink="misTurnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Mis turnos</button>
+            <button *appIfRole="['admin']" mat-flat-button routerLink="solicitarTurnoAdmin" style="margin-top: 10px;"><mat-icon>calendar_month</mat-icon>Solicitar turno</button>
+            <button *appIfRole="['admin']" mat-flat-button routerLink="turnos" style="margin-top: 10px;"><mat-icon>event</mat-icon>Turnos</button>
+            <button *appIfRole="['admin']" mat-flat-button routerLink="informes" style="margin-top: 10px;"><mat-icon>assignment</mat-icon>Informes</button>
+            <button *appIfRole="['admin']" mat-flat-button routerLink="usuarios" style="margin-top: 10px;"><mat-icon>group</mat-icon>Usuarios</button>
+            <button *appIfRole="['especialista']" mat-flat-button routerLink="pacientes" style="margin-top: 10px;"><mat-icon>group</mat-icon>Pacientes</button>
+            <button mat-flat-button routerLink="miPerfil" style="margin-top: 10px;"> <mat-icon>person</mat-icon> Mi perfil</button>
+        </mat-drawer>
         
-        <!-- SPINNER -->
-        <div *ngIf="cargando" class="spinner-overlay">
-            <mat-progress-spinner
-              mode="indeterminate"
-              diameter="50">
-            </mat-progress-spinner>
-        </div>
-          
-        <div [class.loading]="cargando"></div>
-        <!-- SPINNER -->
-    </mat-drawer-content>
+        
+        <mat-drawer-content class="px-10 pb-10 !pt-22  bg-gray-200">
+        
+            <div class="w-full h-full">
+                <router-outlet></router-outlet>            
+            </div>
+            
+            <!-- SPINNER -->
+            <div *ngIf="cargando" class="spinner-overlay">
+                <mat-progress-spinner
+                mode="indeterminate"
+                diameter="50">
+                </mat-progress-spinner>
+            </div>
+            
+            <div [class.loading]="cargando"></div>
+            <!-- SPINNER -->
+        </mat-drawer-content>
 
-      
-</mat-drawer-container>
+        
+    </mat-drawer-container>
+<div>
+    

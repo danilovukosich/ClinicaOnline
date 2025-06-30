@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDocs, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,32 @@ export class UsuariosService {
         break;
     }
 
-    return collectionData(q);
+    return collectionData(q, { idField: 'id' });
+  }
+
+  // getAllUsers()
+  // {
+  //   let col = collection(this.firestore, "userInfo");
+  //   const q = query(col);
+
+  //   return collectionData(q).pipe(take(1));
+  // }
+
+  getAllUsers()
+  {
+    const colRef = collection(this.firestore, 'userInfo');
+    return getDocs(colRef).then(snapshot => {
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }); 
+  }
+
+
+  getLogs()
+  {
+    const colRef = collection(this.firestore, 'logs');
+    return getDocs(colRef).then(snapshot => {
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }); 
   }
 
   GetEspecialistas(especialidad:any)
@@ -42,6 +68,18 @@ export class UsuariosService {
     
     return collectionData(q);
     
+  }
+
+  GetPacientesDeEspecialista(idsTurnos:string[])
+  {
+    console.log('tunros:', idsTurnos);
+    let col = collection(this.firestore, "userInfo");
+    let q!:any;
+
+    q = query(col, where('rol', '==', 'paciente'),
+                  where('id', 'in', idsTurnos));
+    
+    return collectionData(q, { idField: 'id' });
   }
 
   SetEstadoCero(userId:any)

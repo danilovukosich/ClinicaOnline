@@ -1,6 +1,17 @@
-<div class="w-full h-full p-6">
-    <mat-tab-group class="h-full">
-        <mat-tab label="Pacientes" class="h-full">
+<div class="rounded-2xl bg-white px-8 py-8 h-full overflow-auto">
+    <div class="sticky flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-medium">Usuarios</h1>
+                <h2 class="text-gray-500 mb-6">Listado de todos los usuarios del sistema.</h2>
+            </div>
+            <div>
+                 <button mat-button (click)="descargarInfoUsuarios()">
+                    <mat-icon>picture_as_pdf</mat-icon>Descargar Info. Usuarios
+                </button>
+            </div>
+    </div>
+    <mat-tab-group class="h-auto">
+        <mat-tab label="Pacientes" class="h-auto">
             <!-- PACIENTES -->
             <section class="w-full mb-6">
                 <div class="w-full text-center mt-4 flex justify-center gap-7">
@@ -20,8 +31,8 @@
                             </mat-card-header>
             
                             <mat-card-actions class="justify-evenly">
-                                <button mat-button>Historia c.</button>
-                                <button mat-button >Perfil</button>
+                                <button mat-button (click)="verHistoriaClinica(paciente.id, paciente)">Historia c.</button>
+                                <button mat-button (click)="descargarTurnos(paciente)">Historial Turnos.</button>
                             </mat-card-actions>
                         </mat-card>
                     }
@@ -60,7 +71,6 @@
                                 {
                                     <button mat-button class="!text-green-400" (click)="DarAltaUsuario(especialista.id)">Dar de Alta</button>
                                 }
-                                <button mat-button>Perfil</button>
                             </mat-card-actions>
                         </mat-card>
                     }
@@ -93,7 +103,6 @@
                             <mat-card-actions class="justify-evenly">
             
                                 <!-- <button mat-button class="!text-red-400">Dar Baja</button> -->
-                                <button mat-button>Perfil</button>
                             </mat-card-actions>
                         </mat-card>
                     }

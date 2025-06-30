@@ -17,6 +17,7 @@ import { DejarComentarioComponent } from '../layouts/modals/dejar-comentario/dej
 import { MatInputModule } from '@angular/material/input';
 import { VerComentarioComponent } from '../layouts/modals/ver-comentario/ver-comentario.component';
 import { CalificarAtencionComponent } from '../layouts/modals/calificar-atencion/calificar-atencion.component';
+import { CargarHistoriaClinicaComponent } from '../layouts/modals/cargar-historia-clinica/cargar-historia-clinica.component';
 @Component({
     selector: 'app-mis-turnos',
     imports: [MatListModule,
@@ -64,8 +65,10 @@ export class MisTurnosComponent {
 
         if(this.rol=='paciente')
         {
-            this.turnosService.getTurnosPaciente(this.userId).subscribe((turnos:any[])=>{
-                this.turnos = turnos;
+            this.turnosService.getTurnosPacienteConHistoria(this.userId).subscribe((turnos:any[])=>{
+
+                const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+                this.turnos = turnosOrdenados;
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
                 this.dataSource.paginator = this.paginator;   
                 console.log(this.turnos, this.dataSource);
@@ -79,10 +82,13 @@ export class MisTurnosComponent {
         }
         else if(this.rol=='especialista')
         {
-            this.turnosService.getTurnosEspecialista(this.userId).subscribe((turnos:any[])=>{
-                this.turnos = turnos;
+            this.turnosService.getTurnosEspecialistaConHistoria(this.userId).subscribe((turnos:any[])=>{
+
+                const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+                this.turnos = turnosOrdenados;
                 this.dataSource = new MatTableDataSource<Turno>(turnos); 
-                this.dataSource.paginator = this.paginator;   
+                this.dataSource.paginator = this.paginator;
+                
                 console.log(this.turnos);
 
                 this.dataSource.filterPredicate = (data: Turno, filter: string) => {
@@ -124,10 +130,6 @@ export class MisTurnosComponent {
         this.turnosService.cambiarEstadoDeTurno(idTurno, estado);
     }
 
-    comentarioCancelar()
-    {
-
-    }
 
     verComentario(turno:Turno)
     {
@@ -138,15 +140,6 @@ export class MisTurnosComponent {
             });
     }
 
-    dejarResenia()
-    {
-        this.toast.success('dejar reseña');
-    }
-
-    verResenia()
-    {
-        this.toast.success('ver reseña');
-    }
 
     calificarAtencion(turno:Turno)
     {
@@ -157,9 +150,13 @@ export class MisTurnosComponent {
             });
     }
 
-    completarEncuesta()
+    cargarHistoriaClinica(turno:Turno)
     {
-
+        this.dialog.open(CargarHistoriaClinicaComponent, {
+                data:{
+                    turno: turno
+                }
+            });
     }
 
 

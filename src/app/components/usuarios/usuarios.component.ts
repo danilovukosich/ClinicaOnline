@@ -9,6 +9,11 @@ import { RegisterPacienteComponent } from '../auth/register-paciente/register-pa
 import { MatIcon } from '@angular/material/icon';
 import { RegisterEspecialistaComponent } from '../auth/register-especialista/register-especialista.component';
 import { RegisterAdministradorComponent } from '../auth/register-administrador/register-administrador.component';
+import { VerHistoriaClinicaComponent } from '../layouts/modals/ver-historia-clinica/ver-historia-clinica.component';
+import { DescargarExelService } from '../../services/descargar-exel.service';
+import { take } from 'rxjs';
+import { TurnosService } from '../../services/turnos.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
     selector: 'app-usuarios',
@@ -16,7 +21,8 @@ import { RegisterAdministradorComponent } from '../auth/register-administrador/r
     templateUrl: './usuarios.component.html',
     styleUrl: './usuarios.component.css'
 })
-export class UsuariosComponent {
+export class UsuariosComponent 
+{
 
     pacientes!:any;
     especialistas!:any;
@@ -24,12 +30,20 @@ export class UsuariosComponent {
 
 
 
-    constructor(private usuarios:UsuariosService, private dialog:MatDialog)
+    constructor(private usuarios:UsuariosService, 
+                private dialog:MatDialog, 
+                private userService:UsuariosService,
+                private exel:DescargarExelService,
+                private turnosService:TurnosService,
+                private toast:NgToastService)
     {
 
     }
 
-    ngOnInit(): void {
+    ngOnInit(): void 
+    {
+
+        
        
         this.usuarios.GetUsuarios('paciente').subscribe((usuarios:any[])=>{
             this.pacientes = usuarios;
@@ -44,6 +58,7 @@ export class UsuariosComponent {
             this.administradores = usuarios;
             console.log('ADMINISTRADORES:', this.administradores);
         });
+
         
     }
 
@@ -76,4 +91,62 @@ export class UsuariosComponent {
 
         }
     }
+
+    verHistoriaClinica(pacienteId:any, paceinteData:any)
+    {
+        console.log('Id ????', pacienteId);
+        
+        this.dialog.open(VerHistoriaClinicaComponent, {
+                        data:{
+                            pacienteId: pacienteId,
+                            pacienteData: paceinteData
+                        }
+                    });
+    }
+
+
+    descargarInfoUsuarios() 
+    {
+        this.userService.getAllUsers().then((usuarios: any[]) => {
+
+            const data = usuarios.map(user => ({
+                Nombre: user.nombre || '',
+                Apellido: user.apellido || '',
+                Dni:user.dni || '',
+                Edad: user.edad || '',
+                Rol: user.rol || '',
+                ObraSocial: user.obraSocial || 'No especifica',
+                Estado: (user.rol != 'especialista' || user.estado === 1 ? 'Activo' : 'Inactivo')
+            }));
+
+            this.exel.descargarUsuarios(data, 'Listado_Usuarios');
+        });
+    }
+
+    descargarTurnos(paciente:any)
+    {
+        this.turnosService.getTurnosPacienteConHistoria(paciente.id).pipe(take(1)).subscribe((turnos:any[])=>{
+
+            const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
+            const turnosData = turnosOrdenados;
+
+            console.log('turnos data', turnosData);
+            
+            if(turnosData.length > 0)
+            {
+                this.exel.descargarTunrnos(turnosData, `Turnos_paciente_${paciente.nombre}_${paciente.apellido}`, paciente);
+            }
+            else
+            {
+                this.toast.info("El paciente todavia no solicito ningun turno","¡No tiene turnos!");
+            }
+            
+
+        });
+    }
+    
 }
+
+
+
+

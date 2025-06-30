@@ -1,45 +1,31 @@
 <mat-toolbar class="nav">
     <div>
-        @if(this.VerifyCurrentUser())
-        {
-            <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" style="color: #fff;">
-                <mat-icon>menu</mat-icon>
-            </button>
-        }
         <span (click)="scrollToTop()" routerLink="landing" style="font-size: 35px; color: azure; cursor: pointer; font-weight: 550;">Clinica Online</span>
         <mat-icon style="color: #fff; font-size: 28px; margin-left: 10px;">local_hospital</mat-icon>
         
         <span class="example-spacer"></span>
     </div>
-        
-    
 
-    <div>
-        @if(!this.VerifyCurrentUser())
-        {
-            <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
-            <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
-            <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
-        }
+    <div *appIfGuest>
+        <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
+        <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
+        <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
     </div>
-
-    
     
     <div>
-        @if (this.VerifyCurrentUser()) 
-        {
+        <div *appIfLoggedIn>
             <button (click)="LogOut()" routerLink="landing" mat-raised-button extended>
                 <mat-icon>person</mat-icon>
                 Logout
             </button>
-        }
-        @else 
-        {
+        </div>
+    
+        <div *appIfGuest>
             <button routerLink="login" mat-raised-button extended>
                 <mat-icon>person</mat-icon>
                 Iniciar sesión
             </button>
-        }
+        </div>
         
     </div>
     

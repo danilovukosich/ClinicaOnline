@@ -3,8 +3,8 @@
     <div class=" rounded-2xl p-4 h-full">
         <div class="sticky flex justify-between">
             <div>
-                <h1 class="text-3xl font-medium">Mis turnos</h1>
-                <h2 class="text-gray-500 mb-6">Listado de turnos solicitados.</h2>
+                <h1 class="text-3xl font-medium">Turnos</h1>
+                <h2 class="text-gray-500 mb-6">Listado de todos los turnos solicitados.</h2>
 
             </div>
        
@@ -28,7 +28,7 @@
                 
                 <ng-container matColumnDef="especialista">
                 <th mat-header-cell *matHeaderCellDef> Especialista </th>
-                <td mat-cell *matCellDef="let turno"> {{turno.especialistaNombre}} </td>
+                <td mat-cell *matCellDef="let turno"> {{turno.especialistaNombre | nombreEspecialistaCompleto }} </td>
                 </ng-container>
 
 

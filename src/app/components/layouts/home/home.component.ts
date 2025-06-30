@@ -9,14 +9,17 @@ import { AuthService } from '../../../services/auth.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { IfRoleDirective } from '../../../directives/if-role.directive';
+
 @Component({
     selector: 'app-home',
     imports: [MatButtonModule,
         FormsModule,
         ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIcon, MatSidenavModule,
-        MatProgressSpinnerModule, CommonModule, RouterOutlet, RouterLink],
+        MatProgressSpinnerModule, CommonModule, RouterOutlet, RouterLink,IfRoleDirective],
     templateUrl: './home.component.html',
-    styleUrl: './home.component.css'
+    styleUrl: './home.component.css',
+    
 })
 export class HomeComponent {
 

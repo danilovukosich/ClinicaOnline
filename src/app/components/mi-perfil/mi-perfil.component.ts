@@ -13,6 +13,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CrearDisponibilidadComponent } from '../layouts/modals/crear-disponibilidad/crear-disponibilidad.component';
 import { EditarDisponibilidadComponent } from '../layouts/modals/editar-disponibilidad/editar-disponibilidad.component';
+import { HistoriaClinicaService } from '../../services/historia-clinica.service';
+import { HistoriaClinica } from '../../models/historia-clinica';
+import { DescargarPdfService } from '../../services/descargar-pdf.service';
+import { NgToastService } from 'ng-angular-popup';
+import { MatSelectModule } from '@angular/material/select';
+import { EspecialistaService } from '../../services/especialista.service';
+import { DescargarHistorialTurnosComponent } from '../layouts/modals/descargar-historial-turnos/descargar-historial-turnos.component';
 
 
 export interface DisponibilidadPorDia {
@@ -33,7 +40,8 @@ export interface DisponibilidadPorDia {
         MatButtonModule,
         MatIcon,
         MatTooltipModule,
-        MatDialogModule],
+        MatDialogModule,
+        MatSelectModule],
     templateUrl: './mi-perfil.component.html',
     styleUrl: './mi-perfil.component.css'
 })
@@ -44,6 +52,7 @@ export class MiPerfilComponent {
 
   user:any;
   userInfo$!: Observable<any>;
+  userData!:any;
   imagen2!:string;
   fondoDePortada: string = 'https://cdn.wallpapersafari.com/30/78/5j8kxe.jpg';
   rol!:any;
@@ -53,22 +62,32 @@ export class MiPerfilComponent {
   dataSource: Disponibilidad[] = [];
   diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
+  historiasClinicas: HistoriaClinica[] = [];
+  columnasHistorias: string[] = ['fecha', 'altura', 'peso', 'temperatura', 'presion', 'datoExtra'];
+
+  especialidadesSelect!: Observable<any[]>;
 
   constructor(private authService: AuthService, 
               private auth: Auth,
               private disponibilidadService: DisponibilidadService,
-              private dialog:MatDialog)
+              private dialog:MatDialog,
+              private historiaClinicaService:HistoriaClinicaService,
+              private pdf:DescargarPdfService,
+              private toast:NgToastService,
+              private especialista:EspecialistaService)
   {
     
   }
   
   async ngOnInit() {
     
+    this.especialidadesSelect=this.especialista.GetEspecialidades();
     
     this.cargando=true;
     this.user = await this.authService.GetUserAsync();
     this.userInfo$ = this.authService.GetUserInfo();
     this.rol = this.authService.GetRole();
+    
 
     this.userInfo$.subscribe({
         next: (userInfo) => {
@@ -76,6 +95,7 @@ export class MiPerfilComponent {
           this.imagen2 = userInfo.imagen2;
           this.especialidades=userInfo.especialidades;
           this.cargando = false; 
+          this.userData = userInfo;
           console.log('(datos cargados)');
         },
         error: (err) => {
@@ -95,8 +115,27 @@ export class MiPerfilComponent {
       }
       });
     }
+
+    if (this.rol === 'paciente') 
+    {
+      console.log('hola', this.user.uid);
+      
+      this.historiaClinicaService.getHistoriaClinicaPaciente(this.user.uid).subscribe((historial: HistoriaClinica[]) => {
+        this.historiasClinicas = historial;
+        console.log('Historias clínicas del paciente:', historial);
+      });
+    }
+
+    
+
       
 
+  }
+
+  obtenerCamposDinamicos(historia: any): string[] 
+  {
+    const clavesFijas = ['id', 'altura', 'peso', 'temperatura', 'presion', 'fecha', 'turnoId', 'pacienteId', 'timestamp'];
+    return Object.keys(historia).filter(key => !clavesFijas.includes(key));
   }
 
   cargarDisponibilidades() 
@@ -147,6 +186,29 @@ export class MiPerfilComponent {
     });
   }
 
+  async descargarHistoriaClinica() 
+  {
+    if(this.historiasClinicas.length > 0)
+    {
+      await this.pdf.descargarHistoriaClinica(this.historiasClinicas, this.userData);
+      this.toast.success("¡Comenzo la descarga!")
+    }
+    else
+    {
+      this.toast.danger("¡No posee hitorial clinico!")
+    }
+    
+  }
+
+
+  descargarHistorialTurnos() 
+  { 
+    this.dialog.open(DescargarHistorialTurnosComponent, {
+      data: {
+        userId: this.userData.id,
+      }
+    });
+  }
     
     
 
