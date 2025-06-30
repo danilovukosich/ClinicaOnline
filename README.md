@@ -54,7 +54,7 @@ para la creacion de turnos.
 
 
 ## #Informes
-> El usuario administrador va a tener la posibilidad de ver informes y graficos detallados con datos en tiempo real de la clinica.
+> El usuario administrador va a tener la posibilidad de ver y descargar informes y graficos detallados con datos en tiempo real de la clinica.
 ![image](https://github.com/user-attachments/assets/36648dbd-165d-4922-ac0b-2d2fac15b087)
 
 
