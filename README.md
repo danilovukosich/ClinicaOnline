@@ -49,10 +49,18 @@ para la creacion de turnos.
 
 
 ## #Mis turnos
-> El usuario va a tener la posibilidad de ver sus turnos, con su estado y sus detalles.
+> El usuario paciente y administrador va a tener la posibilidad de ver sus turnos, con su estado y sus detalles.
 ![image](https://github.com/user-attachments/assets/7c18ef44-c3dc-4759-b989-4b2c205d272d)
 
 
+## #Informes
+> El usuario administrador va a tener la posibilidad de ver y descargar informes y graficos detallados con datos en tiempo real de la clinica.
+![image](https://github.com/user-attachments/assets/36648dbd-165d-4922-ac0b-2d2fac15b087)
+
+
+## #Pacientes
+> El usuario especialista va a tener la posibilidad de ver informacion sobre sus pacientes.
+![image](https://github.com/user-attachments/assets/fe8efed1-75ce-4c51-bdea-5c6c2e0152d1)
 
 
 
