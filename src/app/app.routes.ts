@@ -23,7 +23,7 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent , data: { animation: 'slideDown' }},
     {path:'registroPaciente', component:RegisterPacienteComponent,  data: { animation: 'slideLeft' }},
     {path:'registroEspecialista', component:RegisterEspecialistaComponent, data: { animation: 'slideRight' }},
-    {path:'home', component:HomeComponent,/* canActivate: [authGuard],*/
+    {path:'home', component:HomeComponent, canActivate: [authGuard],
         children:[
             {path:'welcomeText', component:WelcomeTextComponent},
             {path:'misTurnos', component:MisTurnosComponent},

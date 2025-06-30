@@ -13,6 +13,7 @@ import { VerHistoriaClinicaComponent } from '../layouts/modals/ver-historia-clin
 import { DescargarExelService } from '../../services/descargar-exel.service';
 import { take } from 'rxjs';
 import { TurnosService } from '../../services/turnos.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
     selector: 'app-usuarios',
@@ -33,7 +34,8 @@ export class UsuariosComponent
                 private dialog:MatDialog, 
                 private userService:UsuariosService,
                 private exel:DescargarExelService,
-                private turnosService:TurnosService)
+                private turnosService:TurnosService,
+                private toast:NgToastService)
     {
 
     }
@@ -105,7 +107,7 @@ export class UsuariosComponent
 
     descargarInfoUsuarios() 
     {
-        this.userService.getAllUsers().pipe(take(1)).subscribe((usuarios: any[]) => {
+        this.userService.getAllUsers().then((usuarios: any[]) => {
 
             const data = usuarios.map(user => ({
                 Nombre: user.nombre || '',
@@ -123,14 +125,21 @@ export class UsuariosComponent
 
     descargarTurnos(paciente:any)
     {
-        this.turnosService.getTurnosPacienteConHistoria(paciente.id).subscribe((turnos:any[])=>{
+        this.turnosService.getTurnosPacienteConHistoria(paciente.id).pipe(take(1)).subscribe((turnos:any[])=>{
 
             const turnosOrdenados = turnos.sort((a, b) => b.timestamp - a.timestamp);
             const turnosData = turnosOrdenados;
 
             console.log('turnos data', turnosData);
             
-            this.exel.descargarTunrnos(turnosData, `Turnos_paciente_${paciente.nombre}_${paciente.apellido}`, paciente);
+            if(turnosData.length > 0)
+            {
+                this.exel.descargarTunrnos(turnosData, `Turnos_paciente_${paciente.nombre}_${paciente.apellido}`, paciente);
+            }
+            else
+            {
+                this.toast.info("El paciente todavia no solicito ningun turno","¡No tiene turnos!");
+            }
             
 
         });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDocs, orderBy, query, updateDoc, where } from '@angular/fire/firestore';
 import { take } from 'rxjs';
 
 @Injectable({
@@ -31,20 +31,29 @@ export class UsuariosService {
     return collectionData(q, { idField: 'id' });
   }
 
+  // getAllUsers()
+  // {
+  //   let col = collection(this.firestore, "userInfo");
+  //   const q = query(col);
+
+  //   return collectionData(q).pipe(take(1));
+  // }
+
   getAllUsers()
   {
-    let col = collection(this.firestore, "userInfo");
-    const q = query(col);
-
-    return collectionData(q).pipe(take(1));
+    const colRef = collection(this.firestore, 'userInfo');
+    return getDocs(colRef).then(snapshot => {
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }); 
   }
+
 
   getLogs()
   {
-    let col = collection(this.firestore, "logs");
-    const q = query(col);
-
-    return collectionData(q); 
+    const colRef = collection(this.firestore, 'logs');
+    return getDocs(colRef).then(snapshot => {
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }); 
   }
 
   GetEspecialistas(especialidad:any)

@@ -216,9 +216,10 @@ export class InformesAdminComponent {
 
   decargarlogs()
   {
-    this.userService.getLogs().pipe(take(1)).subscribe((logs: any[]) => {
+    this.userService.getLogs().then((logs: any[]) => {
     
 
+      console.log('Todos los logs recibidos:', logs);
       const data = logs.map(log => {
         const fechaFirestore = log.fecha;
         const fecha = fechaFirestore?.toDate?.() ?? new Date(fechaFirestore);
@@ -231,8 +232,9 @@ export class InformesAdminComponent {
             horario: horaFormateada,
           };
       }); 
-
+      
       this.excel.descargarLogs(data, 'logs_sistema');
+      
     });
   }
 

@@ -4,10 +4,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { IfLoggedInDirective } from '../../../directives/if-logged-in.directive';
+import { IfNotLoggedInDirective } from '../../../directives/if-not-logged-in.directive';
 
 @Component({
     selector: 'app-navbar',
-    imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterLink],
+    imports: [MatToolbarModule, 
+              MatButtonModule, 
+              MatIconModule, 
+              RouterLink],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css'
 })
