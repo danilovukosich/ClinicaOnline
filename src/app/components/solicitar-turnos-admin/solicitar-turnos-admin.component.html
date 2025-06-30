@@ -15,7 +15,7 @@
 
                         @for (paciente of pacientes; track $index)
                         {
-                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
+                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110 overflow-hidden"
                                     [ngClass]="{'transition ease-in !border-3 !border-blue-400': isSeleccionadoPaciente(paciente)}"
                                     (click)="seleccionarPaciente(paciente)">
                                 <mat-card-header>
@@ -81,7 +81,7 @@
 
                         @for (especialista of especialistas; track $index)
                         {
-                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110"
+                            <mat-card class="w-52 h-52 !bg-blue-100 cursor-pointer shadow-md !transition !ease-in hover:scale-110 overflow-hidden"
                                     [ngClass]="{'transition ease-in !border-3 !border-blue-400': isSeleccionadoEspecialista(especialista)}"
                                     (click)="seleccionarEspecialista(especialista)">
                                 <mat-card-header>
