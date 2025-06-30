@@ -5,14 +5,16 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { IfLoggedInDirective } from '../../../directives/if-logged-in.directive';
-import { IfNotLoggedInDirective } from '../../../directives/if-not-logged-in.directive';
+import { IfGuestDirective } from '../../../directives/if-guest.directive';
 
 @Component({
     selector: 'app-navbar',
     imports: [MatToolbarModule, 
               MatButtonModule, 
               MatIconModule, 
-              RouterLink],
+              RouterLink,
+              IfLoggedInDirective,
+              IfGuestDirective],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css'
 })

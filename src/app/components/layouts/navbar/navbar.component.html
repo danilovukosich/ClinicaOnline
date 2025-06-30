@@ -5,35 +5,27 @@
         
         <span class="example-spacer"></span>
     </div>
-        
-    
 
-    <div>
-        @if(!this.VerifyCurrentUser())
-        {
-            <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
-            <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
-            <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
-        }
+    <div *appIfGuest>
+        <button (click)="scrollToSection('section2')" mat-button style="color: #fff; font-size: 18px;">Turnos</button>
+        <button (click)="scrollToSection('sectionDoble')" mat-button style="color: #fff; font-size: 18px;">Asociate</button>
+        <button (click)="scrollToSection('section3')" mat-button style="color: #fff; font-size: 18px;">Acerca nuestro</button>
     </div>
-
-    
     
     <div>
-        @if (this.VerifyCurrentUser()) 
-        {
+        <div *appIfLoggedIn>
             <button (click)="LogOut()" routerLink="landing" mat-raised-button extended>
                 <mat-icon>person</mat-icon>
                 Logout
             </button>
-        }
-        @else 
-        {
+        </div>
+    
+        <div *appIfGuest>
             <button routerLink="login" mat-raised-button extended>
                 <mat-icon>person</mat-icon>
                 Iniciar sesión
             </button>
-        }
+        </div>
         
     </div>
     

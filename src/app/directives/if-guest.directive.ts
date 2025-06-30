@@ -1,12 +1,12 @@
-import { Directive, Input, TemplateRef, ViewContainerRef, inject, effect } from '@angular/core';
+import { Directive, TemplateRef, ViewContainerRef, inject, effect } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { authState } from 'rxfire/auth';
 
 @Directive({
-  selector: '[appIfLoggedIn]',
+  selector: '[appIfGuest]',
   standalone: true,
 })
-export class IfLoggedInDirective {
+export class IfGuestDirective {
   private auth = inject(Auth);
   private viewContainer = inject(ViewContainerRef);
   private templateRef = inject(TemplateRef<any>);
@@ -15,7 +15,8 @@ export class IfLoggedInDirective {
     effect(() => {
       authState(this.auth).subscribe(user => {
         this.viewContainer.clear();
-        if (user) {
+        if (!user) 
+        {
           this.viewContainer.createEmbeddedView(this.templateRef);
         }
       });
