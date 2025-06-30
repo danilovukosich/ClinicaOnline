@@ -70,7 +70,8 @@
                         <mat-icon class="">done</mat-icon>
                     </button>
 
-                    <button *ngIf="((turno.estado == 'pendiente' || turno.estado == 'aceptado') && rol == 'paciente') || (turno.estado=='aceptado' && rol == 'especialista')" 
+                    <!-- <button *ngIf="((turno.estado == 'pendiente' || turno.estado == 'aceptado') && rol == 'paciente') || (turno.estado=='aceptado' && rol == 'especialista')"  -->
+                    <button *ngIf="(turno.estado == 'pendiente' && rol == 'paciente') || (turno.estado=='pendiente' && rol == 'especialista')" 
                             (click)="cambiarEstadoTurno(turno.id, 'cancelado')" 
                             mat-mini-fab matTooltip="Cancelar" 
                             [matTooltipPosition]="'above'" 
@@ -105,7 +106,7 @@
 
                     <button *ngIf="turno.comentario" 
                             (click)="verComentario(turno)"
-                            mat-mini-fab matTooltip="Ver reseña" 
+                            mat-mini-fab matTooltip="Ver comentario/reseña" 
                             [matTooltipPosition]="'above'" 
                             class="!bg-blue-400 !text-white !shadow-md">
                         <mat-icon class="">visibility</mat-icon>
