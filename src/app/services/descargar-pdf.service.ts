@@ -48,7 +48,7 @@ export class DescargarPdfService {
       doc.text(`Nombre del paciente: ${userInfo.nombre} ${userInfo.apellido}`, 10, titleYPos + 15);
       doc.text(`DNI: ${userInfo.dni}`, 10, titleYPos + 20);
       doc.text(`Edad: ${userInfo.edad}`, 10, titleYPos + 25);
-      doc.text(`Obra social: ${userInfo.swiss}`, 10, titleYPos + 30);
+      doc.text(`Obra social: ${userInfo.obraSocial}`, 10, titleYPos + 30);
       // Validar si es paciente
       if (userInfo.rol === 'paciente') 
       {
