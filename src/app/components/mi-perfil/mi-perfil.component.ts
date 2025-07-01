@@ -20,6 +20,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { MatSelectModule } from '@angular/material/select';
 import { EspecialistaService } from '../../services/especialista.service';
 import { DescargarHistorialTurnosComponent } from '../layouts/modals/descargar-historial-turnos/descargar-historial-turnos.component';
+import { EliminarDisponibilidadComponent } from '../layouts/modals/eliminar-disponibilidad/eliminar-disponibilidad.component';
 
 
 export interface DisponibilidadPorDia {
@@ -182,6 +183,18 @@ export class MiPerfilComponent {
         dia: dia,
         especialistaId: especialistaId,
         especialidades: this.especialidades
+      }
+    });
+  }
+
+  eliminar(disponibilidad: Disponibilidad, dia:any) {
+    // abrir modal o similar
+    console.log(this.especialidades);
+    
+    this.dialog.open(EliminarDisponibilidadComponent, {
+      data: {
+        disponibilidad: disponibilidad,
+         dia: dia,
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { collection, collectionData, deleteDoc, doc, Firestore, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Disponibilidad } from '../models/disponibilidad';
 
 @Injectable({
@@ -35,6 +35,15 @@ export class DisponibilidadService {
     
     await updateDoc(ref, dispo);
   }
+
+  async eliminarDisponibilidad(id: any) 
+  {
+    const ref = doc(this.firestore, 'disponibilidades', id);
+    
+    await deleteDoc(ref);
+  }
+
+
 
   removerTildes(texto: string): string 
   {
